@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Family Fishing Game</title>
+    <title>The Family Fishing Game - Classroom Professional Edition</title>
     <style>
         :root {
-            --font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif;
-            --primary-blue: #0288d1;
-            --light-blue: #4fc3f7;
-            --pond-blue: #29b6f6;
-            --sand-yellow: #fff9c4;
-            --grass-green: #81c784;
-            --sun-yellow: #ffca28;
-            --card-white: #ffffff;
-            --text-dark: #37474f;
+            --font-family: 'Arial Rounded MT Bold', 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            --classroom-bg: #0d47a1;
+            --water-top: #4fc3f7;
+            --water-mid: #0288d1;
+            --water-deep: #01579b;
+            --panel-bg: #ffffff;
+            --text-stroke-color: #000000;
+            --glow-color: rgba(255, 255, 255, 0.9);
         }
 
         * {
@@ -27,8 +26,8 @@
 
         body {
             font-family: var(--font-family);
-            background: #e0f7fa;
-            color: var(--text-dark);
+            background-color: #000;
+            color: #37474f;
             overflow: hidden;
             width: 100vw;
             height: 100vh;
@@ -40,342 +39,404 @@
         #game-container {
             width: 100%;
             height: 100%;
-            max-width: 1200px;
-            max-height: 800px;
-            background: linear-gradient(to bottom, #b3e5fc 0%, #e0f2f1 100%);
-            position: relative;
             display: flex;
             flex-direction: column;
-            border: 8px solid #4db6ac;
-            border-radius: 24px;
-            box-shadow: 0 12px 36px rgba(0,0,0,0.15);
+            background: linear-gradient(to bottom, #b3e5fc 0%, #0288d1 100%);
+            position: relative;
             overflow: hidden;
         }
 
-        /* Top Bar Interface */
+        /* Persistent Navigation Header */
         header {
-            height: 70px;
-            background: linear-gradient(to bottom, #ffffff, #f5f5f5);
-            border-bottom: 4px solid #b2dfdb;
+            height: 85px;
+            background: linear-gradient(to bottom, #ffffff 0%, #f1f8e9 100%);
+            border-bottom: 6px solid #4caf50;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 24px;
-            z-index: 10;
+            padding: 0 20px;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        h1 {
+        .nav-brand h1 {
             font-size: 28px;
-            color: #00796b;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+            color: #1b5e20;
+            text-shadow: 2px 2px 0px #c8e6c9;
         }
 
-        .controls-score {
+        .dashboard-counters {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .score-box {
-            background: #fff;
-            padding: 6px 16px;
-            border: 3px solid #00acc1;
-            border-radius: 16px;
-            font-size: 20px;
-            font-weight: bold;
-            color: #00796b;
+        .counter-pill {
+            background: #ffffff;
+            padding: 8px 16px;
+            border: 4px solid #2e7d32;
+            border-radius: 20px;
+            font-size: 22px;
+            font-weight: 900;
+            color: #1b5e20;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .btn-round {
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            border: 3px solid #00acc1;
-            background: white;
+        .action-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-ui {
+            min-width: 54px;
+            height: 54px;
+            padding: 0 10px;
+            border-radius: 14px;
+            border: 4px solid #1565c0;
+            background: #2196f3;
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 22px;
-            box-shadow: 0 4px 0 #00838f;
-            transition: transform 0.1s;
+            box-shadow: 0 5px 0 #0d47a1;
+            transition: all 0.1s ease;
         }
 
-        .btn-round:active {
+        .btn-ui:active {
             transform: translateY(4px);
-            box-shadow: none;
+            box-shadow: 0 1px 0 #0d47a1;
         }
 
-        /* Main Workspace Split Layout */
-        #main-layout {
+        .btn-ui.danger {
+            background: #f44336;
+            border-color: #c62828;
+            box-shadow: 0 5px 0 #5d0000;
+        }
+
+        .btn-ui.warn {
+            background: #ff9800;
+            border-color: #ef6c00;
+            box-shadow: 0 5px 0 #b33c00;
+        }
+
+        /* Split-Screen Playfield Arena */
+        #viewport-main {
             flex: 1;
             display: flex;
             position: relative;
             overflow: hidden;
         }
 
-        /* Left Side: Fishing Area */
-        #fishing-area {
-            flex: 7;
+        /* Left Section: Immersive Classroom Underwater Environment */
+        #ocean-aquarium {
+            flex: 3;
             position: relative;
-            background: linear-gradient(to bottom, var(--light-blue) 0%, #26c6da 40%, var(--primary-blue) 100%);
+            background: linear-gradient(to bottom, var(--water-top) 0%, var(--water-mid) 45%, var(--water-deep) 100%);
             overflow: hidden;
-            border-right: 6px solid #4db6ac;
+            cursor: crosshair;
         }
 
-        .sky-decor {
+        /* Animated Environment Features */
+        .ocean-wave-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 30px;
+            background: repeat-x url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,60 C150,100 350,20 500,60 C650,100 850,20 1000,60 C1150,100 1350,20 1500,60 L1500,120 L0,120 Z" fill="%23ffffff" opacity="0.3"/></svg>');
+            animation: waveMotion 12s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .light-rays {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 25%;
-            background: linear-gradient(to bottom, #80deea 0%, transparent 100%);
+            height: 100%;
+            background: repeating-linear-gradient(105deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 10%, rgba(255,255,255,0.15) 20%);
+            opacity: 0.6;
             pointer-events: none;
+            z-index: 1;
+            animation: raysShimmer 8s ease-in-out infinite alternate;
         }
 
-        .sun {
+        /* Giant Classroom Target Display */
+        .giant-prompt-marquee {
             position: absolute;
-            top: 10px;
-            left: 20px;
-            width: 50px;
-            height: 50px;
-            background: var(--sun-yellow);
-            border-radius: 50%;
-            box-shadow: 0 0 20px #fbc02d;
-            animation: pulse 4s infinite ease-in-out;
-        }
-
-        .prompt-banner {
-            position: absolute;
-            top: 15px;
+            top: 25px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(255, 255, 255, 0.95);
-            border: 4px solid #ff7043;
-            border-radius: 20px;
-            padding: 8px 24px;
-            font-size: 24px;
-            font-weight: bold;
+            border: 8px solid #ff9100;
+            border-radius: 30px;
+            padding: 12px 45px;
+            font-size: 42px;
+            font-weight: 900;
             color: #d84315;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
             text-align: center;
-            z-index: 5;
-            animation: float 3s ease-in-out infinite;
+            z-index: 10;
+            letter-spacing: 2px;
         }
 
-        .seaweed {
+        .giant-prompt-marquee span {
+            color: #ff3d00;
+            background: #fff9c4;
+            padding: 2px 15px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px var(--glow-color);
+            -webkit-text-stroke: 1.5px #000;
+        }
+
+        /* Underwater Floor Scenic Background elements */
+        .seabed-floor {
             position: absolute;
             bottom: 0;
-            width: 40px;
-            height: 120px;
-            fill: #4caf50;
-            opacity: 0.7;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background: linear-gradient(to top, #e0a96d 0%, #f4cc97 100%);
+            z-index: 2;
+            border-top: 4px solid #c68642;
+        }
+
+        .coral-decor {
+            position: absolute;
+            bottom: 60px;
+            fill: #ff4081;
+            opacity: 0.85;
+            z-index: 2;
             pointer-events: none;
         }
 
-        /* Dynamic Fish Elements */
-        .fish {
+        /* Interactive Ambient Props */
+        .interactive-prop {
             position: absolute;
-            width: 130px;
-            height: 75px;
+            z-index: 5;
             cursor: pointer;
-            transition: transform 0.1s ease;
-            z-index: 3;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .interactive-prop:hover {
+            transform: scale(1.15);
+        }
+        .interactive-prop:active {
+            transform: scale(0.9) rotate(-10deg);
         }
 
-        .fish-body {
+        /* Ultra-High Visibility Sea Creatures */
+        .sea-creature-entity {
+            position: absolute;
+            width: 190px;
+            height: 130px;
+            cursor: pointer;
+            z-index: 10;
+            filter: drop-shadow(0 8px 6px rgba(0,0,0,0.25));
+        }
+
+        .creature-body-wrapper {
             width: 100%;
             height: 100%;
+            position: relative;
+            animation: organicSwim 3s ease-in-out infinite alternate;
         }
 
-        .fish-text {
+        .creature-classroom-label {
             position: absolute;
-            top: 50%;
-            left: 45%;
-            transform: translate(-50%, -50%);
-            font-size: 16px;
-            font-weight: bold;
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-            pointer-events: none;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 38px; /* Boosted 300% for high-visibility classroom readability */
+            font-weight: 900;
+            color: #ffffff;
+            /* Extra Thick Outlines for clear viewing from the back of the room */
+            text-shadow: 
+                -4px -4px 0 var(--text-stroke-color),  
+                 4px -4px 0 var(--text-stroke-color),
+                -4px  4px 0 var(--text-stroke-color),
+                 4px  4px 0 var(--text-stroke-color),
+                 0px -4px 0 var(--text-stroke-color),
+                 0px  4px 0 var(--text-stroke-color),
+                -4px  0px 0 var(--text-stroke-color),
+                 4px  0px 0 var(--text-stroke-color),
+                 0 0 25px var(--glow-color);
+            letter-spacing: 1.5px;
             white-space: nowrap;
+            pointer-events: none;
+            z-index: 12;
         }
 
-        /* Right Side: Vocabulary Panel */
-        #vocabulary-panel {
-            flex: 3;
+        /* Right Section: Giant Interactive Reinforcement Card Panel */
+        #classroom-reinforcement-panel {
+            flex: 1.1;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e3f2fd 100%);
+            border-left: 8px solid #4caf50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 25px 15px;
+            z-index: 5;
+            box-shadow: -10px 0 20px rgba(0,0,0,0.1);
+        }
+
+        .giant-preview-card {
+            width: 100%;
+            flex: 1;
             background: #ffffff;
+            border: 6px dashed #1976d2;
+            border-radius: 32px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
             position: relative;
         }
 
-        .card-display {
-            width: 100%;
-            height: 85%;
-            border: 4px dashed #90caf9;
-            border-radius: 20px;
-            background: #f9f9f9;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            transition: background-color 0.3s;
+        .giant-preview-card.correct-glow {
+            animation: neonGreenGlow 1s ease-in-out infinite alternate;
+            border-color: #4caf50;
         }
 
-        .card-display.highlight {
-            background-color: #fff9c4;
-            border-color: #ffb300;
-        }
-
-        .vector-avatar-container {
-            width: 180px;
-            height: 180px;
-            margin-bottom: 15px;
+        .avatar-classroom-frame {
+            width: 250px; /* Enhanced preview framing boundaries */
+            height: 250px;
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .vector-avatar-container svg {
+        .avatar-classroom-frame svg {
             width: 100%;
             height: 100%;
         }
 
-        .vocab-word {
-            font-size: 32px;
-            font-weight: bold;
-            color: #1565c0;
-            margin-bottom: 15px;
+        .avatar-classroom-frame.wave-animation {
+            animation: friendlyWave 0.6s ease-in-out 3;
+        }
+
+        .classroom-vocab-title {
+            font-size: 58px; /* Boosted visibility typography scaling factors */
+            font-weight: 900;
+            color: #0d47a1;
+            margin-top: 15px;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(33,150,243,0.3);
             letter-spacing: 1px;
-            text-align: center;
         }
 
-        .vocab-word.active-speaking {
-            color: #e65100;
-            scale: 1.1;
-            transition: all 0.2s;
+        .classroom-vocab-title.highlight-active {
+            color: #d84315;
+            transform: scale(1.15);
+            text-shadow: 0 0 30px #ffeb3b;
+            transition: all 0.2s ease;
         }
 
-        .btn-speak {
-            background: #ff7043;
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            font-size: 18px;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 4px 0 #d84315;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-speak:active {
-            transform: translateY(4px);
-            box-shadow: none;
-        }
-
-        /* Bottom Bar Tracker */
-        footer {
-            height: 75px;
-            background: #e8f5e9;
-            border-top: 4px solid #a5d6a7;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-            z-index: 10;
-        }
-
-        .tracker-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #2e7d32;
-        }
-
-        .star-container {
-            display: flex;
-            gap: 8px;
-        }
-
-        .star-slot {
-            font-size: 32px;
-            color: #c8e6c9;
-            text-shadow: 1px 1px 0px #fff;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .star-slot.earned {
-            color: #ffca28;
-            animation: pop 0.4s ease-out;
-            text-shadow: 1px 2px 2px rgba(0,0,0,0.2);
-        }
-
-        /* Modal Overlays */
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 100;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-card {
-            background: white;
-            padding: 40px;
-            border-radius: 32px;
-            border: 8px solid #ffb74d;
-            text-align: center;
-            max-width: 500px;
+        .btn-giant-speak {
             width: 90%;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .modal-title {
-            font-size: 36px;
-            color: #e65100;
-            margin-bottom: 15px;
-        }
-
-        .modal-body {
-            font-size: 20px;
-            margin-bottom: 25px;
-            color: #546e7a;
-            line-height: 1.5;
-        }
-
-        .btn-large {
-            background: #4caf50;
+            background: #ff9800;
             color: white;
-            font-size: 24px;
-            font-weight: bold;
-            padding: 14px 40px;
             border: none;
-            border-radius: 40px;
+            padding: 16px 30px;
+            font-size: 28px;
+            font-weight: 900;
+            border-radius: 25px;
             cursor: pointer;
-            box-shadow: 0 6px 0 #388e3c;
+            box-shadow: 0 8px 0 #e65100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
             transition: transform 0.1s;
         }
 
-        .btn-large:active {
+        .btn-giant-speak:active {
             transform: translateY(6px);
-            box-shadow: none;
+            box-shadow: 0 2px 0 #e65100;
         }
 
-        /* Confetti Effects Canvas */
-        #fx-canvas {
+        .btn-giant-speak:disabled {
+            background: #b0bec5;
+            box-shadow: 0 8px 0 #78909c;
+            cursor: not-allowed;
+        }
+
+        /* Achievement Badge Display Area */
+        .achievement-ribbon {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            background: #fff;
+            padding: 8px;
+            border-radius: 16px;
+            border: 3px solid #cfd8dc;
+        }
+
+        .badge-icon {
+            font-size: 32px;
+            filter: grayscale(1);
+            opacity: 0.3;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .badge-icon.unlocked {
+            filter: grayscale(0);
+            opacity: 1;
+            transform: scale(1.25);
+            animation: pop 0.5s ease-out;
+        }
+
+        /* Bottom Star Tracker Section */
+        footer {
+            height: 80px;
+            background: #e8f5e9;
+            border-top: 6px solid #4caf50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+            z-index: 100;
+        }
+
+        .footer-banner-text {
+            font-size: 22px;
+            font-weight: 900;
+            color: #2e7d32;
+        }
+
+        .classroom-stars-track {
+            display: flex;
+            gap: 12px;
+        }
+
+        .star-item {
+            font-size: 42px;
+            color: #c8e6c9;
+            text-shadow: 2px 2px 0 #fff;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.5);
+        }
+
+        .star-item.earned {
+            color: #ffca28;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.25);
+            transform: scale(1.2) rotate(15deg);
+        }
+
+        /* Immersive Visual Effects Overlay Layer Canvas */
+        #fx-layer-canvas {
             position: absolute;
             top: 0;
             left: 0;
@@ -385,704 +446,889 @@
             z-index: 90;
         }
 
-        /* Animations */
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+        /* Overlay & Full Screen Modals */
+        .fullscreen-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(1, 87, 155, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        @keyframes float {
-            0%, 100% { transform: translate(-50%, 0px); }
-            50% { transform: translate(-50%, -6px); }
+
+        .classroom-modal-box {
+            background: white;
+            padding: 45px;
+            border-radius: 40px;
+            border: 10px solid #ffb74d;
+            text-align: center;
+            max-width: 650px;
+            width: 90%;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            animation: modalPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-title-giant {
+            font-size: 48px;
+            color: #e65100;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px #ffe0b2;
+        }
+
+        .modal-desc-text {
+            font-size: 24px;
+            margin-bottom: 35px;
+            color: #455a64;
+            line-height: 1.6;
+            font-weight: bold;
+        }
+
+        .modal-btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-modal-action {
+            background: #4caf50;
+            color: white;
+            font-size: 28px;
+            font-weight: 900;
+            padding: 16px 45px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #2e7d32;
+            transition: transform 0.1s;
+        }
+
+        .btn-modal-action:active {
+            transform: translateY(6px);
+            box-shadow: none;
+        }
+
+        .btn-modal-action.secondary {
+            background: #2196f3;
+            box-shadow: 0 8px 0 #1565c0;
+        }
+
+        .btn-modal-action.danger {
+            background: #f44336;
+            box-shadow: 0 8px 0 #c62828;
+        }
+
+        /* Animation Keyframe Archives */
+        @keyframes waveMotion {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes raysShimmer {
+            0% { transform: scale(1) rotate(0deg); opacity: 0.4; }
+            100% { transform: scale(1.1) rotate(4deg); opacity: 0.7; }
+        }
+        @keyframes organicSwim {
+            0% { transform: translateY(0px) rotate(-2deg); }
+            100% { transform: translateY(8px) rotate(3deg); }
+        }
+        @keyframes friendlyWave {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(15deg); }
+        }
+        @keyframes modalPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes neonGreenGlow {
+            0% { box-shadow: 0 0 10px #4caf50; }
+            100% { box-shadow: 0 0 35px #4caf50, inset 0 0 15px #4caf50; }
         }
         @keyframes pop {
-            0% { transform: scale(0); }
-            90% { transform: scale(1.3); }
+            0% { transform: scale(0.6); }
             100% { transform: scale(1); }
-        }
-        @keyframes scaleUp {
-            0% { transform: scale(0.6); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
         }
 
         .hidden {
             display: none !important;
-        }
-
-        /* Responsive scaling adjustment */
-        @media (max-width: 768px) {
-            #main-layout {
-                flex-direction: column;
-            }
-            #fishing-area {
-                flex: 6;
-                border-right: none;
-                border-bottom: 6px solid #4db6ac;
-            }
-            #vocabulary-panel {
-                flex: 4;
-                flex-direction: row;
-                padding: 10px;
-            }
-            .card-display {
-                flex-direction: row;
-                height: 100%;
-                justify-content: space-around;
-            }
-            .vector-avatar-container {
-                width: 110px;
-                height: 110px;
-                margin-bottom: 0;
-            }
-            .vocab-word {
-                font-size: 24px;
-                margin-bottom: 0;
-            }
         }
     </style>
 </head>
 <body>
 
     <div id="game-container">
-        <canvas id="fx-canvas"></canvas>
+        <!-- Visual FX Render Canvas Engine Layer -->
+        <canvas id="fx-layer-canvas"></canvas>
 
+        <!-- Dynamic Header UI -->
         <header>
-            <h1>👪 The Family Fishing Game</h1>
-            <div class="controls-score">
-                <div class="score-box">Score: <span id="score-val">0</span></div>
-                <button class="btn-round" id="mute-sfx" title="Toggle Sound Effects">🔊</button>
-                <button class="btn-round" id="mute-music" title="Toggle Music">🎵</button>
+            <div class="nav-brand">
+                <h1>👪 The Family Fishing Game</h1>
+            </div>
+            
+            <div class="dashboard-counters">
+                <div class="counter-pill" title="Score Points">⭐ <span id="ui-score">0</span></div>
+                <div class="counter-pill" title="Coins Collected">🪙 <span id="ui-coins">0</span></div>
+                <div class="counter-pill" title="Gems Discovered">💎 <span id="ui-gems">0</span></div>
+            </div>
+
+            <div class="action-controls">
+                <button class="btn-ui" id="ctrl-fullscreen" title="Full Screen View">⛶</button>
+                <button class="btn-ui" id="ctrl-pause" title="Pause Game">⏸</button>
+                <button class="btn-ui warn" id="ctrl-restart" title="Restart Level">🔄</button>
+                <button class="btn-ui" id="ctrl-mute-sfx" title="Mute FX">🔊</button>
+                <button class="btn-ui" id="ctrl-mute-music" title="Mute Music">🎵</button>
+                <button class="btn-ui danger" id="ctrl-exit" title="Exit">🚪</button>
             </div>
         </header>
 
-        <main id="main-layout">
-            <section id="fishing-area">
-                <div class="sky-decor">
-                    <div class="sun"></div>
-                </div>
-                <div class="prompt-banner" id="target-prompt">Find: Loading...</div>
+        <!-- Viewport Main Content Split -->
+        <main id="viewport-main">
+            <!-- Left Sandbox Environment -->
+            <section id="ocean-aquarium">
+                <div class="ocean-wave-overlay"></div>
+                <div class="light-rays"></div>
                 
-                <svg class="seaweed" style="left: 10%;" viewBox="0 0 40 120"><path d="M10,120 Q20,90 10,60 T20,0 T30,60 T20,120 Z"/></svg>
-                <svg class="seaweed" style="left: 45%; height: 90px;" viewBox="0 0 40 120"><path d="M10,120 Q0,90 10,60 T0,0 T20,60 T10,120 Z"/></svg>
-                <svg class="seaweed" style="right: 15%; height: 140px;" viewBox="0 0 40 120"><path d="M10,120 Q30,90 15,60 T30,0 T15,60 T10,120 Z"/></svg>
+                <div class="giant-classroom-marquee" id="target-billboard">
+                    Find: <span id="target-billboard-text">Loading...</span>
+                </div>
+
+                <!-- Ground Level Props Layout -->
+                <div class="seabed-floor"></div>
+                
+                <!-- SVG Background & Clickable Props Asset Elements -->
+                <svg class="coral-decor" style="left: 5%; width:90px; height:120px;" viewBox="0 0 100 150"><path d="M20,150 Q40,90 20,40 T50,0 Q70,50 50,100 T80,150 Z" fill="#ec407a"/></svg>
+                <svg class="coral-decor" style="right: 8%; width:110px; height:140px;" viewBox="0 0 100 150"><path d="M30,150 Q10,80 40,30 T60,0 Q90,60 50,110 T70,150 Z" fill="#ab47bc"/></svg>
+                
+                <!-- Interactive Elements -->
+                <div class="interactive-prop" id="prop-treasure" style="bottom: 15px; left: 40%; width: 100px; height: 80px;">
+                    <svg viewBox="0 0 100 80">
+                        <rect x="10" y="30" width="80" height="45" rx="5" fill="#8d6e63" stroke="#5d4037" stroke-width="4"/>
+                        <path d="M10,30 Q50,0 90,30 Z" fill="#b10000" stroke="#5d4037" stroke-width="4" id="chest-lid-svg"/>
+                        <circle cx="50" cy="35" r="7" fill="#ffca28"/>
+                    </svg>
+                </div>
+
+                <div class="interactive-prop" id="prop-crab" style="bottom: 10px; left: 15%; width: 70px; height: 50px;">
+                    <svg viewBox="0 0 80 50">
+                        <ellipse cx="40" cy="30" rx="20" ry="12" fill="#e53935"/>
+                        <circle cx="28" cy="15" r="4" fill="#000"/><circle cx="52" cy="15" r="4" fill="#000"/>
+                        <path d="M15,20 Q5,10 20,15 M65,20 Q75,10 60,15" stroke="#e53935" stroke-width="5" fill="none"/>
+                        <path d="M25,40 Q20,48 15,42 M40,42 Q40,49 40,42 M55,40 Q60,48 65,42" stroke="#e53935" stroke-width="3"/>
+                    </svg>
+                </div>
+
+                <div class="interactive-prop" id="prop-starfish" style="bottom: 25px; right: 25%; width: 60px; height: 60px;">
+                    <svg viewBox="0 0 100 100">
+                        <path d="M50,0 L65,35 L100,40 L75,65 L85,100 L50,80 L15,100 L25,65 L0,40 L35,35 Z" fill="#ff7043" stroke="#f4511e" stroke-width="3"/>
+                        <circle cx="43" cy="45" r="3" fill="#000"/><circle cx="57" cy="45" r="3" fill="#000"/>
+                        <path d="M46,55 Q50,58 54,55" stroke="#000" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
             </section>
 
-            <section id="vocabulary-panel">
-                <div class="card-display" id="card-display">
-                    <div class="vector-avatar-container" id="avatar-container">
+            <!-- Right Reinforcement Matrix Panel -->
+            <section id="classroom-reinforcement-panel">
+                <div class="giant-preview-card" id="main-preview-card">
+                    <div class="avatar-classroom-frame" id="avatar-viewport-frame">
+                        <!-- Default Startup State View Graphic -->
                         <svg viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="40" fill="#e0f7fa" stroke="#b2dfdb" stroke-width="4"/>
-                            <text x="50" y="55" font-size="30" text-anchor="middle">🎣</text>
+                            <circle cx="50" cy="50" r="44" fill="#e3f2fd" stroke="#2196f3" stroke-width="4" stroke-dasharray="6,4"/>
+                            <text x="50" y="58" font-size="34" text-anchor="middle">🎣</text>
                         </svg>
                     </div>
-                    <div>
-                        <div class="vocab-word" id="word-display">Catch a fish!</div>
-                        <button class="btn-speak" id="btn-speak-action" disabled>
-                            🔊 Listen
-                        </button>
-                    </div>
+                    <div class="classroom-vocab-title" id="vocab-title-text">Catch a creature!</div>
+                </div>
+
+                <button class="btn-giant-speak" id="btn-trigger-speech" disabled>
+                    📢 REPLAY WORD
+                </button>
+
+                <!-- Badge Tracking Matrix Systems Container -->
+                <div class="achievement-ribbon" title="Unlocked Badges">
+                    <span class="badge-icon" id="badge-0" title="Family Explorer">🏅</span>
+                    <span class="badge-icon" id="badge-1" title="Ocean Learner">🐬</span>
+                    <span class="badge-icon" id="badge-2" title="Vocabulary Master">🎓</span>
+                    <span class="badge-icon" id="badge-3" title="Family Champion">🏆</span>
                 </div>
             </section>
         </main>
 
+        <!-- Stars Reward Track Status Deck -->
         <footer>
-            <div class="tracker-title">Your Progress Tracker:</div>
-            <div class="star-container" id="star-frame">
-                </div>
+            <div class="footer-banner-text">Classroom Progress Tracker:</div>
+            <div class="classroom-stars-track" id="stars-deck-casing">
+                <!-- Stars added dynamically by system controller setup -->
+            </div>
         </footer>
     </div>
 
-    <div class="overlay" id="start-overlay">
-        <div class="modal-card">
-            <h2 class="modal-title">Ready to Fish?</h2>
-            <p class="modal-body">Let's catch some colorful fish and learn the names of family members! Turn up your volume to hear your teacher's voice.</p>
-            <button class="btn-large" id="btn-start">Let's Play!</button>
+    <!-- START / INTRO SCREENS MODAL OVERLAY -->
+    <div class="fullscreen-overlay" id="modal-start-gate">
+        <div class="classroom-modal-box">
+            <h2 class="modal-title-giant">The Family Fishing Game</h2>
+            <p class="modal-desc-text">Welcome teachers and students! Catch the sea creatures carrying the correct family vocabulary words. Perfect for smartboards, projectors, and touch screens!</p>
+            <div class="modal-btn-group">
+                <button class="btn-modal-action" id="btn-gate-play">Let's Play! 🌊</button>
+            </div>
         </div>
     </div>
 
-    <div class="overlay hidden" id="milestone-overlay">
-        <div class="modal-card">
-            <h2 class="modal-title" id="milestone-title">Amazing!</h2>
-            <p class="modal-body" id="milestone-text">You are doing fantastic! Keep going!</p>
-            <button class="btn-large" id="btn-milestone-continue">Next Word</button>
+    <!-- GAME OVER / REWARD CERTIFICATE OVERLAY MODAL -->
+    <div class="fullscreen-overlay hidden" id="modal-end-gate">
+        <div class="classroom-modal-box" style="border-color: #ffd700; background: #fffde7;">
+            <h2 class="modal-title-giant" style="color: #ff8f00;">📜 CERTIFICATE OF SUCCESS 📜</h2>
+            <p class="modal-desc-text" id="end-gate-body-text" style="font-size: 28px; color: #ff6f00;">
+                Congratulations!<br>You are a Family Vocabulary Champion!
+            </p>
+            <div id="end-stars-display" style="font-size: 44px; margin-bottom: 25px;"></div>
+            <div class="modal-btn-group">
+                <button class="btn-modal-action" id="btn-end-replay">Play Again 🔄</button>
+                <button class="btn-modal-action secondary" id="btn-end-home">Home 🏠</button>
+                <button class="btn-modal-action danger" id="btn-end-exit">Exit 🚪</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GENERIC INTERMEDIARY PAUSE / BREAK OVERLAY MODAL -->
+    <div class="fullscreen-overlay hidden" id="modal-pause-gate">
+        <div class="classroom-modal-box" style="border-color: #2196f3;">
+            <h2 class="modal-title-giant" style="color: #1565c0;">Game Paused</h2>
+            <p class="modal-desc-text">Take a deep breath! Click below to return to the ocean depths.</p>
+            <div class="modal-btn-group">
+                <button class="btn-modal-action secondary" id="btn-pause-resume">Resume Game ▶</button>
+            </div>
         </div>
     </div>
 
     <script>
         /**********************************************************************
-         * INLINE VECTOR RESOURCE ARCHIVE (SVG GRAPHICS GENERATORS)
+         * VECTOR DEFINITIONS DICTIONARY ARCHIVE (SVGs)
          **********************************************************************/
-        const SVG_AVATARS = {
-            default: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#eceff1"/><text x="50" y="58" font-size="30" text-anchor="middle">🎣</text></svg>`,
-            Father: `<svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="46" fill="#ffb74d"/>
-                <circle cx="50" cy="46" r="24" fill="#ffdbb5"/>
-                <path d="M32,40 Q50,42 68,40 Q72,58 50,58 Q28,58 32,40" fill="#5d4037"/>
-                <rect x="36" y="22" width="28" height="12" rx="4" fill="#5d4037"/>
-                <circle cx="42" cy="44" r="3" fill="#333"/>
-                <circle cx="58" cy="44" r="3" fill="#333"/>
-                <path d="M44,50 Q50,54 56,50" stroke="#333" stroke-width="2" fill="none"/>
-                <path d="M26,76 C26,60 36,64 50,64 C64,64 74,60 74,76 L74,92 L26,92 Z" fill="#0288d1"/>
-                <rect x="47" y="64" width="6" height="18" fill="#fff"/>
-            </svg>`,
-            Mother: `<svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="46" fill="#f06292"/>
-                <path d="M24,28 C20,55 30,55 30,55 C30,55 32,32 50,32 C68,32 70,55 70,55 C70,55 80,55 76,28 C70,10 30,10 24,28 Z" fill="#37474f"/>
-                <circle cx="50" cy="48" r="22" fill="#fbe9e7"/>
-                <circle cx="42" cy="46" r="3" fill="#333"/>
-                <circle cx="58" cy="46" r="3" fill="#333"/>
-                <path d="M43,54 Q50,60 57,54" stroke="#e91e63" stroke-width="2.5" fill="none"/>
-                <path d="M28,78 C28,64 38,66 50,66 C62,66 72,64 72,78 L72,92 L28,92 Z" fill="#ba68c8"/>
-            </svg>`,
-            Brother: `<svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="46" fill="#4fc3f7"/>
-                <circle cx="50" cy="48" r="22" fill="#ffdbb5"/>
-                <path d="M28,36 C35,22 65,22 72,36 Z" fill="#2e7d32"/>
-                <path d="M26,34 L74,30 L72,24 L28,28 Z" fill="#ffca28"/>
-                <circle cx="42" cy="48" r="3" fill="#333"/>
-                <circle cx="58" cy="48" r="3" fill="#333"/>
-                <path d="M44,56 Q50,60 56,56" stroke="#333" stroke-width="2" fill="none"/>
-                <path d="M28,78 C28,66 38,66 50,66 C62,66 72,66 72,78 L72,94 L28,94 Z" fill="#ff7043"/>
-            </svg>`,
-            Sister: `<svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="46" fill="#ba68c8"/>
-                <circle cx="22" cy="36" r="10" fill="#e65100"/>
-                <circle cx="78" cy="36" r="10" fill="#e65100"/>
-                <circle cx="50" cy="48" r="22" fill="#fff3e0"/>
-                <path d="M30,36 Q50,42 70,36" stroke="#e65100" stroke-width="8" fill="none"/>
-                <circle cx="42" cy="48" r="3" fill="#333"/>
-                <circle cx="58" cy="48" r="3" fill="#333"/>
-                <path d="M44,56 Q50,60 56,56" stroke="#e91e63" stroke-width="2" fill="none"/>
-                <path d="M28,78 C28,66 38,66 50,66 C62,66 72,66 72,78 L72,94 L28,94 Z" fill="#4db6ac"/>
-            </svg>`,
-            Grandfather: `<svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="46" fill="#90a4ae"/>
-                <circle cx="50" cy="46" r="24" fill="#ffe0b2"/>
-                <path d="M26,34 C26,20 34,16 50,16 C66,16 74,20 74,34 L74,40 L26,40 Z" fill="#e0e0e0"/>
-                <circle cx="50" cy="46" r="24" fill="none"/>
-                <circle cx="40" cy="44" r="5" stroke="#795548" stroke-width="2" fill="none"/>
-                <circle cx="60" cy="44" r="5" stroke="#795548" stroke-width="2" fill="none"/>
-                <line x1="45" y1="44" x2="55" y2="44" stroke="#795548" stroke-width="2"/>
-                <path d="M42,56 Q50,62 58,56" stroke="#333" stroke-width="2" fill="none"/>
-                <path d="M26,76 C26,62 38,64 50,64 C62,64 74,62 74,76 L74,92 L26,92 Z" fill="#78909c"/>
-            </svg>`,
-            Grandmother: `<svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="46" fill="#a1887f"/>
-                <circle cx="50" cy="20" r="10" fill="#cfd8dc"/>
-                <circle cx="50" cy="48" r="22" fill="#ffebd2"/>
-                <path d="M28,38 C32,26 68,26 72,38 Z" fill="#cfd8dc"/>
-                <circle cx="41" cy="46" r="5" stroke="#ff5722" stroke-width="2" fill="none"/>
-                <circle cx="59" cy="46" r="5" stroke="#ff5722" stroke-width="2" fill="none"/>
-                <line x1="46" y1="46" x2="54" y2="46" stroke="#ff5722" stroke-width="2"/>
-                <path d="M44,56 Q50,60 56,56" stroke="#333" stroke-width="2" fill="none"/>
-                <path d="M28,78 C28,64 38,66 50,66 C62,66 72,64 72,78 L72,92 L28,92 Z" fill="#e57373"/>
-            </svg>`,
-            Baby: `<svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="46" fill="#ffd54f"/>
-                <circle cx="50" cy="48" r="24" fill="#fff3e0"/>
-                <path d="M46,24 Q50,14 54,24" stroke="#ffb300" stroke-width="3" fill="none"/>
-                <circle cx="40" cy="44" r="3" fill="#333"/>
-                <circle cx="60" cy="44" r="3" fill="#333"/>
-                <circle cx="50" cy="56" r="6" fill="#ff7043"/>
-                <path d="M26,78 C26,66 38,68 50,68 C62,68 72,66 72,78 L72,94 L26,94 Z" fill="#fff"/>
-                <rect x="42" y="74" width="16" height="16" fill="#4fc3f7"/>
-            </svg>`,
-            Family: `<svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="46" fill="#4db6ac"/>
-                <path d="M50,25 L85,55 L75,85 L25,85 L15,55 Z" fill="#ffcc80"/>
-                <circle cx="35" cy="45" r="10" fill="#fff3e0"/>
-                <circle cx="65" cy="45" r="10" fill="#fff3e0"/>
-                <circle cx="50" cy="65" r="8" fill="#ffdbb5"/>
-                <path d="M30,42 Q35,46 40,42" stroke="#333" stroke-width="1.5" fill="none"/>
-                <path d="M60,42 Q65,46 70,42" stroke="#333" stroke-width="1.5" fill="none"/>
-                <path d="M45,72 Q50,76 55,72" stroke="#e91e63" stroke-width="2" fill="none"/>
-                <path d="M30,52 Q50,34 70,52" stroke="#ff7043" stroke-width="3" fill="none"/>
-            </svg>`
+        const CREATURE_VECTORS = {
+            Dolphin: `<svg viewBox="0 0 150 100"><path d="M10,60 Q40,20 90,20 Q130,25 145,45 Q120,50 100,55 Q70,65 40,65 Z" fill="#42a5f5"/><path d="M90,20 Q95,5 110,2 Q105,15 100,22 Z" fill="#1e88e5"/><path d="M15,60 L2,50 L5,65 L3,75 Z" fill="#1e88e5"/><circle cx="115" cy="35" r="4" fill="#000"/></svg>`,
+            Turtle: `<svg viewBox="0 0 150 100"><ellipse cx="75" cy="50" rx="45" ry="32" fill="#4caf50" stroke="#2e7d32" stroke-width="3"/><circle cx="130" cy="45" r="14" fill="#81c784"/><path d="M40,75 Q30,85 45,80 M110,75 Q120,85 105,80 M40,25 Q30,15 45,20 M110,25 Q120,15 105,20" stroke="#81c784" stroke-width="8" stroke-linecap="round"/><circle cx="134" cy="40" r="2.5" fill="#000"/></svg>`,
+            Starfish: `<svg viewBox="0 0 150 100"><path d="M75,5 L93,42 L138,45 L102,72 L115,115 L75,92 L35,115 L48,72 L12,45 L57,42 Z" fill="#ff7043"/><circle cx="65" cy="55" r="4" fill="#000"/><circle cx="85" cy="55" r="4" fill="#000"/><path d="M70,68 Q75,74 80,68" stroke="#000" stroke-width="3" fill="none"/></svg>`,
+            Seahorse: `<svg viewBox="0 0 150 100"><path d="M75,10 Q90,10 85,30 Q70,45 80,60 Q85,75 70,85 Q60,90 65,75 Q75,65 65,50 Q60,30 75,10 Z" fill="#ffb74d"/><path d="M85,20 Q100,22 90,28" stroke="#ffb74d" stroke-width="4" fill="none"/><circle cx="78" cy="20" r="3" fill="#000"/></svg>`,
+            Octopus: `<svg viewBox="0 0 150 100"><circle cx="75" cy="40" r="28" fill="#ba68c8"/><path d="M50,65 Q30,85 20,70 M60,68 Q45,95 40,80 M75,68 Q75,98 75,85 M90,68 Q105,95 110,80 M100,65 Q120,85 130,70" stroke="#ba68c8" stroke-width="8" stroke-linecap="round"/><circle cx="65" cy="35" r="4" fill="#000"/><circle cx="85" cy="35" r="4" fill="#000"/><path d="M70,48 Q75,54 80,48" stroke="#000" stroke-width="2" fill="none"/></svg>`,
+            Whale: `<svg viewBox="0 0 150 100"><path d="M15,50 Q20,15 80,15 Q135,20 140,55 Q115,75 75,75 Q35,75 15,50 Z" fill="#5c6bc0"/><path d="M140,55 L152,42 L150,55 L155,65 Z" fill="#3f51b5"/><circle cx="45" cy="38" r="5" fill="#000"/><path d="M60,58 Q75,62 90,58" stroke="#fff" stroke-width="3" fill="none"/></svg>`,
+            Jellyfish: `<svg viewBox="0 0 150 100"><path d="M35,50 C35,15 115,15 115,50 Z" fill="#e1bee7"/><path d="M45,50 Q40,85 48,95 M60,50 Q55,80 62,95 M75,50 Q75,85 78,95 M90,50 Q92,80 88,95 M105,50 Q110,85 102,95" stroke="#ba68c8" stroke-width="4" fill="none"/></svg>`,
+            Crab: `<svg viewBox="0 0 150 100"><ellipse cx="75" cy="55" rx="30" ry="20" fill="#ef5350"/><path d="M35,35 Q25,25 40,42 M115,35 Q125,25 110,42" stroke="#ef5350" stroke-width="8" stroke-linecap="round"/><circle cx="63" cy="45" r="3.5" fill="#000"/><circle cx="87" cy="45" r="3.5" fill="#000"/></svg>`,
+            Clownfish: `<svg viewBox="0 0 150 100"><path d="M20,50 Q45,20 95,20 Q125,35 135,50 Q125,65 95,80 Q45,80 20,50 Z" fill="#ff9800"/><path d="M55,22 L55,78 M90,21 L90,79" stroke="#ffffff" stroke-width="12" fill="none"/><circle cx="110" cy="40" r="4" fill="#000"/></svg>`,
+            Pufferfish: `<svg viewBox="0 0 150 100"><circle cx="75" cy="50" r="35" fill="#fff59d" stroke="#fbc02d" stroke-width="2"/><circle cx="100" cy="40" r="5" fill="#000"/><path d="M40,50 L30,45 L35,50 L30,55 Z" fill="#fbc02d"/><path d="M55,30 L50,22 M75,25 L75,15 M95,30 L100,22 M55,70 L50,78 M75,75 L75,85 M95,70 L100,78" stroke="#fbc02d" stroke-width="3"/></svg>`,
+            Stingray: `<svg viewBox="0 0 150 100"><path d="M10,50 L70,15 L120,50 L70,85 Z" fill="#78909c"/><path d="M120,50 Q150,55 160,52" stroke="#546e7a" stroke-width="4" fill="none"/><circle cx="50" cy="40" r="3.5" fill="#000"/><circle cx="50" cy="60" r="3.5" fill="#000"/></svg>`,
+            Angelfish: `<svg viewBox="0 0 150 100"><path d="M30,50 L100,10 L90,50 L100,90 Z" fill="#26c6da"/><path d="M100,50 L125,30 L120,50 L125,70 Z" fill="#0097a7"/><circle cx="55" cy="50" r="4" fill="#ffff00"/></svg>`
         };
 
-        const FISH_SVGs = [
-            `<svg viewBox="0 0 130 75"><path d="M10,37 C30,10 90,5 110,37 C90,70 30,65 10,37 Z" fill="#ff7043"/><path d="M110,37 L125,15 L120,37 L125,60 Z" fill="#f4511e"/><circle cx="30" cy="28" r="6" fill="white"/><circle cx="32" cy="28" r="3" fill="black"/></svg>`,
-            `<svg viewBox="0 0 130 75"><path d="M10,37 C30,10 90,5 110,37 C90,70 30,65 10,37 Z" fill="#26a69a"/><path d="M110,37 L125,15 L120,37 L125,60 Z" fill="#00796b"/><circle cx="30" cy="28" r="6" fill="white"/><circle cx="32" cy="28" r="3" fill="black"/></svg>`,
-            `<svg viewBox="0 0 130 75"><path d="M10,37 C30,10 90,5 110,37 C90,70 30,65 10,37 Z" fill="#ab47bc"/><path d="M110,37 L125,15 L120,37 L125,60 Z" fill="#7b1fa2"/><circle cx="30" cy="28" r="6" fill="white"/><circle cx="32" cy="28" r="3" fill="black"/></svg>`,
-            `<svg viewBox="0 0 130 75"><path d="M10,37 C30,10 90,5 110,37 C90,70 30,65 10,37 Z" fill="#ffca28"/><path d="M110,37 L125,15 L120,37 L125,60 Z" fill="#f57f17"/><circle cx="30" cy="28" r="6" fill="white"/><circle cx="32" cy="28" r="3" fill="black"/></svg>`
-        ];
+        const AVATAR_VECTORS = {
+            Father: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#ffb74d"/><circle cx="50" cy="44" r="22" fill="#ffdbb5"/><path d="M32,40 Q50,42 68,40 Q72,58 50,58 Q28,58 32,40" fill="#5d4037"/><circle cx="44" cy="42" r="3.5" fill="#000"/><circle cx="56" cy="42" r="3.5" fill="#000"/><path d="M42,50 Q50,55 58,50" stroke="#000" stroke-width="2.5" fill="none"/><path d="M26,78 C26,62 36,65 50,65 C64,65 74,62 74,78 L74,95 L26,95 Z" fill="#0288d1"/></svg>`,
+            Mother: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#f06292"/><path d="M24,28 C20,55 30,55 30,55 C30,55 32,32 50,32 C68,32 70,55 70,55 C70,55 80,55 76,28 C70,10 30,10 24,28 Z" fill="#37474f"/><circle cx="50" cy="48" r="20" fill="#fbe9e7"/><circle cx="44" cy="46" r="3.5" fill="#000"/><circle cx="56" cy="46" r="3.5" fill="#000"/><path d="M43,54 Q50,60 57,54" stroke="#e91e63" stroke-width="3" fill="none"/><path d="M28,78 C28,64 38,66 50,66 C62,66 72,64 72,78 L72,95 L28,95 Z" fill="#ba68c8"/></svg>`,
+            Brother: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#4fc3f7"/><circle cx="50" cy="46" r="20" fill="#ffdbb5"/><path d="M28,34 C35,20 65,20 72,34 Z" fill="#2e7d32"/><circle cx="44" cy="44" r="3.5" fill="#000"/><circle cx="56" cy="44" r="3.5" fill="#000"/><path d="M44,53 Q50,57 56,53" stroke="#000" stroke-width="2" fill="none"/><path d="M28,78 C28,66 38,66 50,66 C62,66 72,66 72,78 L72,95 L28,95 Z" fill="#ff7043"/></svg>`,
+            Sister: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#ba68c8"/><circle cx="24" cy="36" r="9" fill="#e65100"/><circle cx="78" cy="36" r="9" fill="#e65100"/><circle cx="50" cy="48" r="20" fill="#fff3e0"/><path d="M32,36 Q50,42 68,36" stroke="#e65100" stroke-width="6" fill="none"/><circle cx="44" cy="46" r="3.5" fill="#000"/><circle cx="56" cy="46" r="3.5" fill="#000"/><path d="M44,54 Q50,58 56,54" stroke="#e91e63" stroke-width="2" fill="none"/><path d="M28,78 C28,66 38,66 50,66 C62,66 72,66 72,78 L72,95 L28,95 Z" fill="#4db6ac"/></svg>`,
+            Grandfather: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#90a4ae"/><circle cx="50" cy="46" r="22" fill="#ffe0b2"/><path d="M28,32 C28,18 36,14 50,14 C64,14 72,18 72,32 Z" fill="#e0e0e0"/><circle cx="42" cy="44" r="5" stroke="#795548" stroke-width="2" fill="none"/><circle cx="58" cy="44" r="5" stroke="#795548" stroke-width="2" fill="none"/><path d="M44,56 Q50,61 56,56" stroke="#000" stroke-width="2" fill="none"/><path d="M26,76 C26,62 38,64 50,64 C62,64 74,62 74,76 L74,95 L26,95 Z" fill="#78909c"/></svg>`,
+            Grandmother: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#a1887f"/><circle cx="50" cy="20" r="9" fill="#cfd8dc"/><circle cx="50" cy="48" r="20" fill="#ffebd2"/><path d="M30,36 C34,24 66,24 70,36 Z" fill="#cfd8dc"/><circle cx="42" cy="46" r="4.5" stroke="#ff5722" stroke-width="2" fill="none"/><circle cx="58" cy="46" r="4.5" stroke="#ff5722" stroke-width="2" fill="none"/><path d="M44,56 Q50,60 56,56" stroke="#000" stroke-width="2" fill="none"/><path d="M28,78 C28,64 38,66 50,66 C62,66 72,64 72,78 L72,95 L28,95 Z" fill="#e57373"/></svg>`,
+            Baby: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#ffd54f"/><circle cx="50" cy="48" r="22" fill="#fff3e0"/><path d="M46,24 Q50,14 54,24" stroke="#ffb300" stroke-width="3" fill="none"/><circle cx="42" cy="44" r="3" fill="#000"/><circle cx="60" cy="44" r="3" fill="#000"/><circle cx="50" cy="56" r="6" fill="#ff7043"/><path d="M28,78 C28,66 38,68 50,68 C62,68 72,66 72,78 L72,95 L28,95 Z" fill="#fff"/></svg>`,
+            Family: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#4db6ac"/><path d="M50,22 L88,55 L78,90 L22,90 L12,55 Z" fill="#ffcc80"/><circle cx="36" cy="45" r="9" fill="#fff3e0"/><circle cx="64" cy="45" r="9" fill="#fff3e0"/><circle cx="50" cy="68" r="8" fill="#ffdbb5"/><path d="M44,74 Q50,78 56,74" stroke="#e91e63" stroke-width="2.5" fill="none"/></svg>`
+        };
+
+        const VOCABULARY = ["Father", "Mother", "Brother", "Sister", "Grandfather", "Grandmother", "Baby", "Family"];
+        const CREATURE_TYPES = Object.keys(CREATURE_VECTORS);
 
         /**********************************************************************
-         * PROCEDURAL AUDIO ENGINE (WEB AUDIO API SYNTHESIZERS)
+         * PROCEDURAL AUDIO MUSIC ENGINE (WEB AUDIO API MACROS)
          **********************************************************************/
-        class AudioEngine {
+        class ClassroomAudioEngine {
             constructor() {
                 this.ctx = null;
                 this.musicInterval = null;
                 this.sfxMuted = false;
                 this.musicMuted = false;
-                this.musicTempo = 140; 
-                this.melody = [
-                    60, 64, 67, 64, 65, 69, 72, 69,
-                    67, 71, 74, 71, 72, 72, 72, 72
-                ];
-                this.musicStep = 0;
+                this.tempo = 125;
+                // Soft, cheerful pentatonic loop (Xylophone/Bells style)
+                this.notes = [60, 62, 64, 67, 69, 67, 64, 62, 60, 64, 67, 69, 72, 69, 67, 64];
+                this.step = 0;
             }
 
             init() {
                 if (!this.ctx) {
                     this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-                    this.startMusicLoop();
+                    this.startMusic();
                 }
             }
 
-            playTone(freq, type, duration, vol = 0.2, delay = 0) {
+            playSynthTone(freq, type, duration, vol = 0.2, delay = 0) {
                 if (this.sfxMuted || !this.ctx) return;
-                
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-                
-                osc.type = type;
-                osc.frequency.setValueAtTime(freq, this.ctx.currentTime + delay);
-                
-                gain.gain.setValueAtTime(vol, this.ctx.currentTime + delay);
-                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + delay + duration);
-                
-                osc.connect(gain);
-                gain.connect(this.ctx.destination);
-                
-                osc.start(this.ctx.currentTime + delay);
-                osc.stop(this.ctx.currentTime + delay + duration);
-            }
-
-            playSuccess() {
-                const now = 0;
-                this.playTone(523.25, 'sine', 0.15, 0.25, now);     // C5
-                this.playTone(659.25, 'sine', 0.15, 0.25, now + 0.08); // E5
-                this.playTone(783.99, 'sine', 0.15, 0.25, now + 0.16); // G5
-                this.playTone(1046.50, 'sine', 0.3, 0.3, now + 0.24);  // C6
-            }
-
-            playError() {
-                this.playTone(293.66, 'triangle', 0.15, 0.3, 0); // D4
-                this.playTone(220.00, 'triangle', 0.25, 0.3, 0.1); // A3
-            }
-
-            playMilestone() {
-                let now = 0;
-                const notes = [523.25, 587.33, 659.25, 698.46, 783.99, 880.00, 987.77, 1046.50];
-                notes.forEach((freq, idx) => {
-                    this.playTone(freq, 'sine', 0.2, 0.2, now);
-                    now += 0.08;
-                });
-            }
-
-            startMusicLoop() {
-                if (this.musicInterval) clearInterval(this.musicInterval);
-                
-                const stepDuration = 60 / this.musicTempo;
-                this.musicInterval = setInterval(() => {
-                    if (this.musicMuted || !this.ctx) return;
-                    
-                    let midiNote = this.melody[this.musicStep];
-                    let freq = 440 * Math.pow(2, (midiNote - 69) / 12);
-                    
-                    // Soft synth accompaniment pluck
+                try {
                     const osc = this.ctx.createOscillator();
                     const gain = this.ctx.createGain();
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-                    gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.4);
-                    
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + delay);
+                    gain.gain.setValueAtTime(vol, this.ctx.currentTime + delay);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + delay + duration);
                     osc.connect(gain);
                     gain.connect(this.ctx.destination);
-                    osc.start();
-                    osc.stop(this.ctx.currentTime + 0.4);
+                    osc.start(this.ctx.currentTime + delay);
+                    osc.stop(this.ctx.currentTime + delay + duration);
+                } catch(e){}
+            }
+
+            playHappyDing() {
+                // Plucked bells chord
+                this.playSynthTone(587.33, 'sine', 0.2, 0.25, 0);   // D5
+                this.playSynthTone(659.25, 'sine', 0.2, 0.25, 0.05); // E5
+                this.playSynthTone(880.00, 'sine', 0.3, 0.3, 0.1);   // A5
+            }
+
+            playOops() {
+                // Soft downward sweeping tone
+                this.playSynthTone(349.23, 'triangle', 0.2, 0.3, 0); // F4
+                this.playSynthTone(261.63, 'triangle', 0.3, 0.3, 0.15); // C4
+            }
+
+            playBubblePop() {
+                this.playSynthTone(900, 'sine', 0.04, 0.15, 0);
+            }
+
+            playApplauseBurst() {
+                // Synthesis of simulated children cheering clapping noises
+                for(let i=0; i<15; i++) {
+                    let randomDelay = Math.random() * 0.6;
+                    let randomFreq = 700 + Math.random() * 600;
+                    this.playSynthTone(randomFreq, 'triangle', 0.08, 0.08, randomDelay);
+                }
+            }
+
+            startMusic() {
+                if (this.musicInterval) clearInterval(this.musicInterval);
+                const stepSec = 60 / this.tempo;
+                this.musicInterval = setInterval(() => {
+                    if (this.musicMuted || !this.ctx || state.paused) return;
                     
-                    this.musicStep = (this.musicStep + 1) % this.melody.length;
-                }, stepDuration * 1000);
+                    let midi = this.notes[this.step];
+                    let freq = 440 * Math.pow(2, (midi - 69) / 12);
+                    
+                    // Light xylophone bell simulation
+                    this.playSynthTone(freq, 'sine', 0.25, 0.04, 0);
+                    // Accompanying bass root tracking chords
+                    if(this.step % 4 === 0) {
+                        this.playSynthTone(freq / 2, 'triangle', 0.5, 0.02, 0);
+                    }
+                    
+                    this.step = (this.step + 1) % this.notes.length;
+                }, stepSec * 1000);
             }
         }
 
-        const AudioSystem = new AudioEngine();
+        const AudioSystem = new ClassroomAudioEngine();
 
         /**********************************************************************
-         * GAME STATE & ARCHITECTURE ENGINE
+         * GLOBAL CONTROLLER STATE ARCHITECTURE
          **********************************************************************/
-        const VOCABULARY = ["Father", "Mother", "Brother", "Sister", "Grandfather", "Grandmother", "Baby", "Family"];
-        
         let state = {
             score: 0,
+            coins: 0,
+            gems: 0,
             correctCount: 0,
             pool: [...VOCABULARY],
             targetWord: "",
-            activeFish: [],
-            lastTime: 0,
-            speechSynth: window.speechSynthesis,
-            voicesReady: false
+            activeCreatures: [],
+            paused: false,
+            badgesUnlocked: [false, false, false, false],
+            speechSynth: window.speechSynthesis
         };
 
-        // UI Target Bindings
-        const elFishingArea = document.getElementById('fishing-area');
-        const elTargetPrompt = document.getElementById('target-prompt');
-        const elScore = document.getElementById('score-val');
-        const elStarFrame = document.getElementById('star-frame');
-        const elAvatarContainer = document.getElementById('avatar-container');
-        const elWordDisplay = document.getElementById('word-display');
-        const elBtnSpeak = document.getElementById('btn-speak-action');
-        const elCardDisplay = document.getElementById('card-display');
-        
-        // Modal Target Bindings
-        const elStartOverlay = document.getElementById('start-overlay');
-        const elBtnStart = document.getElementById('btn-start');
-        const elMilestoneOverlay = document.getElementById('milestone-overlay');
-        const elMilestoneTitle = document.getElementById('milestone-title');
-        const elMilestoneText = document.getElementById('milestone-text');
-        const elBtnMilestoneContinue = document.getElementById('btn-milestone-continue');
-        
-        // Particle FX system elements
-        const canvasFx = document.getElementById('fx-canvas');
-        const ctxFx = canvasFx.getContext('2d');
+        // DOM Framework Mappings
+        const elOcean = document.getElementById('ocean-aquarium');
+        const elBillboardText = document.getElementById('target-billboard-text');
+        const elScore = document.getElementById('ui-score');
+        const elCoins = document.getElementById('ui-coins');
+        const elGems = document.getElementById('ui-gems');
+        const elStarsDeck = document.getElementById('stars-deck-casing');
+        const elAvatarFrame = document.getElementById('avatar-viewport-frame');
+        const elVocabTitle = document.getElementById('vocab-title-text');
+        const elBtnSpeak = document.getElementById('btn-trigger-speech');
+        const elPreviewCard = document.getElementById('main-preview-card');
+
+        // Particle System Setup
+        const canvas = document.getElementById('fx-layer-canvas');
+        const ctx = canvas.getContext('2d');
         let particles = [];
+        let ambientBubbles = [];
 
         function resizeCanvas() {
-            canvasFx.width = canvasFx.offsetWidth;
-            canvasFx.height = canvasFx.offsetHeight;
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
         }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
         /**********************************************************************
-         * SPEECH ENGINE COUPLING
+         * VOICE SPEECH ENGINE ORCHESTRATION
          **********************************************************************/
-        function speak(text, callback) {
+        function classroomNarrate(phrase, callback) {
             if (!state.speechSynth) return;
-            state.speechSynth.cancel(); // Terminate preceding statements instantly
+            state.speechSynth.cancel();
             
-            const utterance = new SpeechSynthesisUtterance(text);
+            const utterance = new SpeechSynthesisUtterance(phrase);
             utterance.lang = 'en-US';
-            utterance.rate = 0.85; // Child accessible processing rate
-            utterance.pitch = 1.25; // Warm energetic kindergarten tone
+            utterance.rate = 0.8;  // Clear pacing for young learners
+            utterance.pitch = 1.3; // Enthusiastic, friendly voice tone
             
-            if (callback) {
-                utterance.onend = callback;
-            }
+            if (callback) utterance.onend = callback;
             state.speechSynth.speak(utterance);
         }
 
         /**********************************************************************
-         * GAME LOGIC FLOW MANAGEMENT
+         * APPLICATION CORE LOGIC ENGINE
          **********************************************************************/
-        function initGame() {
-            buildTrackerSlots();
-            selectNextTarget();
-            spawnInitialFish();
-            requestAnimationFrame(gameLoop);
-        }
-
-        function buildTrackerSlots() {
-            elStarFrame.innerHTML = '';
-            for(let i = 0; i < VOCABULARY.length; i++) {
-                let slot = document.createElement('span');
-                slot.className = 'star-slot';
-                slot.id = `star-slot-${i}`;
-                slot.innerHTML = '★';
-                elStarFrame.appendChild(slot);
+        function startGameSession() {
+            resizeCanvas();
+            state.score = 0;
+            state.coins = 0;
+            state.gems = 0;
+            state.correctCount = 0;
+            state.pool = [...VOCABULARY];
+            state.badgesUnlocked = [false, false, false, false];
+            
+            elScore.textContent = "0";
+            elCoins.textContent = "0";
+            elGems.textContent = "0";
+            
+            updateBadgeUI();
+            buildProgressStars();
+            setupNextRound();
+            
+            // Spawn initial sea creatures
+            state.activeCreatures.forEach(c => c.el.remove());
+            state.activeCreatures = [];
+            for (let i = 0; i < 5; i++) {
+                spawnCreatureInstance();
             }
         }
 
-        function selectNextTarget() {
+        function buildProgressStars() {
+            elStarsDeck.innerHTML = '';
+            for(let i=0; i<VOCABULARY.length; i++) {
+                let s = document.createElement('span');
+                s.className = 'star-item';
+                s.id = `star-idx-${i}`;
+                s.innerHTML = '★';
+                elStarsDeck.appendChild(s);
+            }
+        }
+
+        function setupNextRound() {
             if (state.pool.length === 0) {
-                // All words learned successfully
-                triggerEndGameCelebration();
+                triggerEndGameSequence();
                 return;
             }
+            
             const randIdx = Math.floor(Math.random() * state.pool.length);
             state.targetWord = state.pool[randIdx];
             
-            elTargetPrompt.innerHTML = `Find: <strong>${state.targetWord}</strong>`;
-            speak(`Can you find ${state.targetWord}?`);
+            elBillboardText.textContent = state.targetWord;
+            classroomNarrate(`Can you find ${state.targetWord}?`);
             
-            // Ensure a fish carrying the newly selected target word exists immediately
-            ensureTargetFishExists();
+            // Ensure target exists in the pool
+            ensureTargetInPool();
         }
 
-        function ensureTargetFishExists() {
-            const match = state.activeFish.find(f => f.word === state.targetWord);
-            if (!match) {
-                createFishInstance(state.targetWord);
+        function ensureTargetInPool() {
+            const exists = state.activeCreatures.some(c => c.word === state.targetWord);
+            if (!exists) {
+                spawnCreatureInstance(state.targetWord);
             }
         }
 
-        function spawnInitialFish() {
-            // Populate pool landscape with assorted alternate targets
-            let options = [...VOCABULARY];
-            for (let i = 0; i < 4; i++) {
-                let word = options[Math.floor(Math.random() * options.length)];
-                createFishInstance(word);
-            }
-            ensureTargetFishExists();
-        }
-
-        function createFishInstance(specifiedWord = null) {
-            let word = specifiedWord;
-            if (!word) {
-                word = VOCABULARY[Math.floor(Math.random() * VOCABULARY.length)];
-            }
-
-            const fishEl = document.createElement('div');
-            fishEl.className = 'fish';
+        function spawnCreatureInstance(assignedWord = null) {
+            let word = assignedWord || VOCABULARY[Math.floor(Math.random() * VOCABULARY.length)];
+            let type = CREATURE_TYPES[Math.floor(Math.random() * CREATURE_TYPES.length)];
             
-            const randomSvg = FISH_SVGs[Math.floor(Math.random() * FISH_SVGs.length)];
-            fishEl.innerHTML = `
-                <div class="fish-body">${randomSvg}</div>
-                <div class="fish-text">${word}</div>
+            const wrapper = document.createElement('div');
+            wrapper.className = 'sea-creature-entity';
+            
+            wrapper.innerHTML = `
+                <div class="creature-body-wrapper">${CREATURE_VECTORS[type]}</div>
+                <div class="creature-classroom-label">${word}</div>
             `;
             
-            elFishingArea.appendChild(fishEl);
+            elOcean.appendChild(wrapper);
 
-            // Set physics properties
-            const direction = Math.random() > 0.5 ? 1 : -1;
-            const areaWidth = elFishingArea.offsetWidth || 800;
-            const areaHeight = elFishingArea.offsetHeight || 500;
+            let dir = Math.random() > 0.5 ? 1 : -1;
+            let wWidth = elOcean.offsetWidth || 800;
+            let wHeight = elOcean.offsetHeight || 500;
             
-            let x = direction === 1 ? -140 : areaWidth + 20;
-            // Bound vertical swimming scope safely between sky lines and seabed
-            let y = 60 + Math.random() * (areaHeight - 160); 
-            let speed = 1.2 + Math.random() * 1.8;
+            let x = dir === 1 ? -200 : wWidth + 50;
+            let y = 100 + Math.random() * (wHeight - 240);
+            let speed = 1.0 + Math.random() * 1.5;
 
-            fishEl.style.transform = `translate(${x}px, ${y}px) scaleX(${-direction})`;
+            wrapper.style.transform = `translate(${x}px, ${y}px) scaleX(${-dir})`;
 
-            const fishObj = {
-                el: fishEl,
+            const instance = {
+                el: wrapper,
                 word: word,
+                type: type,
                 x: x,
                 y: y,
                 speed: speed,
-                direction: direction,
-                sinOffset: Math.random() * 100,
-                sinSpeed: 0.02 + Math.random() * 0.03
+                dir: dir,
+                sinOffset: Math.random() * 50,
+                isJumping: false,
+                jumpY: 0
             };
 
-            fishEl.addEventListener('click', (e) => handleFishCatch(fishObj, e));
-            fishEl.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                handleFishCatch(fishObj, e);
-            });
+            const triggerAction = (e) => { e.preventDefault(); processCreatureCatch(instance); };
+            wrapper.addEventListener('mousedown', triggerAction);
+            wrapper.addEventListener('touchstart', triggerAction);
 
-            state.activeFish.push(fishObj);
+            state.activeCreatures.push(instance);
         }
 
-        function handleFishCatch(fish, event) {
-            event.stopPropagation();
-            
-            if (fish.word === state.targetWord) {
-                // Correct Catch Sequence
-                AudioSystem.playSuccess();
-                triggerConfettiAt(fish.x + 60, fish.y + 35);
+        function processCreatureCatch(creature) {
+            if (state.paused || creature.isJumping) return;
+
+            if (creature.word === state.targetWord) {
+                // Correct Match Sequence
+                creature.isJumping = true;
+                AudioSystem.playHappyDing();
+                AudioSystem.playApplauseBurst();
+                createSplashFX(creature.x + 90, creature.y + 50);
                 
-                state.score += 10;
+                // Adjust reward states
+                state.score += 15;
+                state.coins += 5;
+                state.gems += 1;
                 state.correctCount += 1;
-                elScore.textContent = state.score;
                 
-                // Update Target Card Displays
-                elAvatarContainer.innerHTML = SVG_AVATARS[fish.word] || SVG_AVATARS.default;
-                elWordDisplay.textContent = fish.word;
+                elScore.textContent = state.score;
+                elCoins.textContent = state.coins;
+                elGems.textContent = state.gems;
+
+                // Light up star item tracker mechanics
+                let targetStar = document.getElementById(`star-idx-${state.correctCount - 1}`);
+                if (targetStar) targetStar.classList.add('earned');
+
+                // Update right preview display columns
+                elAvatarFrame.innerHTML = AVATAR_VECTORS[creature.word] || AVATAR_VECTORS.Family;
+                elVocabTitle.textContent = creature.word;
                 elBtnSpeak.disabled = false;
                 
-                // Remove word from pool
-                state.pool = state.pool.filter(w => w !== fish.word);
-                
-                // Light up star reward system slots
-                const starSlot = document.getElementById(`star-slot-${state.correctCount - 1}`);
-                if (starSlot) starSlot.classList.add('earned');
-                
-                // Clear caught asset from DOM
-                removeFishInstance(fish);
-                
-                // Speak verification confirmation audio strings
-                elCardDisplay.classList.add('highlight');
-                elWordDisplay.classList.add('active-speaking');
-                
-                speak(`Great job! This is ${fish.word}!`, () => {
-                    elCardDisplay.classList.remove('highlight');
-                    elWordDisplay.classList.remove('active-speaking');
+                elPreviewCard.classList.add('correct-glow');
+                elAvatarFrame.classList.add('wave-animation');
+                elVocabTitle.classList.add('highlight-active');
+
+                // Filter out consumed text
+                state.pool = state.pool.filter(w => w !== creature.word);
+                evaluateBadges();
+
+                classroomNarrate(`This is ${creature.word}!`, () => {
+                    elPreviewCard.classList.remove('correct-glow');
+                    elAvatarFrame.classList.remove('wave-animation');
+                    elVocabTitle.classList.remove('highlight-active');
                     
-                    // Evaluate Milestones
-                    if (state.correctCount === 5) {
-                        triggerMilestoneModal("Amazing!", "You caught 5 family members! You're an expert fisher!");
+                    // Evaluate level structures or milestones
+                    if (state.correctCount % 5 === 0 && state.pool.length > 0) {
+                        triggerTreasureBurstMilestone();
                     } else {
-                        selectNextTarget();
+                        setTimeout(setupNextRound, 400);
                     }
                 });
-                
+
+                // Remove creature after jump animation ends
+                setTimeout(() => {
+                    creature.el.remove();
+                    state.activeCreatures = state.activeCreatures.filter(c => c !== creature);
+                }, 800);
+
             } else {
-                // Incorrect Catch Sequence
-                AudioSystem.playError();
-                // Play feedback shake animation on selected target
-                fish.el.style.backgroundColor = 'rgba(255,0,0,0.2)';
-                setTimeout(() => fish.el.style.backgroundColor = 'transparent', 300);
-                speak("Try again!");
+                // Incorrect Match Sequence
+                AudioSystem.playOops();
+                creature.el.style.filter = "hue-rotate(90deg) saturate(2)";
+                setTimeout(() => creature.el.style.filter = "none", 500);
+                classroomNarrate("Let's try again!");
             }
         }
 
-        function removeFishInstance(fish) {
-            if(fish.el && fish.el.parentNode) {
-                fish.el.parentNode.removeChild(fish.el);
+        function triggerTreasureBurstMilestone() {
+            AudioSystem.playHappyDing();
+            const chestLid = document.getElementById('chest-lid-svg');
+            chestLid.style.transform = "rotate(-25deg) translate(-10px, -15px)";
+            
+            let rect = document.getElementById('prop-treasure').getBoundingClientRect();
+            let parentRect = elOcean.getBoundingClientRect();
+            let cx = rect.left - parentRect.left + 50;
+            let cy = rect.top - parentRect.top + 30;
+
+            for(let i=0; i<30; i++) {
+                particles.push({
+                    x: cx, y: cy,
+                    vx: (Math.random() - 0.5) * 14,
+                    vy: -5 - Math.random() * 12,
+                    type: Math.random() > 0.5 ? 'coin' : 'star',
+                    color: '#ffcd29', radius: 8 + Math.random()*6, alpha: 1, decay: 0.015
+                });
             }
-            state.activeFish = state.activeFish.filter(f => f !== fish);
+
+            setTimeout(() => {
+                chestLid.style.transform = "none";
+                setupNextRound();
+            }, 2500);
+        }
+
+        function triggerEndGameSequence() {
+            state.paused = true;
+            AudioSystem.playApplauseBurst();
+            
+            const endStars = document.getElementById('end-stars-display');
+            endStars.innerHTML = '★'.repeat(state.correctCount);
+            
+            document.getElementById('modal-end-gate').classList.remove('hidden');
+        }
+
+        function evaluateBadges() {
+            if (state.correctCount >= 1) state.badgesUnlocked[0] = true;
+            if (state.correctCount >= 3) state.badgesUnlocked[1] = true;
+            if (state.correctCount >= 6) state.badgesUnlocked[2] = true;
+            if (state.pool.length === 0) state.badgesUnlocked[3] = true;
+            updateBadgeUI();
+        }
+
+        function updateBadgeUI() {
+            state.badgesUnlocked.forEach((unlocked, idx) => {
+                const el = document.getElementById(`badge-${idx}`);
+                if (unlocked) el.classList.add('unlocked');
+                else el.classList.remove('unlocked');
+            });
         }
 
         /**********************************************************************
-         * CORE REALTIME SIMULATION LOOPS (ENGINE DRIVER)
+         * BACKGROUND REALTIME GRAPHICS SIMULATION (ENGINE RUNTIME)
          **********************************************************************/
-        function gameLoop(timestamp) {
-            const areaWidth = elFishingArea.offsetWidth || 800;
-            
-            // Swim and position dynamic entities
-            for(let i = state.activeFish.length - 1; i >= 0; i--) {
-                let fish = state.activeFish[i];
-                fish.x += fish.speed * fish.direction;
+        function gameLoopRuntime() {
+            if (!state.paused) {
+                let wWidth = elOcean.offsetWidth || 800;
                 
-                // Wave function horizontal variance generator
-                fish.sinOffset += fish.sinSpeed;
-                let currentY = fish.y + Math.sin(fish.sinOffset) * 1.5;
+                // Update and animate sea creatures
+                for (let i = state.activeCreatures.length - 1; i >= 0; i--) {
+                    let c = state.activeCreatures[i];
+                    
+                    if (c.isJumping) {
+                        c.jumpY -= 8;
+                        c.x += c.speed * c.dir * 0.5;
+                        c.el.style.transform = `translate(${c.x}px, ${c.y + c.jumpY}px) scaleX(${-c.dir}) rotate(-15deg)`;
+                    } else {
+                        c.x += c.speed * c.dir;
+                        c.sinOffset += 0.03;
+                        let cy = c.y + Math.sin(c.sinOffset) * 2;
+                        c.el.style.transform = `translate(${c.x}px, ${cy}px) scaleX(${-c.dir})`;
+                        
+                        // Recycle if out of bounds
+                        if ((c.dir === 1 && c.x > wWidth + 100) || (c.dir === -1 && c.x < -250)) {
+                            c.el.remove();
+                            state.activeCreatures.splice(i, 1);
+                            spawnCreatureInstance();
+                        }
+                    }
+                }
 
-                fish.el.style.transform = `translate(${fish.x}px, ${currentY}px) scaleX(${-fish.direction})`;
+                // Balance creature count
+                if (state.activeCreatures.length < 5) {
+                    spawnCreatureInstance();
+                }
 
-                // Assess out of bounds parameters for recycling loops
-                if ((fish.direction === 1 && fish.x > areaWidth + 50) || 
-                    (fish.direction === -1 && fish.x < -160)) {
-                    removeFishInstance(fish);
-                    createFishInstance();
+                // Ambient Background Bubbles Manager
+                if (Math.random() < 0.06 && ambientBubbles.length < 40) {
+                    ambientBubbles.push({
+                        x: Math.random() * wWidth,
+                        y: elOcean.offsetHeight + 20,
+                        speed: 1 + Math.random() * 2,
+                        radius: 2 + Math.random() * 6,
+                        wobble: Math.random() * 100,
+                        wobbleSpeed: 0.02 + Math.random()*0.03
+                    });
                 }
             }
 
-            // Maintain target concentration variables dynamically
-            if (state.activeFish.length < 5) {
-                createFishInstance();
-            }
-
-            updateVisualFx();
-            requestAnimationFrame(gameLoop);
+            renderFXCanvas();
+            requestAnimationFrame(gameLoopRuntime);
         }
 
         /**********************************************************************
-         * PARTICLE GRAPHICS & VISUAL FX (CONFETTI ENGINES)
+         * VISUAL PARTICLE FX GENERATORS
          **********************************************************************/
-        function triggerConfettiAt(x, y) {
-            const colors = ['#ff4081', '#00e676', '#b2ff59', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'];
-            for (let i = 0; i < 40; i++) {
+        function createSplashFX(x, y) {
+            // Droplets particles configuration setup mapping
+            for(let i=0; i<25; i++) {
                 particles.push({
-                    x: x,
-                    y: y,
-                    vx: (Math.random() - 0.5) * 8,
-                    vy: (Math.random() - 0.7) * 12,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    radius: 4 + Math.random() * 6,
-                    alpha: 1,
-                    decay: 0.015 + Math.random() * 0.02
+                    x: x, y: y,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: -4 - Math.random() * 10,
+                    type: 'droplet', color: '#e0f7fa',
+                    radius: 3 + Math.random() * 4, alpha: 1, decay: 0.02
                 });
             }
         }
 
-        function updateVisualFx() {
-            ctxFx.clearRect(0, 0, canvasFx.width, canvasFx.height);
+        function renderFXCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let parentRect = elOcean.getBoundingClientRect();
+
+            // Render Ambient Undersea Bubbles Background
+            ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.6)";
+            ctx.lineWidth = 1;
             
+            for (let i = ambientBubbles.length - 1; i >= 0; i--) {
+                let b = ambientBubbles[i];
+                if (!state.paused) {
+                    b.y -= b.speed;
+                    b.wobble += b.wobbleSpeed;
+                }
+                let drawX = b.x + Math.sin(b.wobble) * 4;
+                
+                ctx.beginPath();
+                ctx.arc(drawX, b.y, b.radius, 0, Math.PI*2);
+                ctx.fill();
+                ctx.stroke();
+
+                if (b.y < -20) ambientBubbles.splice(i, 1);
+            }
+
+            // Render Active Particles System
             for (let i = particles.length - 1; i >= 0; i--) {
                 let p = particles[i];
-                p.x += p.vx;
-                p.y += p.vy;
-                p.vy += 0.25; // gravity simulation components
-                p.alpha -= p.decay;
+                if (!state.paused) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.3; // Gravity pull vector simulation mapping logic
+                    p.alpha -= p.decay;
+                }
 
                 if (p.alpha <= 0) {
                     particles.splice(i, 1);
                     continue;
                 }
 
-                ctxFx.save();
-                ctxFx.globalAlpha = p.alpha;
-                ctxFx.fillStyle = p.color;
-                ctxFx.beginPath();
-                ctxFx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctxFx.fill();
-                ctxFx.restore();
+                ctx.save();
+                ctx.globalAlpha = p.alpha;
+                
+                if (p.type === 'droplet') {
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (p.type === 'coin') {
+                    ctx.fillStyle = '#ffd700';
+                    ctx.strokeStyle = '#b78a00';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                } else if (p.type === 'star') {
+                    ctx.fillStyle = '#ffeb3b';
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
             }
         }
 
         /**********************************************************************
-         * MODAL / INTERACTIVE EVENT COORDINATIONS
+         * UI USER INTERACTIONS & CONTROLS BINDINGS
          **********************************************************************/
-        function triggerMilestoneModal(title, text) {
-            AudioSystem.playMilestone();
-            elMilestoneTitle.textContent = title;
-            elMilestoneText.textContent = text;
-            elMilestoneOverlay.classList.remove('hidden');
-        }
+        // Background Objects Interaction Controls Mapping Matrix
+        document.getElementById('prop-crab').addEventListener('click', () => {
+            AudioSystem.playBubblePop();
+            createSplashFX(event.clientX, event.clientY);
+            classroomNarrate("Look, a little crab!");
+        });
 
-        function triggerEndGameCelebration() {
-            // Global transformation to structural champion certification display
-            AudioSystem.playMilestone();
-            elTargetPrompt.textContent = "🏆 CHAMPION! 🏆";
-            
-            elAvatarContainer.innerHTML = SVG_AVATARS.Family;
-            elWordDisplay.textContent = "Family Vocabulary Champion!";
-            elBtnSpeak.disabled = true;
+        document.getElementById('prop-starfish').addEventListener('click', () => {
+            AudioSystem.playBubblePop();
+            createSplashFX(event.clientX, event.clientY);
+            classroomNarrate("That is a friendly starfish!");
+        });
 
-            // Continual cascading fireworks across coordinates
-            let fireworkInterval = setInterval(() => {
-                if(state.pool.length > 0) { clearInterval(fireworkInterval); return; }
-                let rx = Math.random() * canvasFx.width;
-                let ry = Math.random() * (canvasFx.height * 0.6);
-                triggerConfettiAt(rx, ry);
-            }, 450);
+        document.getElementById('prop-treasure').addEventListener('click', () => {
+            AudioSystem.playHappyDing();
+            classroomNarrate("A hidden treasure chest!");
+        });
 
-            triggerMilestoneModal("🎖️ Congratulations! 🎖️", "You are a Family Vocabulary Champion! You know all your family words perfectly!");
-        }
+        // Navigation Menu Actions Coupling
+        document.getElementById('ctrl-fullscreen').addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(()=>{});
+            } else {
+                document.exitFullscreen();
+            }
+        });
 
-        // Click to replay target audio vocabulary card system profiles
+        document.getElementById('ctrl-pause').addEventListener('click', () => {
+            state.paused = true;
+            document.getElementById('modal-pause-gate').classList.remove('hidden');
+        });
+
+        document.getElementById('btn-pause-resume').addEventListener('click', () => {
+            state.paused = false;
+            document.getElementById('modal-pause-gate').classList.add('hidden');
+        });
+
+        document.getElementById('ctrl-restart').addEventListener('click', () => {
+            if(confirm("Do you want to restart this classroom lesson?")) startGameSession();
+        });
+
+        const sfxBtn = document.getElementById('ctrl-mute-sfx');
+        sfxBtn.addEventListener('click', () => {
+            AudioSystem.sfxMuted = !AudioSystem.sfxMuted;
+            sfxBtn.textContent = AudioSystem.sfxMuted ? '❌' : '🔊';
+        });
+
+        const musicBtn = document.getElementById('ctrl-mute-music');
+        musicBtn.addEventListener('click', () => {
+            AudioSystem.musicMuted = !AudioSystem.musicMuted;
+            musicBtn.textContent = AudioSystem.musicMuted ? '🔇' : '🎵';
+        });
+
+        const exitAction = () => { if(confirm("Close game?")) window.close(); };
+        document.getElementById('ctrl-exit').addEventListener('click', exitAction);
+        document.getElementById('btn-end-exit').addEventListener('click', exitAction);
+
+        // Core Interaction Trigger Gate Mechanisms
+        document.getElementById('btn-gate-play').addEventListener('click', () => {
+            document.getElementById('modal-start-gate').classList.add('hidden');
+            AudioSystem.init();
+            startGameSession();
+        });
+
+        document.getElementById('btn-end-replay').addEventListener('click', () => {
+            document.getElementById('modal-end-gate').classList.add('hidden');
+            state.paused = false;
+            startGameSession();
+        });
+
+        document.getElementById('btn-end-home').addEventListener('click', () => {
+            document.getElementById('modal-end-gate').classList.add('hidden');
+            document.getElementById('modal-start-gate').classList.remove('hidden');
+        });
+
+        // Replay Button Setup Core Engine Coupling Interface Matrix
         elBtnSpeak.addEventListener('click', () => {
-            let currentWord = elWordDisplay.textContent;
-            if (VOCABULARY.includes(currentWord)) {
-                elCardDisplay.classList.add('highlight');
-                elWordDisplay.classList.add('active-speaking');
-                speak(currentWord, () => {
-                    elCardDisplay.classList.remove('highlight');
-                    elWordDisplay.classList.remove('active-speaking');
+            if (VOCABULARY.includes(elVocabTitle.textContent)) {
+                elVocabTitle.classList.add('highlight-active');
+                classroomNarrate(elVocabTitle.textContent, () => {
+                    elVocabTitle.classList.remove('highlight-active');
                 });
             }
         });
 
-        // Initialize engine tracking systems on explicit manual validation gestures
-        elBtnStart.addEventListener('click', () => {
-            elStartOverlay.classList.add('hidden');
-            AudioSystem.init();
-            initGame();
-        });
-
-        elBtnMilestoneContinue.addEventListener('click', () => {
-            elMilestoneOverlay.classList.add('hidden');
-            if (state.pool.length > 0) {
-                selectNextTarget();
-            } else {
-                // Restart structure protocol sequence variations
-                state.score = 0;
-                state.correctCount = 0;
-                state.pool = [...VOCABULARY];
-                elScore.textContent = "0";
-                buildTrackerSlots();
-                selectNextTarget();
-            }
-        });
-
-        // Audio environmental control panels
-        const btnMuteSfx = document.getElementById('mute-sfx');
-        btnMuteSfx.addEventListener('click', () => {
-            AudioSystem.sfxMuted = !AudioSystem.sfxMuted;
-            btnMuteSfx.textContent = AudioSystem.sfxMuted ? '❌' : '🔊';
-        });
-
-        const btnMuteMusic = document.getElementById('mute-music');
-        btnMuteMusic.addEventListener('click', () => {
-            AudioSystem.musicMuted = !AudioSystem.musicMuted;
-            btnMuteMusic.textContent = AudioSystem.musicMuted ? '🔇' : '🎵';
-        });
+        // Kickstart Execution Threads Loop Systems
+        requestAnimationFrame(gameLoopRuntime);
     </script>
 </body>
 </html>
