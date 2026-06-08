@@ -68,15 +68,15 @@
         .dashboard-counters {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .counter-pill {
             background: #ffffff;
-            padding: 10px 20px;
+            padding: 10px 16px;
             border: 4px solid #2e7d32;
             border-radius: 20px;
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 900;
             color: #1b5e20;
             display: flex;
@@ -85,21 +85,35 @@
             box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
         }
 
+        /* Mode Selection Panel styling */
+        .level-selector-box {
+            background: #fff;
+            border: 4px solid #1565c0;
+            border-radius: 16px;
+            padding: 4px 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #0d47a1;
+            outline: none;
+            cursor: pointer;
+            height: 54px;
+        }
+
         .action-controls {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .btn-ui {
-            min-width: 65px;
-            height: 65px;
-            padding: 0 12px;
+            min-width: 58px;
+            height: 58px;
+            padding: 0 10px;
             border-radius: 16px;
             border: 4px solid #1565c0;
             background: #2196f3;
             color: white;
-            font-size: 26px;
+            font-size: 24px;
             font-weight: bold;
             cursor: pointer;
             display: flex;
@@ -178,8 +192,8 @@
             background: rgba(255, 255, 255, 0.95);
             border: 8px solid #ff9100;
             border-radius: 30px;
-            padding: 14px 55px;
-            font-size: 54px;
+            padding: 14px 45px;
+            font-size: 46px;
             font-weight: 900;
             color: #d84315;
             box-shadow: 0 12px 25px rgba(0,0,0,0.3);
@@ -236,8 +250,8 @@
         /* Ultra-High Visibility Emoji Sea Creatures */
         .sea-creature-entity {
             position: absolute;
-            width: 220px;
-            height: 160px;
+            width: 240px;
+            height: 180px;
             cursor: pointer;
             z-index: 10;
         }
@@ -252,28 +266,40 @@
             animation: emojiBounce 2.5s ease-in-out infinite alternate;
         }
 
-        /* Bright Floating Sign: Strictly Left-To-Right, Never Mirrored */
+        /* Bright Floating Sign: Always Straight, Horizontal, Left-To-Right */
         .creature-classroom-sign {
             position: absolute;
-            top: -35px;
+            top: -45px;
             left: 50%;
             transform: translateX(-50%);
             background: #fffb00;
             border: 5px solid #000000;
-            border-radius: 16px;
-            padding: 4px 16px;
+            border-radius: 20px;
+            padding: 6px 16px;
             box-shadow: 0 6px 0 #c68642, 0 8px 15px rgba(0,0,0,0.3);
             pointer-events: none;
             z-index: 12;
             white-space: nowrap;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sign-family-emoji {
+            font-size: 55px;
+            line-height: 1.1;
+            display: block;
         }
 
         .sign-text {
-            font-size: 38px;
+            font-size: 26px;
             font-weight: 900;
             color: #000000;
-            letter-spacing: 2px;
-            display: inline-block;
+            letter-spacing: 1px;
+            display: block;
+            margin-top: 2px;
         }
 
         /* Right Section: Giant Interactive Reinforcement Card Panel */
@@ -312,8 +338,8 @@
         }
 
         .avatar-classroom-frame {
-            width: 320px;
-            height: 320px;
+            width: 330px;
+            height: 330px;
             background: #ffffff;
             border-radius: 24px;
             display: flex;
@@ -322,6 +348,13 @@
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             padding: 10px;
+        }
+
+        /* Giant Learning Card Viewport Elements */
+        .giant-learning-emoji {
+            font-size: 190px;
+            line-height: 1;
+            display: block;
         }
 
         .avatar-classroom-frame svg {
@@ -574,7 +607,16 @@
         <!-- Dynamic Header UI -->
         <header>
             <div class="nav-brand">
-                <h1>👪 The Family Fishing Game</h1>
+                <h1>👪 The Family Fishing Game by Teacher Hanz Balili</h1>
+            </div>
+
+            <!-- Advanced Teacher Difficulty Mode Dropdown Matrix -->
+            <div>
+                <select class="level-selector-box" id="ctrl-difficulty-level" title="Change Classroom Game Mode">
+                    <option value="1" selected>Level 1: Pictures Only (Default)</option>
+                    <option value="2">Level 2: Pictures + Words</option>
+                    <option value="3">Level 3: Words Only</option>
+                </select>
             </div>
             
             <div class="dashboard-counters">
@@ -634,16 +676,13 @@
                 <div class="giant-preview-card" id="main-preview-card">
                     <div class="avatar-classroom-frame" id="avatar-viewport-frame">
                         <!-- Default Startup State View Graphic -->
-                        <svg viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="44" fill="#e3f2fd" stroke="#2196f3" stroke-width="4" stroke-dasharray="6,4"/>
-                            <text x="50" y="58" font-size="34" text-anchor="middle">🎣</text>
-                        </svg>
+                        <span style="font-size: 130px;">🎣</span>
                     </div>
                     <div class="classroom-vocab-title" id="vocab-title-text">Catch a creature!</div>
                 </div>
 
                 <button class="btn-giant-speak" id="btn-trigger-speech" disabled>
-                    📢 REPLAY WORD
+                    📢 REPLAY INSTRUCTION
                 </button>
 
                 <!-- Badge Tracking Matrix Systems Container -->
@@ -669,7 +708,7 @@
     <div class="fullscreen-overlay" id="modal-start-gate">
         <div class="classroom-modal-box">
             <h2 class="modal-title-giant">The Family Fishing Game by Teacher Hanz Balili</h2>
-            <p class="modal-desc-text">Welcome teachers and students! Catch the sea creatures carrying the correct family vocabulary words. Perfect for smartboards, projectors, and touch screens!</p>
+            <p class="modal-desc-text">Listen carefully to the teacher's voice instructions! Catch the friendly sea creatures carrying the matching family pictures.</p>
             <div class="modal-btn-group">
                 <button class="btn-modal-action" id="btn-gate-play">Let's Play! 🌊</button>
             </div>
@@ -713,15 +752,16 @@
             Jellyfish: "🪼", Squid: "🦑", Pufferfish: "🐡", Lobster: "🦞"
         };
 
-        const AVATAR_VECTORS = {
-            father: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#ffb74d"/><circle cx="50" cy="44" r="22" fill="#ffdbb5"/><path d="M32,40 Q50,42 68,40 Q72,58 50,58 Q28,58 32,40" fill="#5d4037"/><circle cx="44" cy="42" r="3.5" fill="#000"/><circle cx="56" cy="42" r="3.5" fill="#000"/><path d="M42,50 Q50,55 58,50" stroke="#000" stroke-width="2.5" fill="none"/><path d="M26,78 C26,62 36,65 50,65 C64,65 74,62 74,78 L74,95 L26,95 Z" fill="#0288d1"/></svg>`,
-            mother: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#f06292"/><path d="M24,28 C20,55 30,55 30,55 C30,55 32,32 50,32 C68,32 70,55 70,55 C70,55 80,55 76,28 C70,10 30,10 24,28 Z" fill="#37474f"/><circle cx="50" cy="48" r="20" fill="#fbe9e7"/><circle cx="44" cy="46" r="3.5" fill="#000"/><circle cx="56" cy="46" r="3.5" fill="#000"/><path d="M43,54 Q50,60 57,54" stroke="#e91e63" stroke-width="3" fill="none"/><path d="M28,78 C28,64 38,66 50,66 C62,66 72,64 72,78 L72,95 L28,95 Z" fill="#ba68c8"/></svg>`,
-            brother: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#4fc3f7"/><circle cx="50" cy="46" r="20" fill="#ffdbb5"/><path d="M28,34 C35,20 65,20 72,34 Z" fill="#2e7d32"/><circle cx="44" cy="44" r="3.5" fill="#000"/><circle cx="56" cy="44" r="3.5" fill="#000"/><path d="M44,53 Q50,57 56,53" stroke="#000" stroke-width="2" fill="none"/><path d="M28,78 C28,66 38,66 50,66 C62,66 72,66 72,78 L72,95 L28,95 Z" fill="#ff7043"/></svg>`,
-            sister: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#ba68c8"/><circle cx="24" cy="36" r="9" fill="#e65100"/><circle cx="78" cy="36" r="9" fill="#e65100"/><circle cx="50" cy="48" r="20" fill="#fff3e0"/><path d="M32,36 Q50,42 68,36" stroke="#e65100" stroke-width="6" fill="none"/><circle cx="44" cy="46" r="3.5" fill="#000"/><circle cx="56" cy="46" r="3.5" fill="#000"/><path d="M44,54 Q50,58 56,54" stroke="#e91e63" stroke-width="2" fill="none"/><path d="M28,78 C28,66 38,66 50,66 C62,66 72,66 72,78 L72,95 L28,95 Z" fill="#4db6ac"/></svg>`,
-            grandfather: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#90a4ae"/><circle cx="50" cy="46" r="22" fill="#ffe0b2"/><path d="M28,32 C28,18 36,14 50,14 C64,14 72,18 72,32 Z" fill="#e0e0e0"/><circle cx="42" cy="44" r="5" stroke="#795548" stroke-width="2" fill="none"/><circle cx="58" cy="44" r="5" stroke="#795548" stroke-width="2" fill="none"/><path d="M44,56 Q50,61 56,56" stroke="#000" stroke-width="2" fill="none"/><path d="M26,76 C26,62 38,64 50,64 C62,64 74,62 74,76 L74,95 L26,95 Z" fill="#78909c"/></svg>`,
-            grandmother: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#a1887f"/><circle cx="50" cy="20" r="9" fill="#cfd8dc"/><circle cx="50" cy="48" r="20" fill="#ffebd2"/><path d="M30,36 C34,24 66,24 70,36 Z" fill="#cfd8dc"/><circle cx="42" cy="46" r="4.5" stroke="#ff5722" stroke-width="2" fill="none"/><circle cx="58" cy="46" r="4.5" stroke="#ff5722" stroke-width="2" fill="none"/><path d="M44,56 Q50,60 56,56" stroke="#000" stroke-width="2" fill="none"/><path d="M28,78 C28,64 38,66 50,66 C62,66 72,64 72,78 L72,95 L28,95 Z" fill="#e57373"/></svg>`,
-            baby: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#ffd54f"/><circle cx="50" cy="48" r="22" fill="#fff3e0"/><path d="M46,24 Q50,14 54,24" stroke="#ffb300" stroke-width="3" fill="none"/><circle cx="42" cy="44" r="3" fill="#000"/><circle cx="60" cy="44" r="3" fill="#000"/><circle cx="50" cy="56" r="6" fill="#ff7043"/><path d="M28,78 C28,66 38,68 50,68 C62,68 72,66 72,78 L72,95 L28,95 Z" fill="#fff"/></svg>`,
-            Family: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#4db6ac"/><path d="M50,22 L88,55 L78,90 L22,90 L12,55 Z" fill="#ffcc80"/><circle cx="36" cy="45" r="9" fill="#fff3e0"/><circle cx="64" cy="45" r="9" fill="#fff3e0"/><circle cx="50" cy="68" r="8" fill="#ffdbb5"/><path d="M44,74 Q50,78 56,74" stroke="#e91e63" stroke-width="2.5" fill="none"/></svg>`
+        // High-Quality Family Character Emojis matching user profiles perfectly
+        const FAMILY_EMOJIS = {
+            father: "👨",
+            mother: "👩",
+            brother: "👦",
+            sister: "👧",
+            grandfather: "👴",
+            grandmother: "👵",
+            baby: "👶",
+            Family: "👨‍👩‍👧‍👦"
         };
 
         const VOCABULARY = ["father", "mother", "brother", "sister", "grandfather", "grandmother", "baby", "Family"];
@@ -822,7 +862,8 @@
             paused: false,
             badgesUnlocked: [false, false, false, false],
             speechSynth: window.speechSynthesis,
-            isNarratingSequence: false
+            isNarratingSequence: false,
+            level: 1 // Default Mode: Level 1 (Picture Recognition Only)
         };
 
         // DOM Framework Mappings
@@ -836,6 +877,7 @@
         const elVocabTitle = document.getElementById('vocab-title-text');
         const elBtnSpeak = document.getElementById('btn-trigger-speech');
         const elPreviewCard = document.getElementById('main-preview-card');
+        const elDifficultySelect = document.getElementById('ctrl-difficulty-level');
 
         // Particle System Setup
         const canvas = document.getElementById('fx-layer-canvas');
@@ -914,8 +956,18 @@
             const randIdx = Math.floor(Math.random() * state.pool.length);
             state.targetWord = state.pool[randIdx];
             
+            // Render text on the billboard for the teacher's tracking support
             elBillboardText.textContent = state.targetWord.toUpperCase();
-            classroomNarrate(`Can you find ${state.targetWord}?`);
+            
+            // Level-appropriate custom listening prompts mapping
+            const audioPhrases = [
+                `Can you find the ${state.targetWord}?`,
+                `Where is ${state.targetWord}?`,
+                `Catch the ${state.targetWord}!`,
+                `Can you find the ${state.targetWord}?`
+            ];
+            const chosenPhrase = audioPhrases[Math.floor(Math.random() * audioPhrases.length)];
+            classroomNarrate(chosenPhrase);
             
             ensureTargetInPool();
         }
@@ -934,10 +986,24 @@
             const wrapper = document.createElement('div');
             wrapper.className = 'sea-creature-entity';
             
-            // Separated wrappers to keep text signs horizontal and readable when facing left/right
+            // Build the float sign structure based dynamically on level configurations
+            let famEmoji = FAMILY_EMOJIS[word];
+            let signInnerMarkup = "";
+
+            if (state.level === 1) {
+                // Picture Only
+                signInnerMarkup = `<span class="sign-family-emoji">${famEmoji}</span>`;
+            } else if (state.level === 2) {
+                // Picture + Word
+                signInnerMarkup = `<span class="sign-family-emoji">${famEmoji}</span><span class="sign-text">${word.toUpperCase()}</span>`;
+            } else {
+                // Word Only
+                signInnerMarkup = `<span class="sign-text" style="font-size:32px; padding: 4px 0;">${word.toUpperCase()}</span>`;
+            }
+
             wrapper.innerHTML = `
                 <div class="creature-graphic-node">${CREATURE_EMOJIS[type]}</div>
-                <div class="creature-classroom-sign"><span class="sign-text">${word.toUpperCase()}</span></div>
+                <div class="creature-classroom-sign">${signInnerMarkup}</div>
             `;
             
             elOcean.appendChild(wrapper);
@@ -947,8 +1013,8 @@
             let wHeight = elOcean.offsetHeight || 500;
             
             let x = dir === 1 ? -250 : wWidth + 50;
-            let y = 120 + Math.random() * (wHeight - 260);
-            let speed = 0.9 + Math.random() * 1.3;
+            let y = 140 + Math.random() * (wHeight - 280);
+            let speed = 0.8 + Math.random() * 1.2;
 
             const graphicNode = wrapper.querySelector('.creature-graphic-node');
             graphicNode.style.transform = `scaleX(${-dir})`;
@@ -998,8 +1064,9 @@
                 let targetStar = document.getElementById(`star-idx-${state.correctCount - 1}`);
                 if (targetStar) targetStar.classList.add('earned');
 
-                // Update right preview display elements
-                elAvatarFrame.innerHTML = AVATAR_VECTORS[creature.word] || AVATAR_VECTORS.Family;
+                // Update right giant preview learning card display elements
+                let targetEmoji = FAMILY_EMOJIS[creature.word];
+                elAvatarFrame.innerHTML = `<span class="giant-learning-emoji">${targetEmoji}</span>`;
                 elVocabTitle.textContent = creature.word.toUpperCase();
                 elBtnSpeak.disabled = false;
                 
@@ -1011,25 +1078,29 @@
                 evaluateBadges();
 
                 // Advanced Kindergarten Learning Mode Prompt Sequence Chain
-                classroomNarrate(`${creature.word}.`, () => {
+                classroomNarrate(`Excellent! That's the ${creature.word}!`, () => {
                     setTimeout(() => {
-                        classroomNarrate(`This is ${creature.word}.`, () => {
+                        classroomNarrate(`${creature.word}.`, () => {
                             setTimeout(() => {
-                                classroomNarrate(`Can you say ${creature.word}?`, () => {
-                                    state.isNarratingSequence = false;
-                                    elPreviewCard.classList.remove('correct-glow');
-                                    elAvatarFrame.classList.remove('wave-animation');
-                                    elVocabTitle.classList.remove('highlight-active');
-                                    
-                                    if (state.correctCount % 5 === 0 && state.pool.length > 0) {
-                                        triggerTreasureBurstMilestone();
-                                    } else {
-                                        setTimeout(setupNextRound, 400);
-                                    }
+                                classroomNarrate(`This is ${creature.word}.`, () => {
+                                    setTimeout(() => {
+                                        classroomNarrate(`Can you say ${creature.word}?`, () => {
+                                            state.isNarratingSequence = false;
+                                            elPreviewCard.classList.remove('correct-glow');
+                                            elAvatarFrame.classList.remove('wave-animation');
+                                            elVocabTitle.classList.remove('highlight-active');
+                                            
+                                            if (state.correctCount % 5 === 0 && state.pool.length > 0) {
+                                                triggerTreasureBurstMilestone();
+                                            } else {
+                                                setTimeout(setupNextRound, 400);
+                                            }
+                                        });
+                                    }, 1000); 
                                 });
-                            }, 1000); // 1 Second structural cadence pause
+                            }, 1000); 
                         });
-                    }, 1000); // 1 Second structural cadence pause
+                    }, 800); 
                 });
 
                 setTimeout(() => {
@@ -1041,7 +1112,13 @@
                 AudioSystem.playOops();
                 creature.el.style.filter = "hue-rotate(90deg) saturate(2.5)";
                 setTimeout(() => creature.el.style.filter = "none", 500);
-                classroomNarrate("Let's try again!");
+                
+                // Using warm, safe encouraging language statements
+                const wrongPhrases = [
+                    "Oops! It's okay.",
+                    "Don't worry. Try again."
+                ];
+                classroomNarrate(wrongPhrases[Math.floor(Math.random() * wrongPhrases.length)]);
             }
         }
 
@@ -1116,7 +1193,6 @@
                         c.sinOffset += 0.03;
                         let cy = c.y + Math.sin(c.sinOffset) * 2;
                         
-                        // Main coordinates translation tracking wrapper
                         c.el.style.transform = `translate(${c.x}px, ${cy}px)`;
                         
                         if ((c.dir === 1 && c.x > wWidth + 150) || (c.dir === -1 && c.x < -280)) {
@@ -1268,6 +1344,18 @@
             if(confirm("Do you want to restart this classroom lesson?")) startGameSession();
         });
 
+        // Interactive Level Selection Event Coupling
+        elDifficultySelect.addEventListener('change', (e) => {
+            state.level = parseInt(e.target.value);
+            // Re-spawn swimming creature pools matching parameters instantly
+            state.activeCreatures.forEach(c => c.el.remove());
+            state.activeCreatures = [];
+            for (let i = 0; i < 5; i++) {
+                spawnCreatureInstance();
+            }
+            ensureTargetInPool();
+        });
+
         const sfxBtn = document.getElementById('ctrl-mute-sfx');
         sfxBtn.addEventListener('click', () => {
             AudioSystem.sfxMuted = !AudioSystem.sfxMuted;
@@ -1303,16 +1391,7 @@
 
         elBtnSpeak.addEventListener('click', () => {
             if (state.isNarratingSequence) return;
-            let rawWord = elVocabTitle.textContent.toLowerCase();
-            // Capitalize word appropriately for text conversion methods
-            let normalizedWord = rawWord.charAt(0).toUpperCase() + rawWord.slice(1);
-            
-            if (VOCABULARY.includes(normalizedWord)) {
-                elVocabTitle.classList.add('highlight-active');
-                classroomNarrate(normalizedWord, () => {
-                    elVocabTitle.classList.remove('highlight-active');
-                });
-            }
+            classroomNarrate(`Can you find the ${state.targetWord}?`);
         });
 
         requestAnimationFrame(gameLoopRuntime);
