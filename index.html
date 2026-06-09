@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>The Family Hub: Fishing & Puzzles by Teacher Hanz Balili</title>
     <style>
         :root {
@@ -22,6 +22,7 @@
             -webkit-user-select: none;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -46,21 +47,23 @@
             overflow: hidden;
         }
 
-        /* Persistent Navigation Header */
+        /* Responsive Navigation Header */
         header {
-            height: 95px;
+            min-height: 95px;
             background: linear-gradient(to bottom, #ffffff 0%, #f1f8e9 100%);
             border-bottom: 6px solid #4caf50;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 15px;
+            padding: 5px 15px;
             z-index: 100;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .nav-brand h1 {
-            font-size: 26px;
+            font-size: 24px;
             color: #1b5e20;
             text-shadow: 2px 2px 0px #c8e6c9;
             cursor: pointer;
@@ -68,7 +71,7 @@
         }
 
         .nav-brand span {
-            font-size: 14px;
+            font-size: 13px;
             display: block;
             color: #558b2f;
             font-weight: bold;
@@ -82,10 +85,10 @@
 
         .counter-pill {
             background: #ffffff;
-            padding: 8px 12px;
+            padding: 8px 14px;
             border: 4px solid #2e7d32;
             border-radius: 20px;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 900;
             color: #1b5e20;
             display: flex;
@@ -97,7 +100,7 @@
         .dropdown-controls-group {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .level-selector-box {
@@ -105,7 +108,7 @@
             border: 4px solid #1565c0;
             border-radius: 16px;
             padding: 4px 8px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             color: #0d47a1;
             outline: none;
@@ -119,15 +122,16 @@
             gap: 6px;
         }
 
+        /* Touch-Friendly Minimal Dimensions Target: 58px-64px */
         .btn-ui {
-            min-width: 54px;
-            height: 54px;
+            min-width: 58px;
+            height: 58px;
             padding: 0 8px;
             border-radius: 16px;
             border: 4px solid #1565c0;
             background: #2196f3;
             color: white;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             cursor: pointer;
             display: flex;
@@ -142,24 +146,17 @@
             box-shadow: 0 2px 0 #0d47a1;
         }
 
-        .btn-ui.danger {
-            background: #f44336;
-            border-color: #c62828;
-            box-shadow: 0 6px 0 #5d0000;
-        }
+        .btn-ui.danger { background: #f44336; border-color: #c62828; box-shadow: 0 6px 0 #5d0000; }
+        .btn-ui.warn { background: #ff9800; border-color: #ef6c00; box-shadow: 0 6px 0 #b33c00; }
+        .btn-ui.parent-info { background: #9c27b0; border-color: #6a1b9a; box-shadow: 0 6px 0 #4a148c; }
 
-        .btn-ui.warn {
-            background: #ff9800;
-            border-color: #ef6c00;
-            box-shadow: 0 6px 0 #b33c00;
-        }
-
-        /* Viewport Main Display Split Panels */
+        /* Split-Screen Playfield Viewports Layouts */
         #viewport-main, #viewport-puzzle {
             flex: 1;
             display: flex;
             position: relative;
             overflow: hidden;
+            width: 100%;
         }
 
         /* Sandbox Background Layout Environments */
@@ -175,7 +172,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 30px;
+            padding: 20px;
         }
 
         .ocean-wave-overlay {
@@ -205,30 +202,30 @@
 
         .giant-prompt-marquee {
             position: absolute;
-            top: 25px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(255, 255, 255, 0.95);
-            border: 8px solid #ff9100;
-            border-radius: 30px;
-            padding: 14px 45px;
-            font-size: 46px;
+            border: 6px solid #ff9100;
+            border-radius: 25px;
+            padding: 10px 35px;
+            font-size: 38px;
             font-weight: 900;
             color: #d84315;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             text-align: center;
             z-index: 10;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             white-space: nowrap;
         }
 
         .giant-prompt-marquee span {
             color: #ff3d00;
             background: #fff9c4;
-            padding: 2px 20px;
-            border-radius: 16px;
-            box-shadow: 0 0 20px var(--glow-color);
-            -webkit-text-stroke: 2px #000;
+            padding: 2px 16px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px var(--glow-color);
+            -webkit-text-stroke: 1.5px #000;
         }
 
         .seabed-floor {
@@ -236,7 +233,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 95px;
+            height: 75px;
             background: linear-gradient(to top, #e0a96d 0%, #f4cc97 100%);
             z-index: 2;
             border-top: 4px solid #c68642;
@@ -244,7 +241,7 @@
 
         .coral-decor {
             position: absolute;
-            bottom: 60px;
+            bottom: 50px;
             fill: #ff4081;
             opacity: 0.85;
             z-index: 2;
@@ -257,21 +254,18 @@
             cursor: pointer;
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .interactive-prop:hover {
-            transform: scale(1.15);
-        }
 
-        /* Sea Creatures & Signs Styles */
+        /* Mobile Scale Adjusted Touch Targets for Sea Creatures */
         .sea-creature-entity {
             position: absolute;
-            width: 240px;
-            height: 180px;
+            width: 250px;
+            height: 190px;
             cursor: pointer;
             z-index: 10;
         }
 
         .creature-graphic-node {
-            font-size: 85px;
+            font-size: 95px;
             text-align: center;
             line-height: 1;
             width: 100%;
@@ -300,22 +294,10 @@
             justify-content: center;
         }
 
-        .sign-family-emoji {
-            font-size: 55px;
-            line-height: 1.1;
-            display: block;
-        }
+        .sign-family-emoji { font-size: 55px; line-height: 1.1; display: block; }
+        .sign-text { font-size: 26px; font-weight: 900; color: #000000; letter-spacing: 1px; display: block; margin-top: 2px; }
 
-        .sign-text {
-            font-size: 26px;
-            font-weight: 900;
-            color: #000000;
-            letter-spacing: 1px;
-            display: block;
-            margin-top: 2px;
-        }
-
-        /* Right Section: Reinforcement Viewports Layouts */
+        /* Right Panel Reinforcement Columns Layout */
         #classroom-reinforcement-panel, #puzzle-reinforcement-panel {
             flex: 1.3;
             background: linear-gradient(135deg, #f5f5f5 0%, #e3f2fd 100%);
@@ -324,7 +306,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 15px;
+            padding: 15px 12px;
             z-index: 5;
             box-shadow: -10px 0 20px rgba(0,0,0,0.1);
         }
@@ -334,13 +316,13 @@
             flex: 1;
             background: #ffffff;
             border: 8px dashed #1976d2;
-            border-radius: 36px;
+            border-radius: 32px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            margin-bottom: 15px;
+            padding: 15px;
+            margin-bottom: 12px;
             box-shadow: 0 12px 24px rgba(0,0,0,0.08);
             position: relative;
         }
@@ -351,8 +333,8 @@
         }
 
         .avatar-classroom-frame {
-            width: 310px;
-            height: 310px;
+            width: 260px;
+            height: 260px;
             background: #ffffff;
             border-radius: 24px;
             display: flex;
@@ -363,93 +345,65 @@
             padding: 10px;
         }
 
-        .giant-learning-emoji {
-            font-size: 190px;
-            line-height: 1;
-            display: block;
-        }
+        .giant-learning-emoji { font-size: 160px; line-height: 1; display: block; }
 
         .classroom-vocab-title {
-            font-size: 64px;
+            font-size: 54px;
             font-weight: 900;
             color: #0d47a1;
-            margin-top: 15px;
+            margin-top: 10px;
             text-align: center;
             text-shadow: 0 0 25px rgba(33,150,243,0.4);
             letter-spacing: 2px;
             line-height: 1.1;
         }
 
-        .classroom-vocab-title span {
-            display: block;
-            font-size: 28px;
-            color: #4caf50;
-            margin-top: 5px;
-        }
-
-        .classroom-vocab-title.highlight-active {
-            color: #d84315;
-            transform: scale(1.12);
-            text-shadow: 0 0 35px #ffeb3b;
-            transition: all 0.2s ease;
-        }
+        .classroom-vocab-title span { display: block; font-size: 24px; color: #4caf50; margin-top: 5px; }
+        .classroom-vocab-title.highlight-active { color: #d84315; transform: scale(1.12); text-shadow: 0 0 35px #ffeb3b; transition: all 0.2s ease; }
 
         .btn-giant-speak {
             width: 100%;
             background: #ff9800;
             color: white;
             border: none;
-            padding: 18px 25px;
-            font-size: 28px;
+            padding: 16px 20px;
+            font-size: 26px;
             font-weight: 900;
-            border-radius: 30px;
+            border-radius: 25px;
             cursor: pointer;
-            box-shadow: 0 10px 0 #e65100;
+            box-shadow: 0 8px 0 #e65100;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             transition: transform 0.1s;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            min-height: 60px;
         }
 
-        .btn-giant-speak:active {
-            transform: translateY(6px);
-            box-shadow: 0 4px 0 #e65100;
-        }
+        .btn-giant-speak:active { transform: translateY(6px); box-shadow: 0 2px 0 #e65100; }
 
         .achievement-ribbon {
             width: 100%;
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             background: #fff;
-            padding: 10px;
+            padding: 8px;
             border-radius: 20px;
             border: 4px solid #cfd8dc;
         }
 
-        .badge-icon {
-            font-size: 38px;
-            filter: grayscale(1);
-            opacity: 0.3;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .badge-icon { font-size: 34px; filter: grayscale(1); opacity: 0.3; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .badge-icon.unlocked { filter: grayscale(0); opacity: 1; transform: scale(1.3); animation: pop 0.5s ease-out; }
 
-        .badge-icon.unlocked {
-            filter: grayscale(0);
-            opacity: 1;
-            transform: scale(1.3);
-            animation: pop 0.5s ease-out;
-        }
-
-        /* --- IMMERSIVE INTUITIVE PUZZLE LAYOUT MODIFICATIONS --- */
+        /* Puzzle Platform Modifiers */
         .puzzle-instruction-header {
             background: #ffea00;
             border: 5px solid #000;
             border-radius: 24px;
-            padding: 12px 30px;
-            font-size: 34px;
+            padding: 10px 24px;
+            font-size: 28px;
             font-weight: 900;
             color: #000;
             text-align: center;
@@ -457,17 +411,18 @@
             z-index: 10;
             letter-spacing: 1px;
             animation: pulseGlow 2s ease-in-out infinite alternate;
+            max-width: 95%;
         }
 
         .puzzle-playground-split {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 40px;
+            gap: 20px;
             width: 100%;
             flex: 1;
-            margin-top: 15px;
-            margin-bottom: 15px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
         .puzzle-board-frame {
@@ -476,8 +431,8 @@
             border-radius: 24px;
             box-shadow: 0 12px 32px rgba(0,0,0,0.4);
             position: relative;
-            width: 320px;
-            height: 320px;
+            width: 280px;
+            height: 280px;
             transition: opacity 0.4s ease;
         }
 
@@ -490,7 +445,6 @@
             transition: all 0.2s ease;
         }
 
-        /* Active Highlight Drop Zone flare rule */
         .puzzle-cell-slot.glow-active {
             border: 6px solid #ffea00;
             background: rgba(255, 234, 0, 0.25);
@@ -499,111 +453,43 @@
         }
 
         .puzzle-mix-tray {
-            width: 550px;
-            height: 150px;
+            width: 90%;
+            max-width: 550px;
+            height: 140px;
             background: rgba(255, 255, 255, 0.9);
             border: 6px dashed #0288d1;
             border-radius: 28px;
             position: relative;
             box-shadow: 0 12px 24px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
             padding: 10px;
             transition: opacity 0.4s ease;
         }
 
-        .puzzle-piece-item {
-            position: absolute;
-            cursor: grab;
-            z-index: 50;
-            touch-action: none;
-            box-sizing: border-box;
-            transition: transform 0.1s ease;
-        }
+        .puzzle-piece-item { position: absolute; z-index: 50; touch-action: none; box-sizing: border-box; }
+        .puzzle-piece-canvas { display: block; border: 4px solid #000; border-radius: 18px; background: #fff; box-shadow: 0 8px 15px rgba(0,0,0,0.3); }
+        .puzzle-piece-item.snapped .puzzle-piece-canvas { border-color: #4caf50; box-shadow: none; animation: snapPulse 0.4s ease-out; }
 
-        .puzzle-piece-item:active {
-            cursor: grabbing;
-            z-index: 100;
-            transform: scale(1.1);
-        }
+        #puzzle-demo-hand { position: absolute; font-size: 75px; z-index: 500; pointer-events: none; transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); filter: drop-shadow(0 8px 10px rgba(0,0,0,0.4)); }
 
-        .puzzle-piece-canvas {
-            display: block;
-            border: 4px solid #000;
-            border-radius: 18px;
-            background: #fff;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-        }
-
-        .puzzle-piece-item.snapped {
-            pointer-events: none;
-            z-index: 10;
-        }
-
-        .puzzle-piece-item.snapped .puzzle-piece-canvas {
-            border-color: #4caf50;
-            box-shadow: none;
-            animation: snapPulse 0.4s ease-out;
-        }
-
-        /* Demonstration Pointer Element */
-        #puzzle-demo-hand {
-            position: absolute;
-            font-size: 75px;
-            z-index: 500;
-            pointer-events: none;
-            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            filter: drop-shadow(0 8px 10px rgba(0,0,0,0.4));
-        }
-
-        /* Global Shared Footer Systems */
         footer {
-            height: 90px;
+            height: 85px;
             background: #e8f5e9;
             border-top: 6px solid #4caf50;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 25px;
+            padding: 0 20px;
             z-index: 100;
         }
 
-        .footer-banner-text {
-            font-size: 26px;
-            font-weight: 900;
-            color: #2e7d32;
-        }
+        .footer-banner-text { font-size: 22px; font-weight: 900; color: #2e7d32; }
+        .classroom-stars-track { display: flex; gap: 12px; }
+        .star-item { font-size: 44px; color: #c8e6c9; text-shadow: 2px 2px 0 #fff; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.5); }
+        .star-item.earned { color: #ffca28; text-shadow: 0 4px 8px rgba(0,0,0,0.25); transform: scale(1.25) rotate(15deg); }
 
-        .classroom-stars-track {
-            display: flex;
-            gap: 16px;
-        }
+        #fx-layer-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90; }
 
-        .star-item {
-            font-size: 52px;
-            color: #c8e6c9;
-            text-shadow: 2px 2px 0 #fff;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.5);
-        }
-
-        .star-item.earned {
-            color: #ffca28;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.25);
-            transform: scale(1.25) rotate(15deg);
-        }
-
-        #fx-layer-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 90;
-        }
-
-        /* Screen Routing Menu Overlays */
+        /* Menu / Overlays System Layouts */
         .fullscreen-overlay {
             position: absolute;
             top: 0;
@@ -616,159 +502,178 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 15px;
+            overflow-y: auto;
         }
 
         .menu-selection-container {
             display: flex;
-            gap: 40px;
+            gap: 25px;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            margin-top: 35px;
+            margin-top: 20px;
+            width: 100%;
         }
 
         .menu-activity-card {
             background: #ffffff;
             border: 8px solid #4caf50;
-            border-radius: 40px;
-            width: 310px;
-            padding: 40px 25px;
+            border-radius: 36px;
+            width: 260px;
+            padding: 30px 20px;
             text-align: center;
             cursor: pointer;
             box-shadow: 0 16px 36px rgba(0,0,0,0.35);
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .menu-activity-card:hover {
-            transform: scale(1.08) translateY(-10px);
-            border-color: #ff9800;
-        }
-
-        .menu-activity-card .card-glyph {
-            font-size: 100px;
-            display: block;
-            margin-bottom: 15px;
-        }
-
-        .menu-activity-card .card-label {
-            font-size: 30px;
-            font-weight: 900;
-            color: #1b5e20;
-        }
+        .menu-activity-card:hover { transform: scale(1.05) translateY(-5px); border-color: #ff9800; }
+        .menu-activity-card .card-glyph { font-size: 85px; display: block; margin-bottom: 10px; }
+        .menu-activity-card .card-label { font-size: 26px; font-weight: 900; color: #1b5e20; }
 
         .classroom-modal-box {
             background: white;
-            padding: 55px;
-            border-radius: 44px;
+            padding: 40px 25px;
+            border-radius: 40px;
             border: 12px solid #ffb74d;
             text-align: center;
-            max-width: 750px;
-            width: 90%;
+            max-width: 700px;
+            width: 100%;
             box-shadow: 0 30px 60px rgba(0,0,0,0.4);
             animation: modalPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 95vh;
+            overflow-y: auto;
         }
 
-        .modal-title-giant {
-            font-size: 56px;
-            color: #e65100;
-            margin-bottom: 25px;
-            text-shadow: 2px 2px 0px #ffe0b2;
-            line-height: 1.1;
-        }
+        .modal-title-giant { font-size: 42px; color: #e65100; margin-bottom: 15px; text-shadow: 2px 2px 0px #ffe0b2; line-height: 1.1; }
+        .modal-desc-text { font-size: 22px; margin-bottom: 25px; color: #455a64; line-height: 1.5; font-weight: bold; }
 
-        .modal-desc-text {
-            font-size: 28px;
-            margin-bottom: 40px;
-            color: #455a64;
-            line-height: 1.6;
-            font-weight: bold;
-        }
+        .modal-btn-group { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
 
-        .modal-btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            flex-wrap: wrap;
-        }
-
+        /* Minimal Touch Targets Scale Bounds: 60px height */
         .btn-modal-action {
             background: #4caf50;
             color: white;
-            font-size: 32px;
+            font-size: 26px;
             font-weight: 900;
-            padding: 20px 55px;
+            padding: 16px 40px;
             border: none;
-            border-radius: 60px;
+            border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 10px 0 #2e7d32;
+            box-shadow: 0 8px 0 #2e7d32;
             transition: transform 0.1s;
+            min-height: 62px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .btn-modal-action:active {
-            transform: translateY(6px);
-            box-shadow: none;
-        }
+        .btn-modal-action:active { transform: translateY(6px); box-shadow: none; }
+        .btn-modal-action.secondary { background: #2196f3; box-shadow: 0 8px 0 #1565c0; }
+        .btn-modal-action.danger { background: #f44336; box-shadow: 0 8px 0 #c62828; }
 
-        .btn-modal-action.secondary {
-            background: #2196f3;
-            box-shadow: 0 10px 0 #1565c0;
-        }
+        .corner-buddy { position: absolute; font-size: 45px; z-index: 4; pointer-events: none; animation: friendlyWave 3s ease-in-out infinite alternate; }
 
-        .btn-modal-action.danger {
-            background: #f44336;
-            box-shadow: 0 10px 0 #c62828;
-        }
-
-        .corner-buddy {
-            position: absolute;
-            font-size: 60px;
-            z-index: 4;
+        /* Orientation Helper Warning Overlay Card element rules */
+        #orientation-warning-prompt {
+            display: none;
+            position: fixed;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff9800;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 16px;
+            z-index: 9999;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            border: 3px solid white;
             pointer-events: none;
-            animation: friendlyWave 3s ease-in-out infinite alternate;
+            text-align: center;
         }
 
         @keyframes waveMotion { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         @keyframes raysShimmer { 0% { transform: scale(1) rotate(0deg); opacity: 0.4; } 100% { transform: scale(1.1) rotate(4deg); opacity: 0.7; } }
-        @keyframes emojiBounce { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-15px) scale(1.04); } }
-        @keyframes friendlyWave { 0%, 100% { transform: rotate(0deg) translateY(0); } 50% { transform: rotate(10deg) translateY(-8px); } }
+        @keyframes emojiBounce { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-12px) scale(1.02); } }
+        @keyframes friendlyWave { 0%, 100% { transform: rotate(0deg) translateY(0); } 50% { transform: rotate(10deg) translateY(-5px); } }
         @keyframes modalPop { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes neonGreenGlow { 0% { box-shadow: 0 0 15px #4caf50; } 100% { box-shadow: 0 0 45px #4caf50, inset 0 0 25px #4caf50; } }
-        @keyframes snapPulse { 0% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.12); filter: brightness(1.3); } 100% { transform: scale(1); filter: brightness(1); } }
-        @keyframes pulseGlow { 0% { box-shadow: 0 0 10px #ffea00; } 100% { box-shadow: 0 0 30px #ffea00; } }
+        @keyframes snapPulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 10px #ffea00; } 100% { box-shadow: 0 0 25px #ffea00; } }
         @keyframes pop { 0% { transform: scale(0.6); } 100% { transform: scale(1); } }
 
         .hidden { display: none !important; }
+
+        /**********************************************************************
+         * MOBILE-FIRST RESPONSIVE MEDIA QUERIES BREAKPOINTS MATRIX
+         **********************************************************************/
+        @media (max-width: 850px), (orientation: portrait) {
+            header { min-height: auto; padding: 8px; justify-content: center; }
+            .nav-brand { text-align: center; width: 100%; }
+            .dashboard-counters { justify-content: center; width: 100%; }
+            .dropdown-controls-group { justify-content: center; width: 100%; flex-wrap: wrap; }
+            .action-controls { justify-content: center; width: 100%; flex-wrap: wrap; }
+
+            #viewport-main, #viewport-puzzle { flex-direction: column; overflow-y: auto; }
+            #ocean-aquarium, #puzzle-sandbox { flex: none; width: 100%; height: 50vh; min-height: 320px; }
+            #classroom-reinforcement-panel, #puzzle-reinforcement-panel { flex: none; width: 100%; border-left: none; border-top: 6px solid #4caf50; padding: 15px; }
+
+            .avatar-classroom-frame { width: 160px; height: 160px; }
+            .giant-learning-emoji { font-size: 100px; }
+            .classroom-vocab-title { font-size: 38px; }
+            .classroom-vocab-title span { font-size: 20px; }
+
+            .puzzle-playground-split { transform: scale(0.85); margin: 0; }
+            .puzzle-mix-tray { width: 95%; height: 120px; }
+            
+            footer { height: auto; padding: 12px; flex-direction: column; gap: 8px; }
+            .star-item { font-size: 34px; }
+            #orientation-warning-prompt { display: block; }
+        }
+
+        @media (max-width: 480px) {
+            .giant-prompt-marquee { font-size: 26px; padding: 6px 20px; }
+            .puzzle-instruction-header { font-size: 20px; padding: 6px 16px; }
+            .puzzle-playground-split { transform: scale(0.7); }
+            .creature-graphic-node { font-size: 75px; }
+            .sign-text { font-size: 18px; }
+            .sign-family-emoji { font-size: 35px; }
+            .sea-creature-entity { width: 180px; height: 140px; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Adaptive Device Rotation Warning Bar -->
+    <div id="orientation-warning-prompt">For the best experience, rotate your device to Landscape mode 🔄</div>
+
     <div id="game-container">
-        <!-- Overlay Core Visual FX Layer Canvas -->
+        <!-- Overlay Layer Canvas Render Box -->
         <canvas id="fx-layer-canvas"></canvas>
 
-        <!-- Dynamic Header Controller Matrix Dashboard -->
+        <!-- Dynamic Responsive Control Header Panel -->
         <header>
             <div class="nav-brand" id="ctrl-brand-home">
                 <h1>THE FAMILY HUB 🏠</h1>
                 <span>Fishing & Puzzles by Teacher Hanz Balili</span>
             </div>
 
-            <!-- Configuration System Selectors Matrix Group -->
             <div class="dropdown-controls-group">
-                <!-- Bilingual Narration Selector Module -->
-                <select class="level-selector-box" id="ctrl-language-setting" title="Toggle Classroom Language Options">
+                <select class="level-selector-box" id="ctrl-language-setting">
                     <option value="en" selected>🇺🇸 English Only</option>
                     <option value="both">🇹🇭 Thai + English</option>
                 </select>
 
-                <select class="level-selector-box" id="ctrl-difficulty-level" title="Fishing Modes">
+                <select class="level-selector-box" id="ctrl-difficulty-level">
                     <option value="1" selected>Level 1: Pictures Only</option>
                     <option value="2">Level 2: Pictures + Words</option>
                     <option value="3">Level 3: Words Only</option>
                 </select>
                 
-                <!-- Puzzle difficulty selector handles 4=2x2, 6=3x2, 9=3x3 -->
-                <select class="level-selector-box hidden" id="ctrl-puzzle-difficulty" title="Puzzle Options">
+                <select class="level-selector-box hidden" id="ctrl-puzzle-difficulty">
                     <option value="4" selected>Beginner (2 × 2 Puzzle)</option>
                     <option value="6">Medium (3 × 2 Puzzle)</option>
                     <option value="9">Hard (3 × 3 Puzzle)</option>
@@ -782,16 +687,17 @@
             </div>
 
             <div class="action-controls">
+                <button class="btn-ui parent-info" id="ctrl-parent-modal" title="Parent Info">ℹ️</button>
                 <button class="btn-ui" id="ctrl-fullscreen">⛶</button>
                 <button class="btn-ui" id="ctrl-pause">⏸</button>
                 <button class="btn-ui warn" id="ctrl-restart">🔄</button>
                 <button class="btn-ui" id="ctrl-mute-sfx">🔊</button>
                 <button class="btn-ui" id="ctrl-mute-music">🎵</button>
-                <button class="btn-ui danger" id="ctrl-exit">🚪</button>
+                <button class="btn-ui danger" id="ctrl-exit"> L🚪</button>
             </div>
         </header>
 
-        <!-- MODE A VIEWPORT LAYER: FISHING GAME (UNCHANGED) -->
+        <!-- ACTIVITY PLAYFIELD SCREEN VIEWPORT 1: FISHING SCENE -->
         <main id="viewport-main" class="hidden">
             <section id="ocean-aquarium">
                 <div class="ocean-wave-overlay"></div>
@@ -818,7 +724,7 @@
             </section>
         </main>
 
-        <!-- MODE B VIEWPORT LAYER: PUZZLE SYSTEM -->
+        <!-- ACTIVITY PLAYFIELD SCREEN VIEWPORT 2: PUZZLE SCENE -->
         <main id="viewport-puzzle" class="hidden">
             <section id="puzzle-sandbox">
                 <div class="ocean-wave-overlay"></div>
@@ -827,13 +733,10 @@
                 <div class="corner-buddy" style="bottom:110px; left:20px;">🐙</div>
                 
                 <div class="puzzle-instruction-header" id="puzzle-build-instruction">BUILD GRANDMOTHER</div>
-
                 <div class="puzzle-playground-split">
                     <div class="puzzle-board-frame" id="puzzle-snap-board"></div>
                 </div>
-
                 <div id="puzzle-demo-hand" class="hidden">👆</div>
-
                 <div class="puzzle-mix-tray" id="puzzle-pieces-tray"></div>
             </section>
             
@@ -849,18 +752,18 @@
             </section>
         </main>
 
-        <!-- Core Tracker Status Deck -->
+        <!-- Shared Core Reward Tracker Footer -->
         <footer>
-            <div class="footer-banner-text">Classroom Progress Tracker:</div>
+            <div class="footer-banner-text">Progress Tracker:</div>
             <div class="classroom-stars-track" id="stars-deck-casing"></div>
         </footer>
     </div>
 
-    <!-- MAIN HOME GATEWAYS ROOT MENU OVERLAY -->
+    <!-- MAIN MENU WELCOME ROUTER SCREEN GATE OVERLAY -->
     <div class="fullscreen-overlay" id="modal-start-gate">
         <div class="classroom-modal-box" style="border-color:#4caf50;">
-            <h2 class="modal-title-giant">THE FAMILY HUB 🌟<br><span style="font-size:26px; color:#558b2f; text-shadow:none;">Fishing and Puzzles by Teacher Hanz Balili</span></h2>
-            <p class="modal-desc-text">Choose a happy learning activity to play today with your classmates!</p>
+            <h2 class="modal-title-giant">👋 Welcome to<br>The Family Hub 🌟</h2>
+            <p class="modal-desc-text">By Teacher Hanz Balili<br><span style="font-size:20px; color:#546e7a; display:block; margin-top:5px;">Choose a game and start learning!</span></p>
             
             <div class="menu-selection-container">
                 <div class="menu-activity-card" id="menu-launch-fishing">
@@ -871,6 +774,21 @@
                     <span class="card-glyph">🧩</span>
                     <span class="card-label">Family Puzzle Game</span>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PERSISTENT PARENT INFORMATION CONTEXT OVERLAY MODAL -->
+    <div class="fullscreen-overlay hidden" id="modal-parent-gate">
+        <div class="classroom-modal-box" style="border-color:#9c27b0;">
+            <h2 class="modal-title-giant" style="color:#6a1b9a;">👪 Parent Information</h2>
+            <p class="modal-desc-text" style="text-align:left; font-size:22px; font-weight:normal;">
+                <strong>The Family Hub: Fishing & Puzzles</strong><br>
+                Created by <strong>Teacher Hanz Balili</strong><br><br>
+                A professional, fun educational web game designed explicitly to help children recognize and learn family relationship vocabulary through responsive interactive gameplay. Perfect for smartboards, classroom projectors, mobile phones, and tablets at home! Progress saves automatically.
+            </p>
+            <div class="modal-btn-group">
+                <button class="btn-modal-action" id="btn-close-parent" style="background:#9c27b0; box-shadow:0 8px 0 #4a148c;">Close Info</button>
             </div>
         </div>
     </div>
@@ -947,7 +865,34 @@
         resizeCanvas();
 
         /**********************************************************************
-         * AUDIO ARCHITECTURE ENGINES
+         * LOCAL STORAGE PROGRESS SAVING ENGINE ARCHITECTURE
+         **********************************************************************/
+        function saveGameState() {
+            const progressPayload = {
+                score: state.score,
+                coins: state.coins,
+                gems: state.gems,
+                correctCount: state.correctCount
+            };
+            localStorage.setItem('teacher_hanz_family_hub_save', JSON.stringify(progressPayload));
+        }
+
+        function loadGameState() {
+            const stored = localStorage.getItem('teacher_hanz_family_hub_save');
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    state.score = parsed.score || 0;
+                    state.coins = parsed.coins || 0;
+                    state.gems = parsed.gems || 0;
+                    state.correctCount = parsed.correctCount || 0;
+                    updateDashboardCounters();
+                } catch(e) { console.error("Error payload extraction reset mapping", e); }
+            }
+        }
+
+        /**********************************************************************
+         * PROCEDURAL WEB AUDIO ARCHITECTURE ENGINE
          **********************************************************************/
         class ClassroomAudioEngine {
             constructor() { this.ctx = null; this.musicInterval = null; this.sfxMuted = false; this.musicMuted = false; this.tempo = 125; this.notes = [60, 62, 64, 67, 69, 67, 64, 62, 60, 64, 67, 69, 72, 69, 67, 64]; this.step = 0; }
@@ -1000,7 +945,7 @@
         }
 
         /**********************************************************************
-         * ROUTER INFRASTRUCTURE PLATFORMS
+         * ROUTER INFRASTRUCTURE MATRIX NAVIGATION SCREEN SWITCHER
          **********************************************************************/
         function displayScreen(targetMode) {
             state.currentGameMode = targetMode;
@@ -1026,19 +971,17 @@
         function buildProgressStars(poolSize) {
             elStarsDeck.innerHTML = '';
             for(let i=0; i<poolSize; i++) {
-                let s = document.createElement('span'); s.className = 'star-item'; s.id = `star-idx-${i}`; s.innerHTML = '★'; elStarsDeck.appendChild(s);
+                let s = document.createElement('span'); s.className = 'star-item'; s.id = `star-idx-${i}`; s.innerHTML = '★'; 
+                if (i < state.correctCount) s.classList.add('earned');
+                elStarsDeck.appendChild(s);
             }
         }
 
-        function updateDashboardCounters() {
-            elScore.textContent = state.score; elCoins.textContent = state.coins; elGems.textContent = state.gems;
-        }
-
         /**********************************************************************
-         * SYSTEM MODE A: FAMILY FISHING
+         * SYSTEM MODE A: FAMILY FISHING GAME ARCHITECTURE
          **********************************************************************/
         function startGameSession() {
-            state.score = 0; state.coins = 0; state.gems = 0; state.correctCount = 0; state.pool = [...VOCABULARY]; state.isNarratingSequence = false;
+            state.pool = [...VOCABULARY]; state.isNarratingSequence = false;
             updateDashboardCounters(); updateBadgeUI(false); buildProgressStars(VOCABULARY.length); setupNextFishingRound();
             state.activeCreatures.forEach(c => c.el.remove()); state.activeCreatures = [];
             for (let i = 0; i < 5; i++) spawnCreatureInstance();
@@ -1068,13 +1011,15 @@
             let dir = Math.random() > 0.5 ? 1 : -1;
             let wW = elOcean.offsetWidth || 800;
             let x = dir === 1 ? -250 : wW + 50;
-            let y = 140 + Math.random() * ((elOcean.offsetHeight || 500) - 280);
+            let y = 100 + Math.random() * ((elOcean.offsetHeight || 400) - 220);
             wrapper.querySelector('.creature-graphic-node').style.transform = `scaleX(${-dir})`;
             wrapper.style.transform = `translate(${x}px, ${y}px)`;
 
-            const instance = { el: wrapper, word: word, x: x, y: y, speed: 0.8 + Math.random() * 1.2, dir: dir, sinOffset: Math.random() * 50, isJumping: false, jumpY: 0 };
+            const instance = { el: wrapper, word: word, x: x, y: y, speed: 0.6 + Math.random() * 1.0, dir: dir, sinOffset: Math.random() * 50, isJumping: false, jumpY: 0 };
+            
+            // Integrated universal pointer mapping for total mobile responsive click actions
             const runCatch = (e) => { e.preventDefault(); processCreatureCatch(instance); };
-            wrapper.addEventListener('mousedown', runCatch); wrapper.addEventListener('touchstart', runCatch);
+            wrapper.addEventListener('pointerdown', runCatch);
             state.activeCreatures.push(instance);
         }
 
@@ -1083,7 +1028,9 @@
             if (creature.word === state.targetWord) {
                 state.isNarratingSequence = true; creature.isJumping = true;
                 AudioSystem.playHappyDing(); AudioSystem.playApplauseBurst(); triggerConfettiAt(creature.x + 110, creature.y + 60);
-                state.score += 15; state.coins += 5; state.gems += 1; state.correctCount += 1; updateDashboardCounters();
+                
+                state.score += 15; state.coins += 5; state.gems += 1; state.correctCount += 1; 
+                updateDashboardCounters(); saveGameState();
                 
                 let ts = document.getElementById(`star-idx-${state.correctCount - 1}`); if (ts) ts.classList.add('earned');
                 
@@ -1115,6 +1062,16 @@
             }
         }
 
+        function triggerTreasureBurstMilestone() {
+            AudioSystem.playHappyDing(); document.getElementById('chest-lid-svg').style.transform = "rotate(-25deg) translate(-10px, -15px)";
+            let rect = document.getElementById('prop-treasure').getBoundingClientRect(); let parentRect = elOcean.getBoundingClientRect();
+            let cx = rect.left - parentRect.left + 55; let cy = rect.top - parentRect.top + 35;
+            for(let i=0; i<30; i++) {
+                particles.push({ x: cx, y: cy, vx: (Math.random() - 0.5) * 14, vy: -5 - Math.random() * 12, type: Math.random() > 0.5 ? 'coin' : 'star', color: '#ffcd29', radius: 9 + Math.random()*6, alpha: 1, decay: 0.015 });
+            }
+            setTimeout(() => { document.getElementById('chest-lid-svg').style.transform = "none"; setupNextFishingRound(); }, 2500);
+        }
+
         function updateBadgeUI(isPuzzle) {
             let count = state.correctCount; let prefix = isPuzzle ? 'pbadge-' : 'badge-';
             let unl = [count >= 1, count >= 3, count >= 6, (isPuzzle ? state.puzzlePool : state.pool).length === 0];
@@ -1122,10 +1079,9 @@
         }
 
         /**********************************************************************
-         * SYSTEM MODE B: REDESIGNED INTUITIVE CLASSROOM PUZZLE SYSTEM
+         * SYSTEM MODE B: DYNAMICALLY SCALED CELLPHONE FRIENDLY PUZZLE GAME
          **********************************************************************/
         function startPuzzleGameSession() {
-            state.score = 0; state.coins = 0; state.gems = 0; state.correctCount = 0; 
             state.puzzlePool = [...VOCABULARY]; state.isNarratingSequence = false;
             state.puzzleDifficulty = 4; 
             document.getElementById('ctrl-puzzle-difficulty').value = "4";
@@ -1139,11 +1095,7 @@
             
             const headerLabel = document.getElementById('puzzle-build-instruction');
             const thData = THAI_VOCAB_MAP[state.targetWord];
-            if (state.lang === 'both') {
-                headerLabel.innerHTML = `BUILD ${state.targetWord.toUpperCase()} • ${thData.thBuild}`;
-            } else {
-                headerLabel.innerHTML = `BUILD ${state.targetWord.toUpperCase()}`;
-            }
+            headerLabel.innerHTML = (state.lang === 'both') ? `BUILD ${state.targetWord.toUpperCase()} • ${thData.thBuild}` : `BUILD ${state.targetWord.toUpperCase()}`;
 
             let emoji = FAMILY_EMOJIS[state.targetWord];
             document.getElementById('puzzle-avatar-viewport').innerHTML = `<span class="giant-learning-emoji">${emoji}</span>`;
@@ -1152,7 +1104,6 @@
             titleEl.innerHTML = `${state.targetWord.toUpperCase()} <span>${state.lang === 'both' ? thData.thName : ''}</span>`;
             document.getElementById('btn-puzzle-replay').disabled = false;
 
-            // Fade board and tray back in as new elements are generated
             document.getElementById('puzzle-snap-board').style.opacity = '1';
             document.getElementById('puzzle-pieces-tray').style.opacity = '1';
 
@@ -1167,30 +1118,25 @@
             const board = document.getElementById('puzzle-snap-board');
             const tray = document.getElementById('puzzle-pieces-tray');
             
-            /* FIX 1 & 4: COMPLETELY WIPE BOARD, TRAY, AND RESIDUAL FRAGMENTS BEFORE GENERATING */
-            board.innerHTML = ''; 
-            tray.innerHTML = ''; 
+            board.innerHTML = ''; tray.innerHTML = ''; 
             document.querySelectorAll('.puzzle-piece-item').forEach(el => el.remove());
-            state.activePuzzlePieces = [];
-            state.puzzleDragTarget = null;
+            state.activePuzzlePieces = []; state.puzzleDragTarget = null;
 
-            /* FIX 2 & 3: DYNAMIC GRID RESOLUTION & RESPONSIVE BOARD CELL SIZING */
             let cols = 2, rows = 2;
             if (state.puzzleDifficulty === 6) { cols = 3; rows = 2; }
             else if (state.puzzleDifficulty === 9) { cols = 3; rows = 3; }
 
-            const boardSize = 320; // The completed image remains the same overall size
-            const cellW = boardSize / cols; 
-            const cellH = boardSize / rows;
-            board.style.width = boardSize + 'px'; 
-            board.style.height = boardSize + 'px';
+            // Dynamic board bounds tracking responsive parameters metrics profiles
+            const boardSize = window.innerWidth < 500 ? 240 : 280; 
+            const cellW = boardSize / cols; const cellH = boardSize / rows;
+            board.style.width = boardSize + 'px'; board.style.height = boardSize + 'px';
 
             const renderCanvas = document.createElement('canvas');
             renderCanvas.width = boardSize; renderCanvas.height = boardSize;
             const rCtx = renderCanvas.getContext('2d');
             rCtx.fillStyle = '#ffffff'; rCtx.fillRect(0, 0, boardSize, boardSize);
             rCtx.font = `${boardSize * 0.65}px Arial`; rCtx.textAlign = 'center'; rCtx.textBaseline = 'middle';
-            rCtx.fillText(emojiStr, boardSize / 2, boardSize / 2 + 15);
+            rCtx.fillText(emojiStr, boardSize / 2, boardSize / 2 + 12);
 
             let rawPieces = [];
             for (let r = 0; r < rows; r++) {
@@ -1201,7 +1147,7 @@
                     slot.className = 'puzzle-cell-slot';
                     slot.style.width = (cellW - 4) + 'px'; slot.style.height = (cellH - 4) + 'px';
                     slot.style.left = (lx + 2) + 'px'; slot.style.top = (ty + 2) + 'px';
-                    slot.innerHTML = `<span style="font-size:20px; color:rgba(255,255,255,0.4); display:flex; align-items:center; justify-content:center; width:100%; height:100%;">?</span>`;
+                    slot.innerHTML = `<span style="font-size:16px; color:rgba(255,255,255,0.3); display:flex; align-items:center; justify-content:center; width:100%; height:100%;">?</span>`;
                     board.appendChild(slot);
 
                     const pieceCanvas = document.createElement('canvas');
@@ -1220,7 +1166,7 @@
                 }
             }
 
-            let trayWidth = 550;
+            let trayWidth = tray.offsetWidth || 500;
             let spacing = trayWidth / rawPieces.length;
             
             rawPieces.sort(() => Math.random() - 0.5); 
@@ -1228,34 +1174,28 @@
                 tray.appendChild(piece.el);
                 
                 let rx = (idx * spacing) + (spacing / 2) - (piece.w / 2);
-                let ry = 75 - (piece.h / 2);
+                let ry = (tray.offsetHeight / 2) - (piece.h / 2);
                 
                 piece.currentX = rx; piece.currentY = ry;
                 piece.el.style.left = rx + 'px'; piece.el.style.top = ry + 'px';
 
-                const grabAction = (e) => { if (!state.paused && !piece.snapped) startPieceDrag(piece, e); };
-                piece.el.addEventListener('pointerdown', grabAction);
+                // Pointer capture integration provides complete touch accuracy across iOS/Android devices
+                piece.el.addEventListener('pointerdown', (e) => { if (!state.paused && !piece.snapped) startPieceDrag(piece, e); });
                 state.activePuzzlePieces.push(piece);
             });
         }
 
-        /**********************************************************************
-         * VISUAL DEMONSTRATION MODULE
-         **********************************************************************/
         function runVisualDemonstrationSequence() {
             if (state.activePuzzlePieces.length === 0 || state.paused || state.currentGameMode !== 'puzzle') return;
-            
             const demoHand = document.getElementById('puzzle-demo-hand');
-            const targetPiece = state.activePuzzlePieces[0]; 
-            if (!targetPiece || targetPiece.snapped) return;
+            const targetPiece = state.activePuzzlePieces[0]; if (!targetPiece || targetPiece.snapped) return;
 
             let sandboxRect = document.getElementById('puzzle-sandbox').getBoundingClientRect();
             let pieceRect = targetPiece.el.getBoundingClientRect();
             let boardRect = document.getElementById('puzzle-snap-board').getBoundingClientRect();
 
-            let startHandX = pieceRect.left - sandboxRect.left + 30;
-            let startHandY = pieceRect.top - sandboxRect.top + 30;
-            
+            let startHandX = pieceRect.left - sandboxRect.left + 20;
+            let startHandY = pieceRect.top - sandboxRect.top + 20;
             let endHandX = boardRect.left - sandboxRect.left + targetPiece.correctX + (targetPiece.w / 2);
             let endHandY = boardRect.top - sandboxRect.top + targetPiece.correctY + (targetPiece.h / 2);
 
@@ -1264,22 +1204,19 @@
 
             setTimeout(() => {
                 if (state.currentGameMode !== 'puzzle') return;
-                targetPiece.el.style.transform = "scale(1.08)";
+                targetPiece.el.style.transform = "scale(1.06)";
                 targetPiece.slotEl.classList.add('glow-active');
-                
-                demoHand.style.left = endHandX + 'px';
-                demoHand.style.top = endHandY + 'px';
+                demoHand.style.left = endHandX + 'px'; demoHand.style.top = endHandY + 'px';
             }, 600);
 
             setTimeout(() => {
-                targetPiece.el.style.transform = "none";
-                targetPiece.slotEl.classList.remove('glow-active');
+                targetPiece.el.style.transform = "none"; targetPiece.slotEl.classList.remove('glow-active');
                 demoHand.classList.add('hidden');
             }, 2200);
         }
 
         /**********************************************************************
-         * POINTER DRAG INTERACTION HOOKS
+         * SMART MOBILE RESPONSIVE COORD POINTER TRAJECTORIES
          **********************************************************************/
         function startPieceDrag(piece, event) {
             state.puzzleDragTarget = piece;
@@ -1289,17 +1226,13 @@
             let elRect = piece.el.getBoundingClientRect();
             state.dragOffset.x = clX - elRect.left; state.dragOffset.y = clY - elRect.top;
             
-            // Move piece to global sandbox layer for unbound movement overlay tracking
             document.getElementById('puzzle-sandbox').appendChild(piece.el);
             let sandboxRect = document.getElementById('puzzle-sandbox').getBoundingClientRect();
             piece.currentX = clX - sandboxRect.left - state.dragOffset.x;
             piece.currentY = clY - sandboxRect.top - state.dragOffset.y;
             piece.el.style.left = piece.currentX + 'px'; piece.el.style.top = piece.currentY + 'px';
 
-            state.activePuzzlePieces.forEach(p => {
-                if(!p.snapped) p.slotEl.classList.add('glow-active');
-            });
-
+            state.activePuzzlePieces.forEach(p => { if(!p.snapped) p.slotEl.classList.add('glow-active'); });
             piece.el.setPointerCapture(event.pointerId);
             event.stopPropagation();
         }
@@ -1320,99 +1253,80 @@
 
         window.addEventListener('pointerup', (e) => {
             if (!state.puzzleDragTarget) return;
-            let piece = state.puzzleDragTarget;
-            state.puzzleDragTarget = null;
+            let piece = state.puzzleDragTarget; state.puzzleDragTarget = null;
             piece.el.releasePointerCapture(e.pointerId);
 
             state.activePuzzlePieces.forEach(p => p.slotEl.classList.remove('glow-active'));
-
             let boardRect = document.getElementById('puzzle-snap-board').getBoundingClientRect();
             let sandboxRect = document.getElementById('puzzle-sandbox').getBoundingClientRect();
 
             let bLocalX = boardRect.left - sandboxRect.left; let bLocalY = boardRect.top - sandboxRect.top;
             let targetSnapX = bLocalX + piece.correctX; let targetSnapY = bLocalY + piece.correctY;
 
-            // Highly forgiving proximity threshold calculation
-            let proximityThreshold = 55; 
+            // Highly forgiving snap proximity bounds: Adjusted for small screens
+            let proximityThreshold = window.innerWidth < 500 ? 45 : 55; 
             let dist = Math.hypot(piece.currentX - targetSnapX, piece.currentY - targetSnapY);
 
             if (dist < proximityThreshold) {
                 piece.snapped = true; piece.el.classList.add('snapped');
-                
-                /* FIX 1: Append straight inside board element to clear perfectly on next round reset */
                 document.getElementById('puzzle-snap-board').appendChild(piece.el); 
-                piece.el.style.left = piece.correctX + 'px'; 
-                piece.el.style.top = piece.correctY + 'px';
+                piece.el.style.left = piece.correctX + 'px'; piece.el.style.top = piece.correctY + 'px';
                 
-                piece.slotEl.innerHTML = ""; 
-                AudioSystem.playBubblePop();
-                
+                piece.slotEl.innerHTML = ""; AudioSystem.playBubblePop();
                 let parentRect = canvas.getBoundingClientRect();
                 triggerConfettiAt(boardRect.left - parentRect.left + piece.correctX + piece.w/2, boardRect.top - parentRect.top + piece.correctY + piece.h/2);
-                
                 checkPuzzleCompletionState();
             } else {
                 AudioSystem.playOops();
                 document.getElementById('puzzle-pieces-tray').appendChild(piece.el);
                 
-                let trayWidth = 550;
+                let trayWidth = document.getElementById('puzzle-pieces-tray').offsetWidth || 500;
                 let pieceIdx = state.activePuzzlePieces.indexOf(piece);
                 let spacing = trayWidth / state.activePuzzlePieces.length;
                 let rx = (pieceIdx * spacing) + (spacing / 2) - (piece.w / 2);
-                let ry = 75 - (piece.h / 2);
+                let ry = (document.getElementById('puzzle-pieces-tray').offsetHeight / 2) - (piece.h / 2);
                 
                 piece.currentX = rx; piece.currentY = ry;
                 piece.el.style.left = rx + 'px'; piece.el.style.top = ry + 'px';
 
                 state.failureSpeechLimiter++;
                 if (state.failureSpeechLimiter % 3 === 0) {
-                    const fallbackPhrases = ["Almost!", "Keep trying!", "Let's try another spot."];
-                    classroomNarrate(fallbackPhrases[Math.floor(Math.random() * fallbackPhrases.length)]);
+                    classroomNarrate(["Almost!", "Keep trying!", "Let's try another spot."][Math.floor(Math.random()*3)]);
                 }
             }
         });
 
         function checkPuzzleCompletionState() {
             if (state.activePuzzlePieces.every(p => p.snapped)) {
-                state.isNarratingSequence = true;
-                AudioSystem.playHappyDing(); AudioSystem.playApplauseBurst();
-                
+                state.isNarratingSequence = true; AudioSystem.playHappyDing(); AudioSystem.playApplauseBurst();
                 let bRect = document.getElementById('puzzle-snap-board').getBoundingClientRect();
                 let pRect = canvas.getBoundingClientRect();
-                triggerConfettiAt(bRect.left - pRect.left + 160, bRect.top - pRect.top + 160);
+                triggerConfettiAt(bRect.left - pRect.left + (bRect.width/2), bRect.top - pRect.top + (bRect.height/2));
 
-                state.score += 20; state.coins += 10; state.gems += 2; state.correctCount += 1; updateDashboardCounters();
+                state.score += 20; state.coins += 10; state.gems += 2; state.correctCount += 1; 
+                updateDashboardCounters(); saveGameState();
+
                 let ts = document.getElementById(`star-idx-${state.correctCount - 1}`); if (ts) ts.classList.add('earned');
-
                 document.getElementById('puzzle-preview-card').classList.add('correct-glow');
                 document.getElementById('puzzle-avatar-viewport').classList.add('wave-animation');
                 
-                const title = document.getElementById('puzzle-vocab-title'); 
-                title.classList.add('highlight-active');
-
+                const title = document.getElementById('puzzle-vocab-title'); title.classList.add('highlight-active');
                 state.puzzlePool = state.puzzlePool.filter(w => w !== state.targetWord); updateBadgeUI(true);
                 const thData = THAI_VOCAB_MAP[state.targetWord];
 
-                /* FIX 5: EXCELLENT TRANSITION AND TIMED CLEARING OF ELEMENTS */
                 speakBilingualSequence(`Excellent! You built ${state.targetWord}!`, "ต่อรูปเสร็จแล้ว", () => {
                     setTimeout(() => { classroomNarrate(`${state.targetWord}.`, () => {
                         setTimeout(() => { speakBilingualSequence(`This is ${state.targetWord}.`, thData.thIntro, () => {
                             setTimeout(() => { classroomNarrate(`Can you say ${state.targetWord}?`, () => {
-                                
-                                // End of reinforcement chain: Begin smooth classroom-friendly transition fade out
                                 document.getElementById('puzzle-snap-board').style.opacity = '0';
                                 document.getElementById('puzzle-pieces-tray').style.opacity = '0';
-                                
                                 setTimeout(() => {
                                     state.isNarratingSequence = false;
                                     document.getElementById('puzzle-preview-card').classList.remove('correct-glow');
                                     document.getElementById('puzzle-avatar-viewport').classList.remove('wave-animation');
                                     title.classList.remove('highlight-active');
-                                    
-                                    // Load next puzzle with a clean slate
                                     setupNextPuzzleRound();
-                                }, 500); // Wait for fade-out styling to complete before resetting nodes
-                                
+                                }, 500);
                             }); }, 1000);
                         }); }, 1000);
                     }); }, 800);
@@ -1421,7 +1335,7 @@
         }
 
         /**********************************************************************
-         * REALTIME SIMULATION TICK ENGINE
+         * ENGINE RUNTIME SIMULATION LOOPS (TICK FRAME)
          **********************************************************************/
         function gameLoopRuntime() {
             let wW = elOcean.offsetWidth || 800;
@@ -1486,15 +1400,22 @@
         }
 
         /**********************************************************************
-         * USER INTERACTION CONTROL BINDS
+         * UI USER DRIVEN BINDINGS & LOCAL STORAGE DISPATCHERS
          **********************************************************************/
         document.getElementById('menu-launch-fishing').addEventListener('click', () => { AudioSystem.init(); displayScreen('fishing'); });
         document.getElementById('menu-launch-puzzle').addEventListener('click', () => { AudioSystem.init(); displayScreen('puzzle'); });
         document.getElementById('ctrl-brand-home').addEventListener('click', () => { displayScreen('menu'); });
 
+        // Parent Information Overlay Trigger buttons listeners coupling
+        document.getElementById('ctrl-parent-modal').addEventListener('click', () => {
+            document.getElementById('modal-parent-gate').classList.remove('hidden');
+        });
+        document.getElementById('btn-close-parent').addEventListener('click', () => {
+            document.getElementById('modal-parent-gate').classList.add('hidden');
+        });
+
         document.getElementById('ctrl-language-setting').addEventListener('change', (e) => {
-            state.lang = e.target.value;
-            if (state.currentGameMode === 'puzzle') setupNextPuzzleRound();
+            state.lang = e.target.value; if (state.currentGameMode === 'puzzle') setupNextPuzzleRound();
         });
 
         document.getElementById('ctrl-difficulty-level').addEventListener('change', (e) => {
@@ -1513,7 +1434,10 @@
         document.getElementById('ctrl-fullscreen').addEventListener('click', () => { if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); });
         document.getElementById('ctrl-pause').addEventListener('click', () => { state.paused = true; document.getElementById('modal-pause-gate').classList.remove('hidden'); });
         document.getElementById('btn-pause-resume').addEventListener('click', () => { state.paused = false; document.getElementById('modal-pause-gate').classList.add('hidden'); });
-        document.getElementById('ctrl-restart').addEventListener('click', () => { if(confirm("Do you want to restart this activity?")) displayScreen(state.currentGameMode); });
+        
+        document.getElementById('ctrl-restart').addEventListener('click', () => { 
+            if(confirm("Do you want to restart this activity? Progress remains saved.")) displayScreen(state.currentGameMode); 
+        });
 
         const sfxBtn = document.getElementById('ctrl-mute-sfx'); sfxBtn.addEventListener('click', () => { AudioSystem.sfxMuted = !AudioSystem.sfxMuted; sfxBtn.textContent = AudioSystem.sfxMuted ? '❌' : '🔊'; });
         const musicBtn = document.getElementById('ctrl-mute-music'); musicBtn.addEventListener('click', () => { AudioSystem.musicMuted = !AudioSystem.musicMuted; musicBtn.textContent = AudioSystem.musicMuted ? '🔇' : '🎵'; });
@@ -1526,12 +1450,11 @@
 
         document.getElementById('btn-trigger-speech').addEventListener('click', () => { if (!state.isNarratingSequence) classroomNarrate(`Can you find the ${state.targetWord}?`); });
         document.getElementById('btn-puzzle-replay').addEventListener('click', () => { 
-            if (!state.isNarratingSequence) {
-                const thData = THAI_VOCAB_MAP[state.targetWord];
-                speakBilingualSequence(`Can you build the picture of ${state.targetWord}?`, thData.thBuild);
-            }
+            if (!state.isNarratingSequence) speakBilingualSequence(`Can you build the picture of ${state.targetWord}?`, THAI_VOCAB_MAP[state.targetWord].thBuild);
         });
 
+        // Load progress automatically via localStorage sandbox variables
+        loadGameState();
         displayScreen('menu');
         requestAnimationFrame(gameLoopRuntime);
     </script>
