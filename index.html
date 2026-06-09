@@ -478,6 +478,7 @@
             position: relative;
             width: 320px;
             height: 320px;
+            transition: opacity 0.4s ease;
         }
 
         .puzzle-cell-slot {
@@ -509,6 +510,7 @@
             align-items: center;
             justify-content: space-around;
             padding: 10px;
+            transition: opacity 0.4s ease;
         }
 
         .puzzle-piece-item {
@@ -765,7 +767,7 @@
                     <option value="3">Level 3: Words Only</option>
                 </select>
                 
-                <!-- Puzzle difficulty selector handles 4=2x2 by default -->
+                <!-- Puzzle difficulty selector handles 4=2x2, 6=3x2, 9=3x3 -->
                 <select class="level-selector-box hidden" id="ctrl-puzzle-difficulty" title="Puzzle Options">
                     <option value="4" selected>Beginner (2 × 2 Puzzle)</option>
                     <option value="6">Medium (3 × 2 Puzzle)</option>
@@ -789,7 +791,7 @@
             </div>
         </header>
 
-        <!-- MODE A VIEWPORT LAYER: FISHING GAME (UNCHANGED MECHANICS) -->
+        <!-- MODE A VIEWPORT LAYER: FISHING GAME (UNCHANGED) -->
         <main id="viewport-main" class="hidden">
             <section id="ocean-aquarium">
                 <div class="ocean-wave-overlay"></div>
@@ -816,7 +818,7 @@
             </section>
         </main>
 
-        <!-- MODE B VIEWPORT LAYER: REDESIGNED INTUITIVE PUZZLE SYSTEM -->
+        <!-- MODE B VIEWPORT LAYER: PUZZLE SYSTEM -->
         <main id="viewport-puzzle" class="hidden">
             <section id="puzzle-sandbox">
                 <div class="ocean-wave-overlay"></div>
@@ -824,24 +826,19 @@
                 <div class="corner-buddy" style="top:95px; left:20px;">🐠</div>
                 <div class="corner-buddy" style="bottom:110px; left:20px;">🐙</div>
                 
-                <!-- Highly explicit workspace display helper header -->
                 <div class="puzzle-instruction-header" id="puzzle-build-instruction">BUILD GRANDMOTHER</div>
 
                 <div class="puzzle-playground-split">
-                    <!-- Target empty drop outline grid board frame -->
                     <div class="puzzle-board-frame" id="puzzle-snap-board"></div>
                 </div>
 
-                <!-- Hand indicator layout instance element for 3-second demo modes -->
                 <div id="puzzle-demo-hand" class="hidden">👆</div>
 
-                <!-- Large high contrast interactive piece drawer tray layout box -->
                 <div class="puzzle-mix-tray" id="puzzle-pieces-tray"></div>
             </section>
             
             <section id="puzzle-reinforcement-panel">
                 <div class="giant-preview-card" id="puzzle-preview-card">
-                    <!-- Right Target Picture frame guide remain visible throughout task -->
                     <div class="avatar-classroom-frame" id="puzzle-avatar-viewport"><span style="font-size: 130px;">🧩</span></div>
                     <div class="classroom-vocab-title" id="puzzle-vocab-title">TARGET PICTURE<span>MAKE THIS PICTURE</span></div>
                 </div>
@@ -912,7 +909,6 @@
         const VOCABULARY = ["Father", "Mother", "Brother", "Sister", "Grandfather", "Grandmother", "Baby", "Family"];
         const CREATURE_TYPES = Object.keys(CREATURE_EMOJIS);
 
-        // Thai Localized Vocabulary Translations mapping
         const THAI_VOCAB_MAP = {
             Father: { thName: "คุณพ่อ", thBuild: "ต่อรูปคุณพ่อ", thIntro: "นี่คือคุณพ่อ" },
             Mother: { thName: "คุณแม่", thBuild: "ต่อรูปคุณแม่", thIntro: "นี่คือคุณแม่" },
@@ -929,12 +925,11 @@
             score: 0, coins: 0, gems: 0, correctCount: 0,
             pool: [...VOCABULARY], targetWord: "", activeCreatures: [],
             paused: false, speechSynth: window.speechSynthesis, isNarratingSequence: false,
-            level: 1, puzzleDifficulty: 4, // Default puzzle difficulty set to 4 (2x2 Beginner Mode)
+            level: 1, puzzleDifficulty: 4, 
             puzzlePool: [...VOCABULARY], activePuzzlePieces: [], puzzleDragTarget: null,
             dragOffset: { x:0, y:0 }, failureSpeechLimiter: 0
         };
 
-        // DOM Element Reference Bindings
         const elOcean = document.getElementById('ocean-aquarium');
         const elBillboardText = document.getElementById('target-billboard-text');
         const elScore = document.getElementById('ui-score');
@@ -952,7 +947,7 @@
         resizeCanvas();
 
         /**********************************************************************
-         * AUDIO ARCHITECTURE ENGINES (WEB AUDIO API PROCEDURAL GENERATORS)
+         * AUDIO ARCHITECTURE ENGINES
          **********************************************************************/
         class ClassroomAudioEngine {
             constructor() { this.ctx = null; this.musicInterval = null; this.sfxMuted = false; this.musicMuted = false; this.tempo = 125; this.notes = [60, 62, 64, 67, 69, 67, 64, 62, 60, 64, 67, 69, 72, 69, 67, 64]; this.step = 0; }
@@ -989,12 +984,10 @@
             if (callback) u.onend = callback; state.speechSynth.speak(u);
         }
 
-        // Expanded Bilingual Narration Controller Method Lookups
         function speakBilingualSequence(enPhrase, thPhrase, callback) {
             if (state.lang === 'both' && thPhrase) {
                 classroomNarrate(enPhrase, () => {
                     setTimeout(() => {
-                        // Switch utterance attributes dynamically for clean localized voice pacing profiles
                         const thUtterance = new SpeechSynthesisUtterance(thPhrase);
                         thUtterance.lang = 'th-TH'; thUtterance.rate = 0.8; thUtterance.pitch = 1.1;
                         if (callback) thUtterance.onend = callback;
@@ -1042,7 +1035,7 @@
         }
 
         /**********************************************************************
-         * SYSTEM MODE A: FAMILY FISHING (MECHANICS PRESERVED COMPLETELY)
+         * SYSTEM MODE A: FAMILY FISHING
          **********************************************************************/
         function startGameSession() {
             state.score = 0; state.coins = 0; state.gems = 0; state.correctCount = 0; state.pool = [...VOCABULARY]; state.isNarratingSequence = false;
@@ -1122,16 +1115,6 @@
             }
         }
 
-        function triggerTreasureBurstMilestone() {
-            AudioSystem.playHappyDing(); document.getElementById('chest-lid-svg').style.transform = "rotate(-25deg) translate(-10px, -15px)";
-            let rect = document.getElementById('prop-treasure').getBoundingClientRect(); let parentRect = elOcean.getBoundingClientRect();
-            let cx = rect.left - parentRect.left + 55; let cy = rect.top - parentRect.top + 35;
-            for(let i=0; i<30; i++) {
-                particles.push({ x: cx, y: cy, vx: (Math.random() - 0.5) * 14, vy: -5 - Math.random() * 12, type: Math.random() > 0.5 ? 'coin' : 'star', color: '#ffcd29', radius: 9 + Math.random()*6, alpha: 1, decay: 0.015 });
-            }
-            setTimeout(() => { document.getElementById('chest-lid-svg').style.transform = "none"; setupNextFishingRound(); }, 2500);
-        }
-
         function updateBadgeUI(isPuzzle) {
             let count = state.correctCount; let prefix = isPuzzle ? 'pbadge-' : 'badge-';
             let unl = [count >= 1, count >= 3, count >= 6, (isPuzzle ? state.puzzlePool : state.pool).length === 0];
@@ -1144,7 +1127,7 @@
         function startPuzzleGameSession() {
             state.score = 0; state.coins = 0; state.gems = 0; state.correctCount = 0; 
             state.puzzlePool = [...VOCABULARY]; state.isNarratingSequence = false;
-            state.puzzleDifficulty = 4; // Force Beginner 2x2 mode layout profiles as standard default
+            state.puzzleDifficulty = 4; 
             document.getElementById('ctrl-puzzle-difficulty').value = "4";
             
             updateDashboardCounters(); updateBadgeUI(true); buildProgressStars(VOCABULARY.length); setupNextPuzzleRound();
@@ -1154,7 +1137,6 @@
             if (state.puzzlePool.length === 0) { triggerEndGameSequence("🧩 PUZZLE CHAMPION 🏆", "Congratulations!<br>You are a Family Puzzle Champion!"); return; }
             state.targetWord = state.puzzlePool[Math.floor(Math.random() * state.puzzlePool.length)];
             
-            // Render visible targets instruction banners (Bilingual adaptive configuration strings)
             const headerLabel = document.getElementById('puzzle-build-instruction');
             const thData = THAI_VOCAB_MAP[state.targetWord];
             if (state.lang === 'both') {
@@ -1163,7 +1145,6 @@
                 headerLabel.innerHTML = `BUILD ${state.targetWord.toUpperCase()}`;
             }
 
-            // Lock Right Target Picture reference frame to maximize connectivity structures
             let emoji = FAMILY_EMOJIS[state.targetWord];
             document.getElementById('puzzle-avatar-viewport').innerHTML = `<span class="giant-learning-emoji">${emoji}</span>`;
             
@@ -1171,8 +1152,11 @@
             titleEl.innerHTML = `${state.targetWord.toUpperCase()} <span>${state.lang === 'both' ? thData.thName : ''}</span>`;
             document.getElementById('btn-puzzle-replay').disabled = false;
 
+            // Fade board and tray back in as new elements are generated
+            document.getElementById('puzzle-snap-board').style.opacity = '1';
+            document.getElementById('puzzle-pieces-tray').style.opacity = '1';
+
             speakBilingualSequence(`Let's make ${state.targetWord}!`, thData.thBuild, () => {
-                // Instantly kickstart programmatic 3-second animated cursor preview guides
                 setTimeout(runVisualDemonstrationSequence, 400);
             });
 
@@ -1182,15 +1166,24 @@
         function generatePuzzleBoardLayout(emojiStr) {
             const board = document.getElementById('puzzle-snap-board');
             const tray = document.getElementById('puzzle-pieces-tray');
-            board.innerHTML = ''; tray.innerHTML = ''; state.activePuzzlePieces = [];
+            
+            /* FIX 1 & 4: COMPLETELY WIPE BOARD, TRAY, AND RESIDUAL FRAGMENTS BEFORE GENERATING */
+            board.innerHTML = ''; 
+            tray.innerHTML = ''; 
+            document.querySelectorAll('.puzzle-piece-item').forEach(el => el.remove());
+            state.activePuzzlePieces = [];
+            state.puzzleDragTarget = null;
 
+            /* FIX 2 & 3: DYNAMIC GRID RESOLUTION & RESPONSIVE BOARD CELL SIZING */
             let cols = 2, rows = 2;
             if (state.puzzleDifficulty === 6) { cols = 3; rows = 2; }
             else if (state.puzzleDifficulty === 9) { cols = 3; rows = 3; }
 
-            const boardSize = 320;
-            const cellW = boardSize / cols; const cellH = boardSize / rows;
-            board.style.width = boardSize + 'px'; board.style.height = boardSize + 'px';
+            const boardSize = 320; // The completed image remains the same overall size
+            const cellW = boardSize / cols; 
+            const cellH = boardSize / rows;
+            board.style.width = boardSize + 'px'; 
+            board.style.height = boardSize + 'px';
 
             const renderCanvas = document.createElement('canvas');
             renderCanvas.width = boardSize; renderCanvas.height = boardSize;
@@ -1204,7 +1197,6 @@
                 for (let c = 0; c < cols; c++) {
                     let lx = c * cellW; let ty = r * cellH;
                     
-                    // Create clearly demarcated slot boundaries with placeholder indicators
                     let slot = document.createElement('div');
                     slot.className = 'puzzle-cell-slot';
                     slot.style.width = (cellW - 4) + 'px'; slot.style.height = (cellH - 4) + 'px';
@@ -1228,22 +1220,19 @@
                 }
             }
 
-            // Layout scrambled blocks systematically across bottom tray components
             let trayWidth = 550;
             let spacing = trayWidth / rawPieces.length;
             
-            rawPieces.sort(() => Math.random() - 0.5); // Randomize layout order mapping
+            rawPieces.sort(() => Math.random() - 0.5); 
             rawPieces.forEach((piece, idx) => {
                 tray.appendChild(piece.el);
                 
-                // Programmatic high-visibility centering arrays
                 let rx = (idx * spacing) + (spacing / 2) - (piece.w / 2);
                 let ry = 75 - (piece.h / 2);
                 
                 piece.currentX = rx; piece.currentY = ry;
                 piece.el.style.left = rx + 'px'; piece.el.style.top = ry + 'px';
 
-                // Combined pointer listener setups targeting standard cell screens and whiteboard layers
                 const grabAction = (e) => { if (!state.paused && !piece.snapped) startPieceDrag(piece, e); };
                 piece.el.addEventListener('pointerdown', grabAction);
                 state.activePuzzlePieces.push(piece);
@@ -1254,13 +1243,12 @@
          * VISUAL DEMONSTRATION MODULE
          **********************************************************************/
         function runVisualDemonstrationSequence() {
-            if (state.activePuzzlePieces.length === 0 || state.paused) return;
+            if (state.activePuzzlePieces.length === 0 || state.paused || state.currentGameMode !== 'puzzle') return;
             
             const demoHand = document.getElementById('puzzle-demo-hand');
-            const targetPiece = state.activePuzzlePieces[0]; // Guide with primary fragment block
+            const targetPiece = state.activePuzzlePieces[0]; 
             if (!targetPiece || targetPiece.snapped) return;
 
-            // Compute geometric bounding matrix values
             let sandboxRect = document.getElementById('puzzle-sandbox').getBoundingClientRect();
             let pieceRect = targetPiece.el.getBoundingClientRect();
             let boardRect = document.getElementById('puzzle-snap-board').getBoundingClientRect();
@@ -1271,21 +1259,18 @@
             let endHandX = boardRect.left - sandboxRect.left + targetPiece.correctX + (targetPiece.w / 2);
             let endHandY = boardRect.top - sandboxRect.top + targetPiece.correctY + (targetPiece.h / 2);
 
-            // Display floating hand pointer
             demoHand.style.left = startHandX + 'px'; demoHand.style.top = startHandY + 'px';
             demoHand.classList.remove('hidden');
 
-            // Trigger animation interpolation steps
             setTimeout(() => {
+                if (state.currentGameMode !== 'puzzle') return;
                 targetPiece.el.style.transform = "scale(1.08)";
-                // Highlight corresponding drop destination slot contours
                 targetPiece.slotEl.classList.add('glow-active');
                 
                 demoHand.style.left = endHandX + 'px';
                 demoHand.style.top = endHandY + 'px';
             }, 600);
 
-            // Turn off preview elements cleanly
             setTimeout(() => {
                 targetPiece.el.style.transform = "none";
                 targetPiece.slotEl.classList.remove('glow-active');
@@ -1294,7 +1279,7 @@
         }
 
         /**********************************************************************
-         * POINTER DRAG INTERACTION HOOKS (SMART SNAP CAPABILITIES MULTIPLEX)
+         * POINTER DRAG INTERACTION HOOKS
          **********************************************************************/
         function startPieceDrag(piece, event) {
             state.puzzleDragTarget = piece;
@@ -1304,7 +1289,13 @@
             let elRect = piece.el.getBoundingClientRect();
             state.dragOffset.x = clX - elRect.left; state.dragOffset.y = clY - elRect.top;
             
-            // Instantly highlight drop target paths with animated yellow flaring lines
+            // Move piece to global sandbox layer for unbound movement overlay tracking
+            document.getElementById('puzzle-sandbox').appendChild(piece.el);
+            let sandboxRect = document.getElementById('puzzle-sandbox').getBoundingClientRect();
+            piece.currentX = clX - sandboxRect.left - state.dragOffset.x;
+            piece.currentY = clY - sandboxRect.top - state.dragOffset.y;
+            piece.el.style.left = piece.currentX + 'px'; piece.el.style.top = piece.currentY + 'px';
+
             state.activePuzzlePieces.forEach(p => {
                 if(!p.snapped) p.slotEl.classList.add('glow-active');
             });
@@ -1333,7 +1324,6 @@
             state.puzzleDragTarget = null;
             piece.el.releasePointerCapture(e.pointerId);
 
-            // Clear glow profiles across outline zones
             state.activePuzzlePieces.forEach(p => p.slotEl.classList.remove('glow-active'));
 
             let boardRect = document.getElementById('puzzle-snap-board').getBoundingClientRect();
@@ -1342,16 +1332,19 @@
             let bLocalX = boardRect.left - sandboxRect.left; let bLocalY = boardRect.top - sandboxRect.top;
             let targetSnapX = bLocalX + piece.correctX; let targetSnapY = bLocalY + piece.correctY;
 
-            // Highly forgiving snap calculations customized for kindergarten capabilities
-            let proximityThreshold = 55; // Magnified capturing radius limits
+            // Highly forgiving proximity threshold calculation
+            let proximityThreshold = 55; 
             let dist = Math.hypot(piece.currentX - targetSnapX, piece.currentY - targetSnapY);
 
             if (dist < proximityThreshold) {
                 piece.snapped = true; piece.el.classList.add('snapped');
-                piece.el.style.left = targetSnapX + 'px'; piece.el.style.top = targetSnapY + 'px';
-                document.getElementById('puzzle-sandbox').appendChild(piece.el); 
                 
-                piece.slotEl.innerHTML = ""; // Dismiss guide placeholders
+                /* FIX 1: Append straight inside board element to clear perfectly on next round reset */
+                document.getElementById('puzzle-snap-board').appendChild(piece.el); 
+                piece.el.style.left = piece.correctX + 'px'; 
+                piece.el.style.top = piece.correctY + 'px';
+                
+                piece.slotEl.innerHTML = ""; 
                 AudioSystem.playBubblePop();
                 
                 let parentRect = canvas.getBoundingClientRect();
@@ -1359,11 +1352,9 @@
                 
                 checkPuzzleCompletionState();
             } else {
-                // Forgiving Failure: Smoothly return back into lower slots without jarring cues
                 AudioSystem.playOops();
                 document.getElementById('puzzle-pieces-tray').appendChild(piece.el);
                 
-                // Reposition smoothly inside workspace constraints
                 let trayWidth = 550;
                 let pieceIdx = state.activePuzzlePieces.indexOf(piece);
                 let spacing = trayWidth / state.activePuzzlePieces.length;
@@ -1373,7 +1364,6 @@
                 piece.currentX = rx; piece.currentY = ry;
                 piece.el.style.left = rx + 'px'; piece.el.style.top = ry + 'px';
 
-                // Soft encouraging reminder vocals activated conservatively to minimize cognitive overload
                 state.failureSpeechLimiter++;
                 if (state.failureSpeechLimiter % 3 === 0) {
                     const fallbackPhrases = ["Almost!", "Keep trying!", "Let's try another spot."];
@@ -1394,7 +1384,6 @@
                 state.score += 20; state.coins += 10; state.gems += 2; state.correctCount += 1; updateDashboardCounters();
                 let ts = document.getElementById(`star-idx-${state.correctCount - 1}`); if (ts) ts.classList.add('earned');
 
-                // Apply victory flares over card panels
                 document.getElementById('puzzle-preview-card').classList.add('correct-glow');
                 document.getElementById('puzzle-avatar-viewport').classList.add('wave-animation');
                 
@@ -1404,16 +1393,26 @@
                 state.puzzlePool = state.puzzlePool.filter(w => w !== state.targetWord); updateBadgeUI(true);
                 const thData = THAI_VOCAB_MAP[state.targetWord];
 
-                // Comprehensive Bilingual Learning Reinforcement Flow Chain
+                /* FIX 5: EXCELLENT TRANSITION AND TIMED CLEARING OF ELEMENTS */
                 speakBilingualSequence(`Excellent! You built ${state.targetWord}!`, "ต่อรูปเสร็จแล้ว", () => {
                     setTimeout(() => { classroomNarrate(`${state.targetWord}.`, () => {
                         setTimeout(() => { speakBilingualSequence(`This is ${state.targetWord}.`, thData.thIntro, () => {
                             setTimeout(() => { classroomNarrate(`Can you say ${state.targetWord}?`, () => {
-                                state.isNarratingSequence = false;
-                                document.getElementById('puzzle-preview-card').classList.remove('correct-glow');
-                                document.getElementById('puzzle-avatar-viewport').classList.remove('puzzle-avatar-viewport');
-                                title.classList.remove('highlight-active');
-                                setTimeout(setupNextPuzzleRound, 800);
+                                
+                                // End of reinforcement chain: Begin smooth classroom-friendly transition fade out
+                                document.getElementById('puzzle-snap-board').style.opacity = '0';
+                                document.getElementById('puzzle-pieces-tray').style.opacity = '0';
+                                
+                                setTimeout(() => {
+                                    state.isNarratingSequence = false;
+                                    document.getElementById('puzzle-preview-card').classList.remove('correct-glow');
+                                    document.getElementById('puzzle-avatar-viewport').classList.remove('wave-animation');
+                                    title.classList.remove('highlight-active');
+                                    
+                                    // Load next puzzle with a clean slate
+                                    setupNextPuzzleRound();
+                                }, 500); // Wait for fade-out styling to complete before resetting nodes
+                                
                             }); }, 1000);
                         }); }, 1000);
                     }); }, 800);
@@ -1493,7 +1492,6 @@
         document.getElementById('menu-launch-puzzle').addEventListener('click', () => { AudioSystem.init(); displayScreen('puzzle'); });
         document.getElementById('ctrl-brand-home').addEventListener('click', () => { displayScreen('menu'); });
 
-        // Language toggle selection listener setup context variations
         document.getElementById('ctrl-language-setting').addEventListener('change', (e) => {
             state.lang = e.target.value;
             if (state.currentGameMode === 'puzzle') setupNextPuzzleRound();
@@ -1534,7 +1532,6 @@
             }
         });
 
-        // Initialize background animation cycle threads
         displayScreen('menu');
         requestAnimationFrame(gameLoopRuntime);
     </script>
