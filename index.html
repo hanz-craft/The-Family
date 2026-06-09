@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Family Fishing Game by Teacher Hanz Balili</title>
+    <title>The Family Hub: Fishing & Puzzles by Teacher Hanz</title>
     <style>
         :root {
             --font-family: 'Arial Rounded MT Bold', 'Comic Sans MS', 'Chalkboard SE', sans-serif;
@@ -63,6 +63,7 @@
             font-size: 32px;
             color: #1b5e20;
             text-shadow: 2px 2px 0px #c8e6c9;
+            cursor: pointer;
         }
 
         .dashboard-counters {
@@ -85,7 +86,6 @@
             box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        /* Mode Selection Panel styling */
         .level-selector-box {
             background: #fff;
             border: 4px solid #1565c0;
@@ -140,24 +140,30 @@
             box-shadow: 0 6px 0 #b33c00;
         }
 
-        /* Split-Screen Playfield Arena */
-        #viewport-main {
+        /* Viewport Main Display Split Panels */
+        #viewport-main, #viewport-puzzle {
             flex: 1;
             display: flex;
             position: relative;
             overflow: hidden;
         }
 
-        /* Left Section: Classroom Underwater Environment */
-        #ocean-aquarium {
+        /* Left Section: Ocean Sandbox Environment */
+        #ocean-aquarium, #puzzle-sandbox {
             flex: 2.8;
             position: relative;
             background: linear-gradient(to bottom, var(--water-top) 0%, var(--water-mid) 45%, var(--water-deep) 100%);
             overflow: hidden;
-            cursor: crosshair;
         }
 
-        /* Animated Environment Features */
+        #puzzle-sandbox {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            padding: 40px;
+        }
+
         .ocean-wave-overlay {
             position: absolute;
             top: 0;
@@ -183,7 +189,6 @@
             animation: raysShimmer 8s ease-in-out infinite alternate;
         }
 
-        /* Giant Classroom Target Display */
         .giant-prompt-marquee {
             position: absolute;
             top: 25px;
@@ -212,7 +217,6 @@
             -webkit-text-stroke: 2px #000;
         }
 
-        /* Underwater Floor Scenic Background elements */
         .seabed-floor {
             position: absolute;
             bottom: 0;
@@ -233,7 +237,6 @@
             pointer-events: none;
         }
 
-        /* Interactive Ambient Props */
         .interactive-prop {
             position: absolute;
             z-index: 5;
@@ -243,11 +246,8 @@
         .interactive-prop:hover {
             transform: scale(1.15);
         }
-        .interactive-prop:active {
-            transform: scale(0.9) rotate(-10deg);
-        }
 
-        /* Ultra-High Visibility Emoji Sea Creatures */
+        /* Sea Creatures & Signs Styles */
         .sea-creature-entity {
             position: absolute;
             width: 240px;
@@ -266,7 +266,6 @@
             animation: emojiBounce 2.5s ease-in-out infinite alternate;
         }
 
-        /* Bright Floating Sign: Always Straight, Horizontal, Left-To-Right */
         .creature-classroom-sign {
             position: absolute;
             top: -45px;
@@ -302,8 +301,8 @@
             margin-top: 2px;
         }
 
-        /* Right Section: Giant Interactive Reinforcement Card Panel */
-        #classroom-reinforcement-panel {
+        /* Right Section: Interactive Reinforcement Layouts */
+        #classroom-reinforcement-panel, #puzzle-reinforcement-panel {
             flex: 1.3;
             background: linear-gradient(135deg, #f5f5f5 0%, #e3f2fd 100%);
             border-left: 8px solid #4caf50;
@@ -350,20 +349,10 @@
             padding: 10px;
         }
 
-        /* Giant Learning Card Viewport Elements */
         .giant-learning-emoji {
             font-size: 190px;
             line-height: 1;
             display: block;
-        }
-
-        .avatar-classroom-frame svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .avatar-classroom-frame.wave-animation {
-            animation: friendlyWave 0.5s ease-in-out 3;
         }
 
         .classroom-vocab-title {
@@ -407,13 +396,6 @@
             box-shadow: 0 4px 0 #e65100;
         }
 
-        .btn-giant-speak:disabled {
-            background: #b0bec5;
-            box-shadow: 0 10px 0 #78909c;
-            cursor: not-allowed;
-        }
-
-        /* Achievement Badge Display Area */
         .achievement-ribbon {
             width: 100%;
             display: flex;
@@ -439,7 +421,83 @@
             animation: pop 0.5s ease-out;
         }
 
-        /* Bottom Star Tracker Section */
+        /* --- NEW PUZZLE COMPONENT LAYOUTS --- */
+        .puzzle-workspace {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            z-index: 5;
+        }
+
+        .puzzle-board-frame {
+            background: rgba(255, 255, 255, 0.9);
+            border: 6px solid #1b5e20;
+            border-radius: 24px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: visible;
+        }
+
+        .puzzle-cell-slot {
+            position: absolute;
+            box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.3);
+            box-sizing: border-box;
+        }
+
+        .puzzle-piece-item {
+            position: absolute;
+            cursor: grab;
+            z-index: 50;
+            touch-action: none;
+            box-sizing: border-box;
+            transition: transform 0.1s ease;
+        }
+
+        .puzzle-piece-item:active {
+            cursor: grabbing;
+            z-index: 100;
+            transform: scale(1.05);
+        }
+
+        .puzzle-piece-canvas {
+            display: block;
+            border: 3px solid #000;
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: 0 6px 10px rgba(0,0,0,0.25);
+        }
+
+        .puzzle-piece-item.snapped {
+            pointer-events: none;
+            z-index: 10;
+            transform: none;
+        }
+
+        .puzzle-piece-item.snapped .puzzle-piece-canvas {
+            border-color: #4caf50;
+            box-shadow: none;
+            animation: briefGlow 0.5s ease-out;
+        }
+
+        .puzzle-mix-tray {
+            width: 500px;
+            height: 140px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 5px dashed #0288d1;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        @keyframes briefGlow {
+            0% { filter: drop-shadow(0 0 0px #4caf50); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 20px #4caf50); transform: scale(1.08); }
+            100% { filter: drop-shadow(0 0 0px #4caf50); transform: scale(1); }
+        }
+
+        /* Shared Footer Systems */
         footer {
             height: 90px;
             background: #e8f5e9;
@@ -475,7 +533,6 @@
             transform: scale(1.25) rotate(15deg);
         }
 
-        /* Immersive Visual Effects Overlay Layer Canvas */
         #fx-layer-canvas {
             position: absolute;
             top: 0;
@@ -486,7 +543,7 @@
             z-index: 90;
         }
 
-        /* Overlay & Full Screen Modals */
+        /* Screen & Overlays Navigation Matrix */
         .fullscreen-overlay {
             position: absolute;
             top: 0;
@@ -499,6 +556,44 @@
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+
+        .menu-selection-container {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .menu-activity-card {
+            background: #ffffff;
+            border: 8px solid #4caf50;
+            border-radius: 36px;
+            width: 280px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 16px 32px rgba(0,0,0,0.3);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .menu-activity-card:hover {
+            transform: scale(1.08) translateY(-10px);
+            border-color: #ff9800;
+        }
+
+        .menu-activity-card .card-glyph {
+            font-size: 90px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .menu-activity-card .card-label {
+            font-size: 28px;
+            font-weight: 900;
+            color: #1b5e20;
         }
 
         .classroom-modal-box {
@@ -563,165 +658,153 @@
             box-shadow: 0 10px 0 #c62828;
         }
 
-        /* Animation Keyframe Archives */
-        @keyframes waveMotion {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        @keyframes raysShimmer {
-            0% { transform: scale(1) rotate(0deg); opacity: 0.4; }
-            100% { transform: scale(1.1) rotate(4deg); opacity: 0.7; }
-        }
-        @keyframes emojiBounce {
-            0% { transform: translateY(0) scale(1); }
-            100% { transform: translateY(-12px) scale(1.03); }
-        }
-        @keyframes friendlyWave {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(12deg); }
-        }
-        @keyframes modalPop {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        @keyframes neonGreenGlow {
-            0% { box-shadow: 0 0 15px #4caf50; }
-            100% { box-shadow: 0 0 40px #4caf50, inset 0 0 20px #4caf50; }
-        }
-        @keyframes pop {
-            0% { transform: scale(0.6); }
-            100% { transform: scale(1); }
+        /* Viewport Ambient Watching Corner Buddies Layout */
+        .corner-buddy {
+            position: absolute;
+            font-size: 55px;
+            z-index: 4;
+            pointer-events: none;
+            animation: friendlyWave 3s ease-in-out infinite standard;
         }
 
-        .hidden {
-            display: none !important;
-        }
+        @keyframes waveMotion { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes raysShimmer { 0% { transform: scale(1) rotate(0deg); opacity: 0.4; } 100% { transform: scale(1.1) rotate(4deg); opacity: 0.7; } }
+        @keyframes emojiBounce { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-12px) scale(1.03); } }
+        @keyframes friendlyWave { 0%, 100% { transform: rotate(0deg) translateY(0); } 50% { transform: rotate(8deg) translateY(-6px); } }
+        @keyframes modalPop { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes neonGreenGlow { 0% { box-shadow: 0 0 15px #4caf50; } 100% { box-shadow: 0 0 40px #4caf50, inset 0 0 20px #4caf50; } }
+        @keyframes pop { 0% { transform: scale(0.6); } 100% { transform: scale(1); } }
+
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
     <div id="game-container">
-        <!-- Visual FX Render Canvas Engine Layer -->
+        <!-- Overlay Layer Canvas Engine -->
         <canvas id="fx-layer-canvas"></canvas>
 
-        <!-- Dynamic Header UI -->
+        <!-- Dynamic Header Interface Dashboard -->
         <header>
-            <div class="nav-brand">
-                <h1>👪 The Family Fishing Game by Teacher Hanz Balili</h1>
+            <div class="nav-brand" id="ctrl-brand-home">
+                <h1>Family Core Hub 🏠</h1>
             </div>
 
-            <!-- Advanced Teacher Difficulty Mode Dropdown Matrix -->
-            <div>
-                <select class="level-selector-box" id="ctrl-difficulty-level" title="Change Classroom Game Mode">
-                    <option value="1" selected>Level 1: Pictures Only (Default)</option>
+            <!-- Dynamic Difficulty Switch System -->
+            <div id="difficulty-control-wrapper">
+                <select class="level-selector-box" id="ctrl-difficulty-level">
+                    <option value="1" selected>Level 1: Pictures Only (Fishing)</option>
                     <option value="2">Level 2: Pictures + Words</option>
                     <option value="3">Level 3: Words Only</option>
+                </select>
+                <select class="level-selector-box hidden" id="ctrl-puzzle-difficulty">
+                    <option value="4" selected>Easy (2 × 2 Puzzle)</option>
+                    <option value="6">Medium (3 × 2 Puzzle)</option>
+                    <option value="9">Hard (3 × 3 Puzzle)</option>
                 </select>
             </div>
             
             <div class="dashboard-counters">
-                <div class="counter-pill" title="Score Points">⭐ <span id="ui-score">0</span></div>
-                <div class="counter-pill" title="Coins Collected">🪙 <span id="ui-coins">0</span></div>
-                <div class="counter-pill" title="Gems Discovered">💎 <span id="ui-gems">0</span></div>
+                <div class="counter-pill">⭐ <span id="ui-score">0</span></div>
+                <div class="counter-pill">🪙 <span id="ui-coins">0</span></div>
+                <div class="counter-pill">💎 <span id="ui-gems">0</span></div>
             </div>
 
             <div class="action-controls">
-                <button class="btn-ui" id="ctrl-fullscreen" title="Full Screen View">⛶</button>
-                <button class="btn-ui" id="ctrl-pause" title="Pause Game">⏸</button>
-                <button class="btn-ui warn" id="ctrl-restart" title="Restart Level">🔄</button>
-                <button class="btn-ui" id="ctrl-mute-sfx" title="Mute FX">🔊</button>
-                <button class="btn-ui" id="ctrl-mute-music" title="Mute Music">🎵</button>
-                <button class="btn-ui danger" id="ctrl-exit" title="Exit">🚪</button>
+                <button class="btn-ui" id="ctrl-fullscreen">⛶</button>
+                <button class="btn-ui" id="ctrl-pause">⏸</button>
+                <button class="btn-ui warn" id="ctrl-restart">🔄</button>
+                <button class="btn-ui" id="ctrl-mute-sfx">🔊</button>
+                <button class="btn-ui" id="ctrl-mute-music">🎵</button>
+                <button class="btn-ui danger" id="ctrl-exit"> L🚪</button>
             </div>
         </header>
 
-        <!-- Viewport Main Content Split -->
-        <main id="viewport-main">
-            <!-- Left Sandbox Environment -->
+        <!-- ACTIVITY VIEWPORT 1: FISHING SYSTEM -->
+        <main id="viewport-main" class="hidden">
             <section id="ocean-aquarium">
                 <div class="ocean-wave-overlay"></div>
                 <div class="light-rays"></div>
-                
-                <div class="giant-prompt-marquee" id="target-billboard">
-                    Find: <span id="target-billboard-text">Loading...</span>
-                </div>
-
-                <!-- Ground Level Props Layout -->
+                <div class="giant-prompt-marquee">Find: <span id="target-billboard-text">Loading...</span></div>
                 <div class="seabed-floor"></div>
-                
-                <!-- SVG Background & Clickable Props Asset Elements -->
                 <svg class="coral-decor" style="left: 5%; width:90px; height:120px;" viewBox="0 0 100 150"><path d="M20,150 Q40,90 20,40 T50,0 Q70,50 50,100 T80,150 Z" fill="#ec407a"/></svg>
                 <svg class="coral-decor" style="right: 8%; width:110px; height:140px;" viewBox="0 0 100 150"><path d="M30,150 Q10,80 40,30 T60,0 Q90,60 50,110 T70,150 Z" fill="#ab47bc"/></svg>
-                
-                <!-- Interactive Elements -->
                 <div class="interactive-prop" id="prop-treasure" style="bottom: 15px; left: 40%; width: 110px; height: 90px;">
-                    <svg viewBox="0 0 100 80">
-                        <rect x="10" y="30" width="80" height="45" rx="5" fill="#8d6e63" stroke="#5d4037" stroke-width="4"/>
-                        <path d="M10,30 Q50,0 90,30 Z" fill="#b10000" stroke="#5d4037" stroke-width="4" id="chest-lid-svg"/>
-                        <circle cx="50" cy="35" r="7" fill="#ffca28"/>
-                    </svg>
+                    <svg viewBox="0 0 100 80"><rect x="10" y="30" width="80" height="45" rx="5" fill="#8d6e63" stroke="#5d4037" stroke-width="4"/><path d="M10,30 Q50,0 90,30 Z" fill="#b10000" stroke="#5d4037" stroke-width="4" id="chest-lid-svg"/><circle cx="50" cy="35" r="7" fill="#ffca28"/></svg>
                 </div>
-
-                <div class="interactive-prop" id="prop-crab" style="bottom: 15px; left: 15%; width: 85px; height: 65px;">
-                    <span style="font-size: 60px; display: block; line-height: 1;">🦀</span>
-                </div>
-
-                <div class="interactive-prop" id="prop-starfish" style="bottom: 25px; right: 25%; width: 75px; height: 75px;">
-                    <span style="font-size: 60px; display: block; line-height: 1;">⭐</span>
-                </div>
+                <div class="interactive-prop" id="prop-crab" style="bottom: 15px; left: 15%; width: 85px; height: 65px;"><span style="font-size: 60px; display: block;">🦀</span></div>
+                <div class="interactive-prop" id="prop-starfish" style="bottom: 25px; right: 25%; width: 75px; height: 75px;"><span style="font-size: 60px; display: block;">⭐</span></div>
             </section>
-
-            <!-- Right Reinforcement Matrix Panel -->
             <section id="classroom-reinforcement-panel">
                 <div class="giant-preview-card" id="main-preview-card">
-                    <div class="avatar-classroom-frame" id="avatar-viewport-frame">
-                        <!-- Default Startup State View Graphic -->
-                        <span style="font-size: 130px;">🎣</span>
-                    </div>
-                    <div class="classroom-vocab-title" id="vocab-title-text">Catch a creature!</div>
+                    <div class="avatar-classroom-frame" id="avatar-viewport-frame"><span style="font-size: 130px;">🎣</span></div>
+                    <div class="classroom-vocab-title" id="vocab-title-text">Catch!</div>
                 </div>
-
-                <button class="btn-giant-speak" id="btn-trigger-speech" disabled>
-                    📢 REPLAY INSTRUCTION
-                </button>
-
-                <!-- Badge Tracking Matrix Systems Container -->
-                <div class="achievement-ribbon" title="Unlocked Badges">
-                    <span class="badge-icon" id="badge-0" title="Family Explorer">🏅</span>
-                    <span class="badge-icon" id="badge-1" title="Ocean Learner">🐬</span>
-                    <span class="badge-icon" id="badge-2" title="Vocabulary Master">🎓</span>
-                    <span class="badge-icon" id="badge-3" title="Family Champion">🏆</span>
+                <button class="btn-giant-speak" id="btn-trigger-speech" disabled>📢 REPLAY ASK</button>
+                <div class="achievement-ribbon">
+                    <span class="badge-icon" id="badge-0">🏅</span><span class="badge-icon" id="badge-1">🐬</span><span class="badge-icon" id="badge-2">🎓</span><span class="badge-icon" id="badge-3">🏆</span>
                 </div>
             </section>
         </main>
 
-        <!-- Stars Reward Track Status Deck -->
+        <!-- ACTIVITY VIEWPORT 2: PUZZLE ENGINE -->
+        <main id="viewport-puzzle" class="hidden">
+            <section id="puzzle-sandbox">
+                <div class="ocean-wave-overlay"></div>
+                <div class="light-rays"></div>
+                <div class="corner-buddy" style="top:20px; left:20px;">🐠</div>
+                <div class="corner-buddy" style="bottom:110px; right:20px;">🐙</div>
+                
+                <div class="puzzle-workspace">
+                    <!-- Target Puzzle Drag Grid -->
+                    <div class="puzzle-board-frame" id="puzzle-snap-board"></div>
+                    <!-- Pieces Drawer Container Tray -->
+                    <div class="puzzle-mix-tray" id="puzzle-pieces-tray"></div>
+                </div>
+            </section>
+            <section id="puzzle-reinforcement-panel">
+                <div class="giant-preview-card" id="puzzle-preview-card">
+                    <div class="avatar-classroom-frame" id="puzzle-avatar-viewport"><span style="font-size: 130px;">🧩</span></div>
+                    <div class="classroom-vocab-title" id="puzzle-vocab-title">Build It!</div>
+                </div>
+                <button class="btn-giant-speak" id="btn-puzzle-replay" disabled>📢 REPLAY TARGET</button>
+                <div class="achievement-ribbon">
+                    <span class="badge-icon" id="pbadge-0">🏅</span><span class="badge-icon" id="pbadge-1">🧩</span><span class="badge-icon" id="pbadge-2">🎓</span><span class="badge-icon" id="pbadge-3">🏆</span>
+                </div>
+            </section>
+        </main>
+
+        <!-- Shared Core Reward Tracker Footer -->
         <footer>
             <div class="footer-banner-text">Classroom Progress Tracker:</div>
-            <div class="classroom-stars-track" id="stars-deck-casing">
-                <!-- Stars added dynamically by system controller setup -->
-            </div>
+            <div class="classroom-stars-track" id="stars-deck-casing"></div>
         </footer>
     </div>
 
-    <!-- START / INTRO SCREENS MODAL OVERLAY -->
+    <!-- MAIN MENU SCREEN GATEWAYS OVERLAY -->
     <div class="fullscreen-overlay" id="modal-start-gate">
-        <div class="classroom-modal-box">
-            <h2 class="modal-title-giant">The Family Fishing Game by Teacher Hanz Balili</h2>
-            <p class="modal-desc-text">Listen carefully to the teacher's voice instructions! Catch the friendly sea creatures carrying the matching family pictures.</p>
-            <div class="modal-btn-group">
-                <button class="btn-modal-action" id="btn-gate-play">Let's Play! 🌊</button>
+        <div class="classroom-modal-box" style="border-color:#4caf50;">
+            <h2 class="modal-title-giant">The Family Hub by Teacher Hanz Balili 🌟</h2>
+            <p class="modal-desc-text">Choose a happy learning activity to play today with your classmates!</p>
+            
+            <div class="menu-selection-container">
+                <div class="menu-activity-card" id="menu-launch-fishing">
+                    <span class="card-glyph">🎣</span>
+                    <span class="card-label">Family Fishing Game by Teacher Hanz Balili</span>
+                </div>
+                <div class="menu-activity-card" id="menu-launch-puzzle">
+                    <span class="card-glyph">🧩</span>
+                    <span class="card-label">Family Puzzle Game by Teacher Hanz Balili</span>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- GAME OVER / REWARD CERTIFICATE OVERLAY MODAL -->
+    <!-- END CERTIFICATES SYSTEM LAYER -->
     <div class="fullscreen-overlay hidden" id="modal-end-gate">
         <div class="classroom-modal-box" style="border-color: #ffd700; background: #fffde7;">
-            <h2 class="modal-title-giant" style="color: #ff8f00;">📜 CERTIFICATE OF SUCCESS 📜</h2>
-            <p class="modal-desc-text" id="end-gate-body-text" style="font-size: 32px; color: #ff6f00;">
-                Congratulations!<br>You are a Family Vocabulary Champion!
-            </p>
+            <h2 class="modal-title-giant" style="color: #ff8f00;" id="end-gate-title">📜 CHAMPION DECK 📜</h2>
+            <p class="modal-desc-text" id="end-gate-body-text" style="font-size: 32px; color: #ff6f00;"></p>
             <div id="end-stars-display" style="font-size: 54px; margin-bottom: 25px;"></div>
             <div class="modal-btn-group">
                 <button class="btn-modal-action" id="btn-end-replay">Play Again 🔄</button>
@@ -731,11 +814,11 @@
         </div>
     </div>
 
-    <!-- GENERIC INTERMEDIARY PAUSE / BREAK OVERLAY MODAL -->
+    <!-- INTERMEDIARY BREAK MODAL -->
     <div class="fullscreen-overlay hidden" id="modal-pause-gate">
         <div class="classroom-modal-box" style="border-color: #2196f3;">
             <h2 class="modal-title-giant" style="color: #1565c0;">Game Paused</h2>
-            <p class="modal-desc-text">Take a deep breath! Click below to return to the ocean depths.</p>
+            <p class="modal-desc-text">Take a deep breath! Click below to return to the fun.</p>
             <div class="modal-btn-group">
                 <button class="btn-modal-action secondary" id="btn-pause-resume">Resume Game ▶</button>
             </div>
@@ -744,656 +827,500 @@
 
     <script>
         /**********************************************************************
-         * EMOJI ARCHIVE DEFINITIONS (3D CARTOON STYLE SET)
+         * SYSTEM CORE VARIABLES & DATA ARCHIVE
          **********************************************************************/
-        const CREATURE_EMOJIS = {
-            Dolphin: "🐬", Turtle: "🐢", Octopus: "🐙", Crab: "🦀",
-            TropicalFish: "🐠", Fish: "🐟", Starfish: "⭐", Whale: "🐳",
-            Jellyfish: "🪼", Squid: "🦑", Pufferfish: "🐡", Lobster: "🦞"
-        };
-
-        // High-Quality Family Character Emojis matching user profiles perfectly
-        const FAMILY_EMOJIS = {
-            father: "👨",
-            mother: "👩",
-            brother: "👦",
-            sister: "👧",
-            grandfather: "👴",
-            grandmother: "👵",
-            baby: "👶",
-            Family: "👨‍👩‍👧‍👦"
-        };
-
-        const VOCABULARY = ["father", "mother", "brother", "sister", "grandfather", "grandmother", "baby", "Family"];
+        const CREATURE_EMOJIS = { Dolphin: "🐬", Turtle: "🐢", Octopus: "🐙", Crab: "🦀", TropicalFish: "🐠", Fish: "🐟", Starfish: "⭐", Whale: "🐳", Jellyfish: "🪼", Squid: "🦑", Pufferfish: "🐡", Lobster: "🦞" };
+        const FAMILY_EMOJIS = { Father: "👨", Mother: "👩", Brother: "👦", Sister: "👧", Grandfather: "👴", Grandmother: "👵", Baby: "👶", Family: "👨‍👩‍👧‍👦" };
+        const VOCABULARY = ["Father", "Mother", "Brother", "Sister", "Grandfather", "Grandmother", "Baby", "Family"];
         const CREATURE_TYPES = Object.keys(CREATURE_EMOJIS);
 
-        /**********************************************************************
-         * PROCEDURAL AUDIO MUSIC ENGINE (WEB AUDIO API MACROS)
-         **********************************************************************/
-        class ClassroomAudioEngine {
-            constructor() {
-                this.ctx = null;
-                this.musicInterval = null;
-                this.sfxMuted = false;
-                this.musicMuted = false;
-                this.tempo = 125;
-                this.notes = [60, 62, 64, 67, 69, 67, 64, 62, 60, 64, 67, 69, 72, 69, 67, 64];
-                this.step = 0;
-            }
-
-            init() {
-                if (!this.ctx) {
-                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-                    this.startMusic();
-                }
-            }
-
-            playSynthTone(freq, type, duration, vol = 0.2, delay = 0) {
-                if (this.sfxMuted || !this.ctx) return;
-                try {
-                    const osc = this.ctx.createOscillator();
-                    const gain = this.ctx.createGain();
-                    osc.type = type;
-                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + delay);
-                    gain.gain.setValueAtTime(vol, this.ctx.currentTime + delay);
-                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + delay + duration);
-                    osc.connect(gain);
-                    gain.connect(this.ctx.destination);
-                    osc.start(this.ctx.currentTime + delay);
-                    osc.stop(this.ctx.currentTime + delay + duration);
-                } catch(e){}
-            }
-
-            playHappyDing() {
-                this.playSynthTone(587.33, 'sine', 0.2, 0.25, 0);   
-                this.playSynthTone(659.25, 'sine', 0.2, 0.25, 0.05); 
-                this.playSynthTone(880.00, 'sine', 0.3, 0.3, 0.1);   
-            }
-
-            playOops() {
-                this.playSynthTone(349.23, 'triangle', 0.2, 0.3, 0); 
-                this.playSynthTone(261.63, 'triangle', 0.3, 0.3, 0.15); 
-            }
-
-            playBubblePop() {
-                this.playSynthTone(900, 'sine', 0.04, 0.15, 0);
-            }
-
-            playApplauseBurst() {
-                for(let i=0; i<15; i++) {
-                    let randomDelay = Math.random() * 0.6;
-                    let randomFreq = 700 + Math.random() * 600;
-                    this.playSynthTone(randomFreq, 'triangle', 0.08, 0.08, randomDelay);
-                }
-            }
-
-            startMusic() {
-                if (this.musicInterval) clearInterval(this.musicInterval);
-                const stepSec = 60 / this.tempo;
-                this.musicInterval = setInterval(() => {
-                    if (this.musicMuted || !this.ctx || state.paused) return;
-                    
-                    let midi = this.notes[this.step];
-                    let freq = 440 * Math.pow(2, (midi - 69) / 12);
-                    
-                    this.playSynthTone(freq, 'sine', 0.25, 0.04, 0);
-                    if(this.step % 4 === 0) {
-                        this.playSynthTone(freq / 2, 'triangle', 0.5, 0.02, 0);
-                    }
-                    
-                    this.step = (this.step + 1) % this.notes.length;
-                }, stepSec * 1000);
-            }
-        }
-
-        const AudioSystem = new ClassroomAudioEngine();
-
-        /**********************************************************************
-         * GLOBAL CONTROLLER STATE ARCHITECTURE
-         **********************************************************************/
         let state = {
-            score: 0,
-            coins: 0,
-            gems: 0,
-            correctCount: 0,
-            pool: [...VOCABULARY],
-            targetWord: "",
-            activeCreatures: [],
-            paused: false,
-            badgesUnlocked: [false, false, false, false],
-            speechSynth: window.speechSynthesis,
-            isNarratingSequence: false,
-            level: 1 // Default Mode: Level 1 (Picture Recognition Only)
+            currentGameMode: "menu", // "fishing" | "puzzle" | "menu"
+            score: 0, coins: 0, gems: 0, correctCount: 0,
+            pool: [...VOCABULARY], targetWord: "", activeCreatures: [],
+            paused: false, speechSynth: window.speechSynthesis, isNarratingSequence: false,
+            level: 1, // Fishing Level
+            puzzleDifficulty: 4, // 4=2x2, 6=3x2, 9=3x3
+            puzzlePool: [...VOCABULARY],
+            activePuzzlePieces: [], puzzleDragTarget: null, dragOffset: { x:0, y:0 }
         };
 
-        // DOM Framework Mappings
+        // UI Binding Elements
         const elOcean = document.getElementById('ocean-aquarium');
         const elBillboardText = document.getElementById('target-billboard-text');
         const elScore = document.getElementById('ui-score');
         const elCoins = document.getElementById('ui-coins');
         const elGems = document.getElementById('ui-gems');
         const elStarsDeck = document.getElementById('stars-deck-casing');
-        const elAvatarFrame = document.getElementById('avatar-viewport-frame');
-        const elVocabTitle = document.getElementById('vocab-title-text');
-        const elBtnSpeak = document.getElementById('btn-trigger-speech');
-        const elPreviewCard = document.getElementById('main-preview-card');
-        const elDifficultySelect = document.getElementById('ctrl-difficulty-level');
-
-        // Particle System Setup
         const canvas = document.getElementById('fx-layer-canvas');
         const ctx = canvas.getContext('2d');
+
         let particles = [];
         let ambientBubbles = [];
 
-        function resizeCanvas() {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-        }
+        function resizeCanvas() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
         /**********************************************************************
-         * VOICE SPEECH ENGINE ORCHESTRATION
+         * PROCEDURAL AUDIO ENGINE (WEB AUDIO MACROS)
          **********************************************************************/
+        class ClassroomAudioEngine {
+            constructor() { this.ctx = null; this.musicInterval = null; this.sfxMuted = false; this.musicMuted = false; this.tempo = 125; this.notes = [60, 62, 64, 67, 69, 67, 64, 62, 60, 64, 67, 69, 72, 69, 67, 64]; this.step = 0; }
+            init() { if (!this.ctx) { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); this.startMusic(); } }
+            playSynthTone(freq, type, duration, vol = 0.2, delay = 0) {
+                if (this.sfxMuted || !this.ctx) return;
+                try {
+                    const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
+                    osc.type = type; osc.frequency.setValueAtTime(freq, this.ctx.currentTime + delay);
+                    gain.gain.setValueAtTime(vol, this.ctx.currentTime + delay); gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + delay + duration);
+                    osc.connect(gain); gain.connect(this.ctx.destination); osc.start(this.ctx.currentTime + delay); osc.stop(this.ctx.currentTime + delay + duration);
+                } catch(e){}
+            }
+            playHappyDing() { this.playSynthTone(587.33, 'sine', 0.2, 0.25, 0); this.playSynthTone(659.25, 'sine', 0.2, 0.25, 0.05); this.playSynthTone(880.00, 'sine', 0.3, 0.3, 0.1); }
+            playOops() { this.playSynthTone(349.23, 'triangle', 0.2, 0.3, 0); this.playSynthTone(261.63, 'triangle', 0.3, 0.3, 0.15); }
+            playBubblePop() { this.playSynthTone(900, 'sine', 0.04, 0.15, 0); }
+            playApplauseBurst() { for(let i=0; i<15; i++) { let rd = Math.random() * 0.6; let rf = 700 + Math.random() * 600; this.playSynthTone(rf, 'triangle', 0.08, 0.08, rd); } }
+            startMusic() {
+                if (this.musicInterval) clearInterval(this.musicInterval);
+                this.musicInterval = setInterval(() => {
+                    if (this.musicMuted || !this.ctx || state.paused) return;
+                    let freq = 440 * Math.pow(2, (this.notes[this.step] - 69) / 12);
+                    this.playSynthTone(freq, 'sine', 0.25, 0.03, 0);
+                    if(this.step % 4 === 0) this.playSynthTone(freq / 2, 'triangle', 0.5, 0.01, 0);
+                    this.step = (this.step + 1) % this.notes.length;
+                }, (60 / this.tempo) * 1000);
+            }
+        }
+        const AudioSystem = new ClassroomAudioEngine();
+
         function classroomNarrate(phrase, callback) {
-            if (!state.speechSynth) return;
-            state.speechSynth.cancel();
-            
-            const utterance = new SpeechSynthesisUtterance(phrase);
-            utterance.lang = 'en-US';
-            utterance.rate = 0.75;  
-            utterance.pitch = 1.3; 
-            
-            if (callback) utterance.onend = callback;
-            state.speechSynth.speak(utterance);
+            if (!state.speechSynth) return; state.speechSynth.cancel();
+            const u = new SpeechSynthesisUtterance(phrase); u.lang = 'en-US'; u.rate = 0.75; u.pitch = 1.3;
+            if (callback) u.onend = callback; state.speechSynth.speak(u);
         }
 
         /**********************************************************************
-         * APPLICATION CORE LOGIC ENGINE
+         * HUB SCREEN SWITCHER & INITIALIZERS
+         **********************************************************************/
+        function displayScreen(targetMode) {
+            state.currentGameMode = targetMode;
+            document.getElementById('modal-start-gate').classList.add('hidden');
+            document.getElementById('viewport-main').classList.add('hidden');
+            document.getElementById('viewport-puzzle').classList.add('hidden');
+            document.getElementById('difficulty-control-wrapper').querySelectorAll('select').forEach(s => s.classList.add('hidden'));
+
+            if (targetMode === 'fishing') {
+                document.getElementById('viewport-main').classList.remove('hidden');
+                document.getElementById('ctrl-difficulty-level').classList.remove('hidden');
+                startGameSession();
+            } else if (targetMode === 'puzzle') {
+                document.getElementById('viewport-puzzle').classList.remove('hidden');
+                document.getElementById('ctrl-puzzle-difficulty').classList.remove('hidden');
+                startPuzzleGameSession();
+            } else {
+                document.getElementById('modal-start-gate').classList.remove('hidden');
+            }
+        }
+
+        function buildProgressStars(poolSize) {
+            elStarsDeck.innerHTML = '';
+            for(let i=0; i<poolSize; i++) {
+                let s = document.createElement('span'); s.className = 'star-item'; s.id = `star-idx-${i}`; s.innerHTML = '★'; elStarsDeck.appendChild(s);
+            }
+        }
+
+        /**********************************************************************
+         * GAME ENGINE MODE A: FAMILY FISHING
          **********************************************************************/
         function startGameSession() {
-            resizeCanvas();
-            state.score = 0;
-            state.coins = 0;
-            state.gems = 0;
-            state.correctCount = 0;
-            state.pool = [...VOCABULARY];
-            state.badgesUnlocked = [false, false, false, false];
-            state.isNarratingSequence = false;
-            
-            elScore.textContent = "0";
-            elCoins.textContent = "0";
-            elGems.textContent = "0";
-            
-            updateBadgeUI();
-            buildProgressStars();
-            setupNextRound();
-            
-            state.activeCreatures.forEach(c => c.el.remove());
-            state.activeCreatures = [];
-            for (let i = 0; i < 5; i++) {
-                spawnCreatureInstance();
-            }
+            state.score = 0; state.coins = 0; state.gems = 0; state.correctCount = 0; state.pool = [...VOCABULARY]; state.isNarratingSequence = false;
+            updateDashboardCounters(); updateBadgeUI(false); buildProgressStars(VOCABULARY.length); setupNextFishingRound();
+            state.activeCreatures.forEach(c => c.el.remove()); state.activeCreatures = [];
+            for (let i = 0; i < 5; i++) spawnCreatureInstance();
         }
 
-        function buildProgressStars() {
-            elStarsDeck.innerHTML = '';
-            for(let i=0; i<VOCABULARY.length; i++) {
-                let s = document.createElement('span');
-                s.className = 'star-item';
-                s.id = `star-idx-${i}`;
-                s.innerHTML = '★';
-                elStarsDeck.appendChild(s);
-            }
+        function updateDashboardCounters() {
+            elScore.textContent = state.score; elCoins.textContent = state.coins; elGems.textContent = state.gems;
         }
 
-        function setupNextRound() {
-            if (state.pool.length === 0) {
-                triggerEndGameSequence();
-                return;
-            }
-            
-            const randIdx = Math.floor(Math.random() * state.pool.length);
-            state.targetWord = state.pool[randIdx];
-            
-            // Render text on the billboard for the teacher's tracking support
+        function setupNextFishingRound() {
+            if (state.pool.length === 0) { triggerEndGameSequence("🏆 FISHING CHAMPION 🏆", "Congratulations!<br>You are a Family Vocabulary Champion!"); return; }
+            state.targetWord = state.pool[Math.floor(Math.random() * state.pool.length)];
             elBillboardText.textContent = state.targetWord.toUpperCase();
-            
-            // Level-appropriate custom listening prompts mapping
-            const audioPhrases = [
-                `Can you find the ${state.targetWord}?`,
-                `Where is ${state.targetWord}?`,
-                `Catch the ${state.targetWord}!`,
-                `Can you find the ${state.targetWord}?`
-            ];
-            const chosenPhrase = audioPhrases[Math.floor(Math.random() * audioPhrases.length)];
-            classroomNarrate(chosenPhrase);
-            
-            ensureTargetInPool();
-        }
-
-        function ensureTargetInPool() {
-            const exists = state.activeCreatures.some(c => c.word === state.targetWord);
-            if (!exists) {
-                spawnCreatureInstance(state.targetWord);
-            }
+            classroomNarrate(`Can you find the ${state.targetWord}?`);
+            if (!state.activeCreatures.some(c => c.word === state.targetWord)) spawnCreatureInstance(state.targetWord);
         }
 
         function spawnCreatureInstance(assignedWord = null) {
             let word = assignedWord || VOCABULARY[Math.floor(Math.random() * VOCABULARY.length)];
             let type = CREATURE_TYPES[Math.floor(Math.random() * CREATURE_TYPES.length)];
+            const wrapper = document.createElement('div'); wrapper.className = 'sea-creature-entity';
             
-            const wrapper = document.createElement('div');
-            wrapper.className = 'sea-creature-entity';
+            let signInnerMarkup = (state.level === 1) ? `<span class="sign-family-emoji">${FAMILY_EMOJIS[word]}</span>` :
+                                  (state.level === 2) ? `<span class="sign-family-emoji">${FAMILY_EMOJIS[word]}</span><span class="sign-text">${word.toUpperCase()}</span>` :
+                                                        `<span class="sign-text" style="font-size:32px; padding:4px 0;">${word.toUpperCase()}</span>`;
             
-            // Build the float sign structure based dynamically on level configurations
-            let famEmoji = FAMILY_EMOJIS[word];
-            let signInnerMarkup = "";
-
-            if (state.level === 1) {
-                // Picture Only
-                signInnerMarkup = `<span class="sign-family-emoji">${famEmoji}</span>`;
-            } else if (state.level === 2) {
-                // Picture + Word
-                signInnerMarkup = `<span class="sign-family-emoji">${famEmoji}</span><span class="sign-text">${word.toUpperCase()}</span>`;
-            } else {
-                // Word Only
-                signInnerMarkup = `<span class="sign-text" style="font-size:32px; padding: 4px 0;">${word.toUpperCase()}</span>`;
-            }
-
-            wrapper.innerHTML = `
-                <div class="creature-graphic-node">${CREATURE_EMOJIS[type]}</div>
-                <div class="creature-classroom-sign">${signInnerMarkup}</div>
-            `;
-            
+            wrapper.innerHTML = `<div class="creature-graphic-node">${CREATURE_EMOJIS[type]}</div><div class="creature-classroom-sign">${signInnerMarkup}</div>`;
             elOcean.appendChild(wrapper);
 
             let dir = Math.random() > 0.5 ? 1 : -1;
-            let wWidth = elOcean.offsetWidth || 800;
-            let wHeight = elOcean.offsetHeight || 500;
-            
-            let x = dir === 1 ? -250 : wWidth + 50;
-            let y = 140 + Math.random() * (wHeight - 280);
-            let speed = 0.8 + Math.random() * 1.2;
-
-            const graphicNode = wrapper.querySelector('.creature-graphic-node');
-            graphicNode.style.transform = `scaleX(${-dir})`;
-
+            let wW = elOcean.offsetWidth || 800;
+            let x = dir === 1 ? -250 : wW + 50;
+            let y = 140 + Math.random() * ((elOcean.offsetHeight || 500) - 280);
+            wrapper.querySelector('.creature-graphic-node').style.transform = `scaleX(${-dir})`;
             wrapper.style.transform = `translate(${x}px, ${y}px)`;
 
-            const instance = {
-                el: wrapper,
-                graphicEl: graphicNode,
-                word: word,
-                type: type,
-                x: x,
-                y: y,
-                speed: speed,
-                dir: dir,
-                sinOffset: Math.random() * 50,
-                isJumping: false,
-                jumpY: 0
-            };
-
-            const triggerAction = (e) => { e.preventDefault(); processCreatureCatch(instance); };
-            wrapper.addEventListener('mousedown', triggerAction);
-            wrapper.addEventListener('touchstart', triggerAction);
-
+            const instance = { el: wrapper, word: word, x: x, y: y, speed: 0.8 + Math.random() * 1.2, dir: dir, sinOffset: Math.random() * 50, isJumping: false, jumpY: 0 };
+            const runCatch = (e) => { e.preventDefault(); processCreatureCatch(instance); };
+            wrapper.addEventListener('mousedown', runCatch); wrapper.addEventListener('touchstart', runCatch);
             state.activeCreatures.push(instance);
         }
 
         function processCreatureCatch(creature) {
             if (state.paused || creature.isJumping || state.isNarratingSequence) return;
-
             if (creature.word === state.targetWord) {
-                state.isNarratingSequence = true;
-                creature.isJumping = true;
-                AudioSystem.playHappyDing();
-                AudioSystem.playApplauseBurst();
-                createSplashFX(creature.x + 110, creature.y + 60);
+                state.isNarratingSequence = true; creature.isJumping = true;
+                AudioSystem.playHappyDing(); AudioSystem.playApplauseBurst(); triggerConfettiAt(creature.x + 110, creature.y + 60);
+                state.score += 15; state.coins += 5; state.gems += 1; state.correctCount += 1; updateDashboardCounters();
                 
-                state.score += 15;
-                state.coins += 5;
-                state.gems += 1;
-                state.correctCount += 1;
-                
-                elScore.textContent = state.score;
-                elCoins.textContent = state.coins;
-                elGems.textContent = state.gems;
+                let ts = document.getElementById(`star-idx-${state.correctCount - 1}`); if (ts) ts.classList.add('earned');
+                document.getElementById('avatar-viewport-frame').innerHTML = `<span class="giant-learning-emoji">${FAMILY_EMOJIS[creature.word]}</span>`;
+                const vt = document.getElementById('vocab-title-text'); vt.textContent = creature.word.toUpperCase();
+                document.getElementById('btn-trigger-speech').disabled = false;
+                document.getElementById('main-preview-card').classList.add('correct-glow'); vt.classList.add('highlight-active');
 
-                let targetStar = document.getElementById(`star-idx-${state.correctCount - 1}`);
-                if (targetStar) targetStar.classList.add('earned');
-
-                // Update right giant preview learning card display elements
-                let targetEmoji = FAMILY_EMOJIS[creature.word];
-                elAvatarFrame.innerHTML = `<span class="giant-learning-emoji">${targetEmoji}</span>`;
-                elVocabTitle.textContent = creature.word.toUpperCase();
-                elBtnSpeak.disabled = false;
-                
-                elPreviewCard.classList.add('correct-glow');
-                elAvatarFrame.classList.add('wave-animation');
-                elVocabTitle.classList.add('highlight-active');
-
-                state.pool = state.pool.filter(w => w !== creature.word);
-                evaluateBadges();
-
-                // Advanced Kindergarten Learning Mode Prompt Sequence Chain
+                state.pool = state.pool.filter(w => w !== creature.word); updateBadgeUI(false);
                 classroomNarrate(`Excellent! That's the ${creature.word}!`, () => {
-                    setTimeout(() => {
-                        classroomNarrate(`${creature.word}.`, () => {
-                            setTimeout(() => {
-                                classroomNarrate(`This is ${creature.word}.`, () => {
-                                    setTimeout(() => {
-                                        classroomNarrate(`Can you say ${creature.word}?`, () => {
-                                            state.isNarratingSequence = false;
-                                            elPreviewCard.classList.remove('correct-glow');
-                                            elAvatarFrame.classList.remove('wave-animation');
-                                            elVocabTitle.classList.remove('highlight-active');
-                                            
-                                            if (state.correctCount % 5 === 0 && state.pool.length > 0) {
-                                                triggerTreasureBurstMilestone();
-                                            } else {
-                                                setTimeout(setupNextRound, 400);
-                                            }
-                                        });
-                                    }, 1000); 
-                                });
-                            }, 1000); 
-                        });
-                    }, 800); 
+                    setTimeout(() => { classroomNarrate(`${creature.word}.`, () => {
+                        setTimeout(() => { classroomNarrate(`This is ${creature.word}.`, () => {
+                            setTimeout(() => { classroomNarrate(`Can you say ${creature.word}?`, () => {
+                                state.isNarratingSequence = false; document.getElementById('main-preview-card').classList.remove('correct-glow'); vt.classList.remove('highlight-active');
+                                if (state.correctCount % 5 === 0 && state.pool.length > 0) triggerTreasureBurstMilestone(); else setTimeout(setupNextFishingRound, 400);
+                            }); }, 1000);
+                        }); }, 1000);
+                    }); }, 800);
                 });
-
-                setTimeout(() => {
-                    creature.el.remove();
-                    state.activeCreatures = state.activeCreatures.filter(c => c !== creature);
-                }, 800);
-
+                setTimeout(() => { creature.el.remove(); state.activeCreatures = state.activeCreatures.filter(c => c !== creature); }, 800);
             } else {
-                AudioSystem.playOops();
-                creature.el.style.filter = "hue-rotate(90deg) saturate(2.5)";
-                setTimeout(() => creature.el.style.filter = "none", 500);
-                
-                // Using warm, safe encouraging language statements
-                const wrongPhrases = [
-                    "Oops! It's okay.",
-                    "Don't worry. Try again."
-                ];
-                classroomNarrate(wrongPhrases[Math.floor(Math.random() * wrongPhrases.length)]);
+                AudioSystem.playOops(); creature.el.style.filter = "hue-rotate(90deg) saturate(2.5)"; setTimeout(() => creature.el.style.filter = "none", 500);
+                classroomNarrate(Math.random() > 0.5 ? "Oops! It's okay." : "Don't worry. Try again.");
             }
         }
 
         function triggerTreasureBurstMilestone() {
-            AudioSystem.playHappyDing();
-            const chestLid = document.getElementById('chest-lid-svg');
-            chestLid.style.transform = "rotate(-25deg) translate(-10px, -15px)";
-            
-            let rect = document.getElementById('prop-treasure').getBoundingClientRect();
-            let parentRect = elOcean.getBoundingClientRect();
-            let cx = rect.left - parentRect.left + 55;
-            let cy = rect.top - parentRect.top + 35;
-
+            AudioSystem.playHappyDing(); document.getElementById('chest-lid-svg').style.transform = "rotate(-25deg) translate(-10px, -15px)";
+            let rect = document.getElementById('prop-treasure').getBoundingClientRect(); let parentRect = elOcean.getBoundingClientRect();
+            let cx = rect.left - parentRect.left + 55; let cy = rect.top - parentRect.top + 35;
             for(let i=0; i<30; i++) {
-                particles.push({
-                    x: cx, y: cy,
-                    vx: (Math.random() - 0.5) * 14,
-                    vy: -5 - Math.random() * 12,
-                    type: Math.random() > 0.5 ? 'coin' : 'star',
-                    color: '#ffcd29', radius: 9 + Math.random()*6, alpha: 1, decay: 0.015
-                });
+                particles.push({ x: cx, y: cy, vx: (Math.random() - 0.5) * 14, vy: -5 - Math.random() * 12, type: Math.random() > 0.5 ? 'coin' : 'star', color: '#ffcd29', radius: 9 + Math.random()*6, alpha: 1, decay: 0.015 });
+            }
+            setTimeout(() => { document.getElementById('chest-lid-svg').style.transform = "none"; setupNextFishingRound(); }, 2500);
+        }
+
+        function updateBadgeUI(isPuzzle) {
+            let count = state.correctCount; let prefix = isPuzzle ? 'pbadge-' : 'badge-';
+            let unl = [count >= 1, count >= 3, count >= 6, (isPuzzle ? state.puzzlePool : state.pool).length === 0];
+            unl.forEach((u, i) => { const el = document.getElementById(prefix + i); if (u) el.classList.add('unlocked'); else el.classList.remove('unlocked'); });
+        }
+
+        /**********************************************************************
+         * GAME ENGINE MODE B: FAMILY PUZZLE SYSTEM
+         **********************************************************************/
+        function startPuzzleGameSession() {
+            state.score = 0; state.coins = 0; state.gems = 0; state.correctCount = 0; state.puzzlePool = [...VOCABULARY]; state.isNarratingSequence = false;
+            updateDashboardCounters(); updateBadgeUI(true); buildProgressStars(VOCABULARY.length); setupNextPuzzleRound();
+        }
+
+        function setupNextPuzzleRound() {
+            if (state.puzzlePool.length === 0) { triggerEndGameSequence("🧩 PUZZLE CHAMPION 🏆", "Congratulations!<br>You are a Family Puzzle Champion!"); return; }
+            state.targetWord = state.puzzlePool[Math.floor(Math.random() * state.puzzlePool.length)];
+            
+            // Set Right Side Reference Cards Viewport
+            let emoji = FAMILY_EMOJIS[state.targetWord];
+            document.getElementById('puzzle-avatar-viewport').innerHTML = `<span class="giant-learning-emoji">${emoji}</span>`;
+            document.getElementById('puzzle-vocab-title').textContent = state.targetWord.toUpperCase();
+            document.getElementById('btn-puzzle-replay').disabled = false;
+
+            classroomNarrate(Math.random() > 0.5 ? `Let's make ${state.targetWord}!` : `Can you build the picture of ${state.targetWord}?`);
+            generatePuzzleBoardLayout(emoji);
+        }
+
+        function generatePuzzleBoardLayout(emojiStr) {
+            const board = document.getElementById('puzzle-snap-board');
+            const tray = document.getElementById('puzzle-pieces-tray');
+            board.innerHTML = ''; tray.innerHTML = ''; state.activePuzzlePieces = [];
+
+            let cols = 2, rows = 2;
+            if (state.puzzleDifficulty === 6) { cols = 3; rows = 2; }
+            else if (state.puzzleDifficulty === 9) { cols = 3; rows = 3; }
+
+            const boardSize = 320;
+            const cellW = boardSize / cols; const cellH = boardSize / rows;
+            board.style.width = boardSize + 'px'; board.style.height = boardSize + 'px';
+
+            // Create temporary rendering elements to clip character designs dynamically
+            const renderCanvas = document.createElement('canvas');
+            renderCanvas.width = boardSize; renderCanvas.height = boardSize;
+            const rCtx = renderCanvas.getContext('2d');
+            rCtx.fillStyle = '#ffffff'; rCtx.fillRect(0, 0, boardSize, boardSize);
+            rCtx.font = `${boardSize * 0.65}px Arial`; rCtx.textAlign = 'center'; rCtx.textBaseline = 'middle';
+            rCtx.fillText(emojiStr, boardSize / 2, boardSize / 2 + 15);
+
+            // Generate placement slots and layout maps
+            let rawPieces = [];
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    let lx = c * cellW; let ty = r * cellH;
+                    let slot = document.createElement('div');
+                    slot.className = 'puzzle-cell-slot';
+                    slot.style.width = cellW + 'px'; slot.style.height = cellH + 'px';
+                    slot.style.left = lx + 'px'; slot.style.top = ty + 'px';
+                    board.appendChild(slot);
+
+                    // Cut visual fragments dynamically
+                    const pieceCanvas = document.createElement('canvas');
+                    pieceCanvas.className = 'puzzle-piece-canvas';
+                    pieceCanvas.width = cellW; pieceCanvas.height = cellH;
+                    const pCtx = pieceCanvas.getContext('2d');
+                    pCtx.drawImage(renderCanvas, lx, ty, cellW, cellH, 0, 0, cellW, cellH);
+
+                    let pEl = document.createElement('div');
+                    pEl.className = 'puzzle-piece-item';
+                    pEl.appendChild(pieceCanvas);
+                    pEl.style.width = cellW + 'px'; pEl.style.height = cellH + 'px';
+
+                    const item = { el: pEl, correctX: lx, correctY: ty, currentX: 0, currentY: 0, snapped: false, w: cellW, h: cellH };
+                    rawPieces.push(item);
+                }
             }
 
-            setTimeout(() => {
-                chestLid.style.transform = "none";
-                setupNextRound();
-            }, 2500);
-        }
+            // Distribute items inside drawer random layout tray layers securely
+            let trayRect = tray.getBoundingClientRect();
+            rawPieces.forEach((piece, idx) => {
+                tray.appendChild(piece.el);
+                let boundsX = Math.max(0, 500 - piece.w - 15);
+                let boundsY = Math.max(0, 140 - piece.h - 15);
+                let rx = Math.random() * boundsX; let ry = Math.random() * boundsY;
+                
+                piece.currentX = rx; piece.currentY = ry;
+                piece.el.style.left = rx + 'px'; piece.el.style.top = ry + 'px';
 
-        function triggerEndGameSequence() {
-            state.paused = true;
-            AudioSystem.playApplauseBurst();
-            
-            const endStars = document.getElementById('end-stars-display');
-            endStars.innerHTML = '★'.repeat(state.correctCount);
-            
-            document.getElementById('modal-end-gate').classList.remove('hidden');
-        }
-
-        function evaluateBadges() {
-            if (state.correctCount >= 1) state.badgesUnlocked[0] = true;
-            if (state.correctCount >= 3) state.badgesUnlocked[1] = true;
-            if (state.correctCount >= 6) state.badgesUnlocked[2] = true;
-            if (state.pool.length === 0) state.badgesUnlocked[3] = true;
-            updateBadgeUI();
-        }
-
-        function updateBadgeUI() {
-            state.badgesUnlocked.forEach((unlocked, idx) => {
-                const el = document.getElementById(`badge-${idx}`);
-                if (unlocked) el.classList.add('unlocked');
-                else el.classList.remove('unlocked');
+                // Coupling cross-platform pointer listeners directly
+                const grabAction = (e) => { if (!state.paused && !piece.snapped) startPieceDrag(piece, e); };
+                piece.el.addEventListener('pointerdown', grabAction);
+                state.activePuzzlePieces.push(piece);
             });
         }
 
         /**********************************************************************
-         * BACKGROUND REALTIME GRAPHICS SIMULATION (ENGINE RUNTIME)
+         * POINTER EVENTS POOL MATRICES (DRAG & DROP ENGINE)
+         **********************************************************************/
+        function startPieceDrag(piece, event) {
+            state.puzzleDragTarget = piece;
+            let clientX = event.clientX; let clientY = event.clientY;
+            if (event.touches && event.touches.length > 0) { clientX = event.touches[0].clientX; clientY = event.touches[0].clientY; }
+            
+            let elRect = piece.el.getBoundingClientRect();
+            state.dragOffset.x = clientX - elRect.left; state.dragOffset.y = clientY - elRect.top;
+            piece.el.setPointerCapture(event.pointerId);
+            event.stopPropagation();
+        }
+
+        window.addEventListener('pointermove', (e) => {
+            if (!state.puzzleDragTarget || state.paused) return;
+            let piece = state.puzzleDragTarget;
+            let clientX = e.clientX; let clientY = e.clientY;
+            if (e.touches && e.touches.length > 0) { clientX = e.touches[0].clientX; clientY = e.touches[0].clientY; }
+
+            // Project translation mappings dynamically over viewport parents context
+            let workspaceRect = document.getElementById('puzzle-sandbox').getBoundingClientRect();
+            let targetX = clientX - workspaceRect.left - state.dragOffset.x;
+            let targetY = clientY - workspaceRect.top - state.dragOffset.y;
+
+            piece.el.style.left = targetX + 'px'; piece.el.style.top = targetY + 'px';
+            piece.currentX = targetX; piece.currentY = targetY;
+        });
+
+        window.addEventListener('pointerup', (e) => {
+            if (!state.puzzleDragTarget) return;
+            let piece = state.puzzleDragTarget;
+            state.puzzleDragTarget = null;
+            piece.el.releasePointerCapture(e.pointerId);
+
+            let boardRect = document.getElementById('puzzle-snap-board').getBoundingClientRect();
+            let workspaceRect = document.getElementById('puzzle-sandbox').getBoundingClientRect();
+
+            // Translate board absolute positioning configurations
+            let bLocalX = boardRect.left - workspaceRect.left; let bLocalY = boardRect.top - workspaceRect.top;
+            let snapDestX = bLocalX + piece.correctX; let snapDestY = bLocalY + piece.correctY;
+
+            let dist = Math.hypot(piece.currentX - snapDestX, piece.currentY - snapDestY);
+            if (dist < 32) {
+                // Correct Match Placement Snap
+                piece.snapped = true; piece.el.classList.add('snapped');
+                piece.el.style.left = snapDestX + 'px'; piece.el.style.top = snapDestY + 'px';
+                document.getElementById('puzzle-sandbox').appendChild(piece.el); // Reparent to Board Space
+                AudioSystem.playBubblePop();
+                
+                // Spawn a cute tiny star burst locally above cell
+                let parentRect = canvas.getBoundingClientRect();
+                triggerConfettiAt(boardRect.left - parentRect.left + piece.correctX + piece.w/2, boardRect.top - parentRect.top + piece.correctY + piece.h/2);
+                classroomNarrate("Great job!");
+                
+                checkPuzzleCompletionState();
+            } else {
+                // Incorrect Match Placement Return Animation Loop
+                AudioSystem.playOops();
+                document.getElementById('puzzle-pieces-tray').appendChild(piece.el);
+                let boundsX = Math.max(0, 500 - piece.w - 15); let boundsY = Math.max(0, 140 - piece.h - 15);
+                let rx = Math.random() * boundsX; let ry = Math.random() * boundsY;
+                piece.currentX = rx; piece.currentY = ry;
+                piece.el.style.left = rx + 'px'; piece.el.style.top = ry + 'px';
+                classroomNarrate("Try again.");
+            }
+        });
+
+        function checkPuzzleCompletionState() {
+            if (state.activePuzzlePieces.every(p => p.snapped)) {
+                // Whole Puzzle Finished Sequence
+                state.isNarratingSequence = true;
+                AudioSystem.playHappyDing(); AudioSystem.playApplauseBurst();
+                let bRect = document.getElementById('puzzle-snap-board').getBoundingClientRect();
+                let pRect = canvas.getBoundingClientRect();
+                triggerConfettiAt(bRect.left - pRect.left + 160, bRect.top - pRect.top + 160);
+
+                state.score += 20; state.coins += 10; state.gems += 2; state.correctCount += 1; updateDashboardCounters();
+                let ts = document.getElementById(`star-idx-${state.correctCount - 1}`); if (ts) ts.classList.add('earned');
+
+                document.getElementById('puzzle-preview-card').classList.add('correct-glow');
+                document.getElementById('puzzle-avatar-viewport').classList.add('wave-animation');
+                const title = document.getElementById('puzzle-vocab-title'); title.classList.add('highlight-active');
+
+                state.puzzlePool = state.puzzlePool.filter(w => w !== state.targetWord); updateBadgeUI(true);
+
+                classroomNarrate(`Excellent! You made ${state.targetWord}!`, () => {
+                    setTimeout(() => { classroomNarrate(`${state.targetWord}.`, () => {
+                        setTimeout(() => { classroomNarrate(`This is ${state.targetWord}.`, () => {
+                            setTimeout(() => { classroomNarrate(`Can you say ${state.targetWord}?`, () => {
+                                state.isNarratingSequence = false;
+                                document.getElementById('puzzle-preview-card').classList.remove('correct-glow');
+                                document.getElementById('puzzle-avatar-viewport').classList.remove('wave-animation');
+                                title.classList.remove('highlight-active');
+                                setTimeout(setupNextPuzzleRound, 800);
+                            }); }, 1000);
+                        }); }, 1000);
+                    }); }, 800);
+                });
+            }
+        }
+
+        /**********************************************************************
+         * BACKGROUND REALTIME GRAPHICS SYSTEM SIMULATIONS (TICK RUNTIME)
          **********************************************************************/
         function gameLoopRuntime() {
-            if (!state.paused) {
-                let wWidth = elOcean.offsetWidth || 800;
-                
+            let wW = elOcean.offsetWidth || 800;
+            if (!state.paused && state.currentGameMode === 'fishing') {
                 for (let i = state.activeCreatures.length - 1; i >= 0; i--) {
                     let c = state.activeCreatures[i];
-                    
                     if (c.isJumping) {
-                        c.jumpY -= 9;
-                        c.x += c.speed * c.dir * 0.5;
+                        c.jumpY -= 9; c.x += c.speed * c.dir * 0.5;
                         c.el.style.transform = `translate(${c.x}px, ${c.y + c.jumpY}px) rotate(-15deg)`;
                     } else {
-                        c.x += c.speed * c.dir;
-                        c.sinOffset += 0.03;
-                        let cy = c.y + Math.sin(c.sinOffset) * 2;
-                        
-                        c.el.style.transform = `translate(${c.x}px, ${cy}px)`;
-                        
-                        if ((c.dir === 1 && c.x > wWidth + 150) || (c.dir === -1 && c.x < -280)) {
-                            c.el.remove();
-                            state.activeCreatures.splice(i, 1);
-                            spawnCreatureInstance();
+                        c.x += c.speed * c.dir; c.sinOffset += 0.03;
+                        c.el.style.transform = `translate(${c.x}px, ${c.y + Math.sin(c.sinOffset) * 2}px)`;
+                        if ((c.dir === 1 && c.x > wW + 150) || (c.dir === -1 && c.x < -280)) {
+                            c.el.remove(); state.activeCreatures.splice(i, 1); spawnCreatureInstance();
                         }
                     }
                 }
-
-                if (state.activeCreatures.length < 5) {
-                    spawnCreatureInstance();
-                }
-
-                if (Math.random() < 0.06 && ambientBubbles.length < 40) {
-                    ambientBubbles.push({
-                        x: Math.random() * wWidth,
-                        y: elOcean.offsetHeight + 20,
-                        speed: 1 + Math.random() * 2,
-                        radius: 3 + Math.random() * 6,
-                        wobble: Math.random() * 100,
-                        wobbleSpeed: 0.02 + Math.random()*0.03
-                    });
-                }
+                if (state.activeCreatures.length < 5) spawnCreatureInstance();
             }
 
+            // Global Ambient Background Bubbles Manager
+            if (!state.paused && (state.currentGameMode === 'fishing' || state.currentGameMode === 'puzzle')) {
+                if (Math.random() < 0.05 && ambientBubbles.length < 35) {
+                    ambientBubbles.push({ x: Math.random() * canvas.width, y: canvas.height + 20, speed: 1 + Math.random() * 2, radius: 2 + Math.random() * 5, wobble: Math.random() * 100, wobbleSpeed: 0.02 + Math.random()*0.03 });
+                }
+            }
             renderFXCanvas();
             requestAnimationFrame(gameLoopRuntime);
         }
 
-        /**********************************************************************
-         * VISUAL PARTICLE FX GENERATORS
-         **********************************************************************/
-        function createSplashFX(x, y) {
-            for(let i=0; i<25; i++) {
-                particles.push({
-                    x: x, y: y,
-                    vx: (Math.random() - 0.5) * 10,
-                    vy: -4 - Math.random() * 10,
-                    type: 'droplet', color: '#e0f7fa',
-                    radius: 4 + Math.random() * 4, alpha: 1, decay: 0.02
-                });
+        function triggerConfettiAt(x, y) {
+            for(let i=0; i<30; i++) {
+                particles.push({ x: x, y: y, vx: (Math.random() - 0.5) * 10, vy: -4 - Math.random() * 9, type: 'droplet', color: ['#ff4081','#00e676','#ffeb3b','#2979ff','#e040fb'][Math.floor(Math.random()*5)], radius: 4 + Math.random()*4, alpha: 1, decay: 0.02 });
             }
         }
 
         function renderFXCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            let parentRect = elOcean.getBoundingClientRect();
-
-            ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.6)";
-            ctx.lineWidth = 1;
+            ctx.fillStyle = "rgba(255, 255, 255, 0.35)"; ctx.strokeStyle = "rgba(255, 255, 255, 0.5)"; ctx.lineWidth = 1;
             
             for (let i = ambientBubbles.length - 1; i >= 0; i--) {
-                let b = ambientBubbles[i];
-                if (!state.paused) {
-                    b.y -= b.speed;
-                    b.wobble += b.wobbleSpeed;
-                }
-                let drawX = b.x + Math.sin(b.wobble) * 4;
-                
-                ctx.beginPath();
-                ctx.arc(drawX, b.y, b.radius, 0, Math.PI*2);
-                ctx.fill();
-                ctx.stroke();
-
+                let b = ambientBubbles[i]; if (!state.paused) { b.y -= b.speed; b.wobble += b.wobbleSpeed; }
+                ctx.beginPath(); ctx.arc(b.x + Math.sin(b.wobble)*4, b.y, b.radius, 0, Math.PI*2); ctx.fill(); ctx.stroke();
                 if (b.y < -20) ambientBubbles.splice(i, 1);
             }
 
             for (let i = particles.length - 1; i >= 0; i--) {
-                let p = particles[i];
-                if (!state.paused) {
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    p.vy += 0.3; 
-                    p.alpha -= p.decay;
-                }
-
-                if (p.alpha <= 0) {
-                    particles.splice(i, 1);
-                    continue;
-                }
-
-                ctx.save();
-                ctx.globalAlpha = p.alpha;
-                
-                if (p.type === 'droplet') {
-                    ctx.fillStyle = p.color;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fill();
-                } else if (p.type === 'coin') {
-                    ctx.fillStyle = '#ffd700';
-                    ctx.strokeStyle = '#b78a00';
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.stroke();
-                } else if (p.type === 'star') {
-                    ctx.fillStyle = '#ffeb3b';
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fill();
-                }
+                let p = particles[i]; if (!state.paused) { p.x += p.vx; p.y += p.vy; p.vy += 0.28; p.alpha -= p.decay; }
+                if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+                ctx.save(); ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color;
+                if(p.type === 'coin') { ctx.fillStyle = '#ffd700'; ctx.strokeStyle = '#b78a00'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); }
+                else { ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill(); }
                 ctx.restore();
             }
         }
 
+        function triggerEndGameSequence(titleText, bodyMarkup) {
+            state.paused = true; AudioSystem.playApplauseBurst();
+            document.getElementById('end-gate-title').textContent = titleText;
+            document.getElementById('end-gate-body-text').innerHTML = bodyMarkup;
+            document.getElementById('end-stars-display').innerHTML = '★'.repeat(state.correctCount);
+            document.getElementById('modal-end-gate').classList.remove('hidden');
+        }
+
         /**********************************************************************
-         * UI USER INTERACTIONS & CONTROLS BINDINGS
+         * BINDINGS, CORE ACTIONS AND INTERACTION HANDLERS
          **********************************************************************/
-        document.getElementById('prop-crab').addEventListener('click', (e) => {
-            AudioSystem.playBubblePop();
-            createSplashFX(e.clientX, e.clientY);
-            classroomNarrate("Look, a little crab!");
+        document.getElementById('menu-launch-fishing').addEventListener('click', () => { AudioSystem.init(); displayScreen('fishing'); });
+        document.getElementById('menu-launch-puzzle').addEventListener('click', () => { AudioSystem.init(); displayScreen('puzzle'); });
+        document.getElementById('ctrl-brand-home').addEventListener('click', () => { displayScreen('menu'); });
+
+        document.getElementById('ctrl-difficulty-level').addEventListener('change', (e) => {
+            state.level = parseInt(e.target.value); state.activeCreatures.forEach(c => c.el.remove()); state.activeCreatures = [];
+            for (let i = 0; i < 5; i++) spawnCreatureInstance(); ensureTargetInPool();
         });
 
-        document.getElementById('prop-starfish').addEventListener('click', (e) => {
-            AudioSystem.playBubblePop();
-            createSplashFX(e.clientX, e.clientY);
-            classroomNarrate("That is a friendly starfish!");
+        document.getElementById('ctrl-puzzle-difficulty').addEventListener('change', (e) => {
+            state.puzzleDifficulty = parseInt(e.target.value); setupNextPuzzleRound();
         });
 
-        document.getElementById('prop-treasure').addEventListener('click', () => {
-            AudioSystem.playHappyDing();
-            classroomNarrate("A hidden treasure chest!");
-        });
+        // Ambient Sandbox Tap Responses
+        document.getElementById('prop-crab').addEventListener('click', (e) => { AudioSystem.playBubblePop(); triggerConfettiAt(e.clientX, e.clientY); classroomNarrate("Look, a little crab!"); });
+        document.getElementById('prop-starfish').addEventListener('click', (e) => { AudioSystem.playBubblePop(); triggerConfettiAt(e.clientX, e.clientY); classroomNarrate("That is a friendly starfish!"); });
+        document.getElementById('prop-treasure').addEventListener('click', () => { AudioSystem.playHappyDing(); classroomNarrate("A hidden treasure chest!"); });
 
-        document.getElementById('ctrl-fullscreen').addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(()=>{});
-            } else {
-                document.exitFullscreen();
-            }
-        });
+        document.getElementById('ctrl-fullscreen').addEventListener('click', () => { if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); });
+        document.getElementById('ctrl-pause').addEventListener('click', () => { state.paused = true; document.getElementById('modal-pause-gate').classList.remove('hidden'); });
+        document.getElementById('btn-pause-resume').addEventListener('click', () => { state.paused = false; document.getElementById('modal-pause-gate').classList.add('hidden'); });
+        document.getElementById('ctrl-restart').addEventListener('click', () => { if(confirm("Do you want to restart this activity?")) displayScreen(state.currentGameMode); });
 
-        document.getElementById('ctrl-pause').addEventListener('click', () => {
-            state.paused = true;
-            document.getElementById('modal-pause-gate').classList.remove('hidden');
-        });
+        const sfxBtn = document.getElementById('ctrl-mute-sfx'); sfxBtn.addEventListener('click', () => { AudioSystem.sfxMuted = !AudioSystem.sfxMuted; sfxBtn.textContent = AudioSystem.sfxMuted ? '❌' : '🔊'; });
+        const musicBtn = document.getElementById('ctrl-mute-music'); musicBtn.addEventListener('click', () => { AudioSystem.musicMuted = !AudioSystem.musicMuted; musicBtn.textContent = AudioSystem.musicMuted ? '🔇' : '🎵'; });
+        
+        const exitCall = () => { if(confirm("Close layout window?")) window.close(); };
+        document.getElementById('ctrl-exit').addEventListener('click', exitCall); document.getElementById('btn-end-exit').addEventListener('click', exitCall);
 
-        document.getElementById('btn-pause-resume').addEventListener('click', () => {
-            state.paused = false;
-            document.getElementById('modal-pause-gate').classList.add('hidden');
-        });
+        document.getElementById('btn-end-replay').addEventListener('click', () => { document.getElementById('modal-end-gate').classList.add('hidden'); state.paused = false; displayScreen(state.currentGameMode); });
+        document.getElementById('btn-end-home').addEventListener('click', () => { document.getElementById('modal-end-gate').classList.add('hidden'); state.paused = false; displayScreen('menu'); });
 
-        document.getElementById('ctrl-restart').addEventListener('click', () => {
-            if(confirm("Do you want to restart this classroom lesson?")) startGameSession();
-        });
+        document.getElementById('btn-trigger-speech').addEventListener('click', () => { if (!state.isNarratingSequence) classroomNarrate(`Can you find the ${state.targetWord}?`); });
+        document.getElementById('btn-puzzle-replay').addEventListener('click', () => { if (!state.isNarratingSequence) classroomNarrate(`Can you build the picture of ${state.targetWord}?`); });
 
-        // Interactive Level Selection Event Coupling
-        elDifficultySelect.addEventListener('change', (e) => {
-            state.level = parseInt(e.target.value);
-            // Re-spawn swimming creature pools matching parameters instantly
-            state.activeCreatures.forEach(c => c.el.remove());
-            state.activeCreatures = [];
-            for (let i = 0; i < 5; i++) {
-                spawnCreatureInstance();
-            }
-            ensureTargetInPool();
-        });
-
-        const sfxBtn = document.getElementById('ctrl-mute-sfx');
-        sfxBtn.addEventListener('click', () => {
-            AudioSystem.sfxMuted = !AudioSystem.sfxMuted;
-            sfxBtn.textContent = AudioSystem.sfxMuted ? '❌' : '🔊';
-        });
-
-        const musicBtn = document.getElementById('ctrl-mute-music');
-        musicBtn.addEventListener('click', () => {
-            AudioSystem.musicMuted = !AudioSystem.musicMuted;
-            musicBtn.textContent = AudioSystem.musicMuted ? '🔇' : '🎵';
-        });
-
-        const exitAction = () => { if(confirm("Close game?")) window.close(); };
-        document.getElementById('ctrl-exit').addEventListener('click', exitAction);
-        document.getElementById('btn-end-exit').addEventListener('click', exitAction);
-
-        document.getElementById('btn-gate-play').addEventListener('click', () => {
-            document.getElementById('modal-start-gate').classList.add('hidden');
-            AudioSystem.init();
-            startGameSession();
-        });
-
-        document.getElementById('btn-end-replay').addEventListener('click', () => {
-            document.getElementById('modal-end-gate').classList.add('hidden');
-            state.paused = false;
-            startGameSession();
-        });
-
-        document.getElementById('btn-end-home').addEventListener('click', () => {
-            document.getElementById('modal-end-gate').classList.add('hidden');
-            document.getElementById('modal-start-gate').classList.remove('hidden');
-        });
-
-        elBtnSpeak.addEventListener('click', () => {
-            if (state.isNarratingSequence) return;
-            classroomNarrate(`Can you find the ${state.targetWord}?`);
-        });
-
+        // Kickstart Background Animation Execution Thread Loop
+        displayScreen('menu');
         requestAnimationFrame(gameLoopRuntime);
     </script>
 </body>
