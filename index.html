@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Family Hub: Fishing & Puzzles by Teacher Hanz</title>
+    <title>The Family Hub: Fishing & Puzzles by Teacher Hanz Balili</title>
     <style>
         :root {
             --font-family: 'Arial Rounded MT Bold', 'Comic Sans MS', 'Chalkboard SE', sans-serif;
@@ -54,44 +54,58 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
+            padding: 0 15px;
             z-index: 100;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .nav-brand h1 {
-            font-size: 32px;
+            font-size: 26px;
             color: #1b5e20;
             text-shadow: 2px 2px 0px #c8e6c9;
             cursor: pointer;
+            line-height: 1.1;
+        }
+
+        .nav-brand span {
+            font-size: 14px;
+            display: block;
+            color: #558b2f;
+            font-weight: bold;
         }
 
         .dashboard-counters {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
 
         .counter-pill {
             background: #ffffff;
-            padding: 10px 16px;
+            padding: 8px 12px;
             border: 4px solid #2e7d32;
             border-radius: 20px;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
             color: #1b5e20;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .dropdown-controls-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .level-selector-box {
             background: #fff;
             border: 4px solid #1565c0;
             border-radius: 16px;
-            padding: 4px 10px;
-            font-size: 18px;
+            padding: 4px 8px;
+            font-size: 16px;
             font-weight: bold;
             color: #0d47a1;
             outline: none;
@@ -102,18 +116,18 @@
         .action-controls {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .btn-ui {
-            min-width: 58px;
-            height: 58px;
-            padding: 0 10px;
+            min-width: 54px;
+            height: 54px;
+            padding: 0 8px;
             border-radius: 16px;
             border: 4px solid #1565c0;
             background: #2196f3;
             color: white;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             cursor: pointer;
             display: flex;
@@ -148,7 +162,7 @@
             overflow: hidden;
         }
 
-        /* Left Section: Ocean Sandbox Environment */
+        /* Sandbox Background Layout Environments */
         #ocean-aquarium, #puzzle-sandbox {
             flex: 2.8;
             position: relative;
@@ -158,10 +172,10 @@
 
         #puzzle-sandbox {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 40px;
-            padding: 40px;
+            justify-content: space-between;
+            padding: 30px;
         }
 
         .ocean-wave-overlay {
@@ -301,7 +315,7 @@
             margin-top: 2px;
         }
 
-        /* Right Section: Interactive Reinforcement Layouts */
+        /* Right Section: Reinforcement Viewports Layouts */
         #classroom-reinforcement-panel, #puzzle-reinforcement-panel {
             flex: 1.3;
             background: linear-gradient(135deg, #f5f5f5 0%, #e3f2fd 100%);
@@ -310,7 +324,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 25px 20px;
+            padding: 20px 15px;
             z-index: 5;
             box-shadow: -10px 0 20px rgba(0,0,0,0.1);
         }
@@ -325,8 +339,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 25px;
-            margin-bottom: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
             box-shadow: 0 12px 24px rgba(0,0,0,0.08);
             position: relative;
         }
@@ -337,8 +351,8 @@
         }
 
         .avatar-classroom-frame {
-            width: 330px;
-            height: 330px;
+            width: 310px;
+            height: 310px;
             background: #ffffff;
             border-radius: 24px;
             display: flex;
@@ -356,18 +370,26 @@
         }
 
         .classroom-vocab-title {
-            font-size: 72px;
+            font-size: 64px;
             font-weight: 900;
             color: #0d47a1;
-            margin-top: 20px;
+            margin-top: 15px;
             text-align: center;
             text-shadow: 0 0 25px rgba(33,150,243,0.4);
             letter-spacing: 2px;
+            line-height: 1.1;
+        }
+
+        .classroom-vocab-title span {
+            display: block;
+            font-size: 28px;
+            color: #4caf50;
+            margin-top: 5px;
         }
 
         .classroom-vocab-title.highlight-active {
             color: #d84315;
-            transform: scale(1.15);
+            transform: scale(1.12);
             text-shadow: 0 0 35px #ffeb3b;
             transition: all 0.2s ease;
         }
@@ -377,8 +399,8 @@
             background: #ff9800;
             color: white;
             border: none;
-            padding: 20px 35px;
-            font-size: 32px;
+            padding: 18px 25px;
+            font-size: 28px;
             font-weight: 900;
             border-radius: 30px;
             cursor: pointer;
@@ -388,7 +410,7 @@
             justify-content: center;
             gap: 15px;
             transition: transform 0.1s;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .btn-giant-speak:active {
@@ -402,13 +424,13 @@
             justify-content: center;
             gap: 12px;
             background: #fff;
-            padding: 12px;
+            padding: 10px;
             border-radius: 20px;
             border: 4px solid #cfd8dc;
         }
 
         .badge-icon {
-            font-size: 42px;
+            font-size: 38px;
             filter: grayscale(1);
             opacity: 0.3;
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -421,29 +443,72 @@
             animation: pop 0.5s ease-out;
         }
 
-        /* --- NEW PUZZLE COMPONENT LAYOUTS --- */
-        .puzzle-workspace {
+        /* --- IMMERSIVE INTUITIVE PUZZLE LAYOUT MODIFICATIONS --- */
+        .puzzle-instruction-header {
+            background: #ffea00;
+            border: 5px solid #000;
+            border-radius: 24px;
+            padding: 12px 30px;
+            font-size: 34px;
+            font-weight: 900;
+            color: #000;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+            z-index: 10;
+            letter-spacing: 1px;
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+
+        .puzzle-playground-split {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 20px;
-            z-index: 5;
+            justify-content: center;
+            gap: 40px;
+            width: 100%;
+            flex: 1;
+            margin-top: 15px;
+            margin-bottom: 15px;
         }
 
         .puzzle-board-frame {
-            background: rgba(255, 255, 255, 0.9);
-            border: 6px solid #1b5e20;
+            background: rgba(255, 255, 255, 0.25);
+            border: 6px solid #fff;
             border-radius: 24px;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.4);
             position: relative;
-            overflow: visible;
+            width: 320px;
+            height: 320px;
         }
 
         .puzzle-cell-slot {
             position: absolute;
-            box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.15);
-            background: rgba(255, 255, 255, 0.3);
             box-sizing: border-box;
+            border: 4px dashed rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            transition: all 0.2s ease;
+        }
+
+        /* Active Highlight Drop Zone flare rule */
+        .puzzle-cell-slot.glow-active {
+            border: 6px solid #ffea00;
+            background: rgba(255, 234, 0, 0.25);
+            box-shadow: 0 0 25px #ffea00;
+            transform: scale(1.02);
+        }
+
+        .puzzle-mix-tray {
+            width: 550px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 6px dashed #0288d1;
+            border-radius: 28px;
+            position: relative;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 10px;
         }
 
         .puzzle-piece-item {
@@ -458,46 +523,39 @@
         .puzzle-piece-item:active {
             cursor: grabbing;
             z-index: 100;
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         .puzzle-piece-canvas {
             display: block;
-            border: 3px solid #000;
-            border-radius: 14px;
+            border: 4px solid #000;
+            border-radius: 18px;
             background: #fff;
-            box-shadow: 0 6px 10px rgba(0,0,0,0.25);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
         }
 
         .puzzle-piece-item.snapped {
             pointer-events: none;
             z-index: 10;
-            transform: none;
         }
 
         .puzzle-piece-item.snapped .puzzle-piece-canvas {
             border-color: #4caf50;
             box-shadow: none;
-            animation: briefGlow 0.5s ease-out;
+            animation: snapPulse 0.4s ease-out;
         }
 
-        .puzzle-mix-tray {
-            width: 500px;
-            height: 140px;
-            background: rgba(255, 255, 255, 0.85);
-            border: 5px dashed #0288d1;
-            border-radius: 20px;
-            position: relative;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        /* Demonstration Pointer Element */
+        #puzzle-demo-hand {
+            position: absolute;
+            font-size: 75px;
+            z-index: 500;
+            pointer-events: none;
+            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            filter: drop-shadow(0 8px 10px rgba(0,0,0,0.4));
         }
 
-        @keyframes briefGlow {
-            0% { filter: drop-shadow(0 0 0px #4caf50); transform: scale(1); }
-            50% { filter: drop-shadow(0 0 20px #4caf50); transform: scale(1.08); }
-            100% { filter: drop-shadow(0 0 0px #4caf50); transform: scale(1); }
-        }
-
-        /* Shared Footer Systems */
+        /* Global Shared Footer Systems */
         footer {
             height: 90px;
             background: #e8f5e9;
@@ -543,7 +601,7 @@
             z-index: 90;
         }
 
-        /* Screen & Overlays Navigation Matrix */
+        /* Screen Routing Menu Overlays */
         .fullscreen-overlay {
             position: absolute;
             top: 0;
@@ -564,18 +622,18 @@
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            margin-top: 30px;
+            margin-top: 35px;
         }
 
         .menu-activity-card {
             background: #ffffff;
             border: 8px solid #4caf50;
-            border-radius: 36px;
-            width: 280px;
-            padding: 35px 20px;
+            border-radius: 40px;
+            width: 310px;
+            padding: 40px 25px;
             text-align: center;
             cursor: pointer;
-            box-shadow: 0 16px 32px rgba(0,0,0,0.3);
+            box-shadow: 0 16px 36px rgba(0,0,0,0.35);
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -585,13 +643,13 @@
         }
 
         .menu-activity-card .card-glyph {
-            font-size: 90px;
+            font-size: 100px;
             display: block;
             margin-bottom: 15px;
         }
 
         .menu-activity-card .card-label {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 900;
             color: #1b5e20;
         }
@@ -613,6 +671,7 @@
             color: #e65100;
             margin-bottom: 25px;
             text-shadow: 2px 2px 0px #ffe0b2;
+            line-height: 1.1;
         }
 
         .modal-desc-text {
@@ -658,21 +717,22 @@
             box-shadow: 0 10px 0 #c62828;
         }
 
-        /* Viewport Ambient Watching Corner Buddies Layout */
         .corner-buddy {
             position: absolute;
-            font-size: 55px;
+            font-size: 60px;
             z-index: 4;
             pointer-events: none;
-            animation: friendlyWave 3s ease-in-out infinite standard;
+            animation: friendlyWave 3s ease-in-out infinite alternate;
         }
 
         @keyframes waveMotion { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         @keyframes raysShimmer { 0% { transform: scale(1) rotate(0deg); opacity: 0.4; } 100% { transform: scale(1.1) rotate(4deg); opacity: 0.7; } }
-        @keyframes emojiBounce { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-12px) scale(1.03); } }
-        @keyframes friendlyWave { 0%, 100% { transform: rotate(0deg) translateY(0); } 50% { transform: rotate(8deg) translateY(-6px); } }
+        @keyframes emojiBounce { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-15px) scale(1.04); } }
+        @keyframes friendlyWave { 0%, 100% { transform: rotate(0deg) translateY(0); } 50% { transform: rotate(10deg) translateY(-8px); } }
         @keyframes modalPop { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes neonGreenGlow { 0% { box-shadow: 0 0 15px #4caf50; } 100% { box-shadow: 0 0 40px #4caf50, inset 0 0 20px #4caf50; } }
+        @keyframes neonGreenGlow { 0% { box-shadow: 0 0 15px #4caf50; } 100% { box-shadow: 0 0 45px #4caf50, inset 0 0 25px #4caf50; } }
+        @keyframes snapPulse { 0% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.12); filter: brightness(1.3); } 100% { transform: scale(1); filter: brightness(1); } }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 10px #ffea00; } 100% { box-shadow: 0 0 30px #ffea00; } }
         @keyframes pop { 0% { transform: scale(0.6); } 100% { transform: scale(1); } }
 
         .hidden { display: none !important; }
@@ -681,24 +741,33 @@
 <body>
 
     <div id="game-container">
-        <!-- Overlay Layer Canvas Engine -->
+        <!-- Overlay Core Visual FX Layer Canvas -->
         <canvas id="fx-layer-canvas"></canvas>
 
-        <!-- Dynamic Header Interface Dashboard -->
+        <!-- Dynamic Header Controller Matrix Dashboard -->
         <header>
             <div class="nav-brand" id="ctrl-brand-home">
-                <h1>Family Core Hub 🏠</h1>
+                <h1>THE FAMILY HUB 🏠</h1>
+                <span>Fishing & Puzzles by Teacher Hanz Balili</span>
             </div>
 
-            <!-- Dynamic Difficulty Switch System -->
-            <div id="difficulty-control-wrapper">
-                <select class="level-selector-box" id="ctrl-difficulty-level">
-                    <option value="1" selected>Level 1: Pictures Only (Fishing)</option>
+            <!-- Configuration System Selectors Matrix Group -->
+            <div class="dropdown-controls-group">
+                <!-- Bilingual Narration Selector Module -->
+                <select class="level-selector-box" id="ctrl-language-setting" title="Toggle Classroom Language Options">
+                    <option value="en" selected>🇺🇸 English Only</option>
+                    <option value="both">🇹🇭 Thai + English</option>
+                </select>
+
+                <select class="level-selector-box" id="ctrl-difficulty-level" title="Fishing Modes">
+                    <option value="1" selected>Level 1: Pictures Only</option>
                     <option value="2">Level 2: Pictures + Words</option>
                     <option value="3">Level 3: Words Only</option>
                 </select>
-                <select class="level-selector-box hidden" id="ctrl-puzzle-difficulty">
-                    <option value="4" selected>Easy (2 × 2 Puzzle)</option>
+                
+                <!-- Puzzle difficulty selector handles 4=2x2 by default -->
+                <select class="level-selector-box hidden" id="ctrl-puzzle-difficulty" title="Puzzle Options">
+                    <option value="4" selected>Beginner (2 × 2 Puzzle)</option>
                     <option value="6">Medium (3 × 2 Puzzle)</option>
                     <option value="9">Hard (3 × 3 Puzzle)</option>
                 </select>
@@ -716,11 +785,11 @@
                 <button class="btn-ui warn" id="ctrl-restart">🔄</button>
                 <button class="btn-ui" id="ctrl-mute-sfx">🔊</button>
                 <button class="btn-ui" id="ctrl-mute-music">🎵</button>
-                <button class="btn-ui danger" id="ctrl-exit"> L🚪</button>
+                <button class="btn-ui danger" id="ctrl-exit">🚪</button>
             </div>
         </header>
 
-        <!-- ACTIVITY VIEWPORT 1: FISHING SYSTEM -->
+        <!-- MODE A VIEWPORT LAYER: FISHING GAME (UNCHANGED MECHANICS) -->
         <main id="viewport-main" class="hidden">
             <section id="ocean-aquarium">
                 <div class="ocean-wave-overlay"></div>
@@ -747,63 +816,72 @@
             </section>
         </main>
 
-        <!-- ACTIVITY VIEWPORT 2: PUZZLE ENGINE -->
+        <!-- MODE B VIEWPORT LAYER: REDESIGNED INTUITIVE PUZZLE SYSTEM -->
         <main id="viewport-puzzle" class="hidden">
             <section id="puzzle-sandbox">
                 <div class="ocean-wave-overlay"></div>
                 <div class="light-rays"></div>
-                <div class="corner-buddy" style="top:20px; left:20px;">🐠</div>
-                <div class="corner-buddy" style="bottom:110px; right:20px;">🐙</div>
+                <div class="corner-buddy" style="top:95px; left:20px;">🐠</div>
+                <div class="corner-buddy" style="bottom:110px; left:20px;">🐙</div>
                 
-                <div class="puzzle-workspace">
-                    <!-- Target Puzzle Drag Grid -->
+                <!-- Highly explicit workspace display helper header -->
+                <div class="puzzle-instruction-header" id="puzzle-build-instruction">BUILD GRANDMOTHER</div>
+
+                <div class="puzzle-playground-split">
+                    <!-- Target empty drop outline grid board frame -->
                     <div class="puzzle-board-frame" id="puzzle-snap-board"></div>
-                    <!-- Pieces Drawer Container Tray -->
-                    <div class="puzzle-mix-tray" id="puzzle-pieces-tray"></div>
                 </div>
+
+                <!-- Hand indicator layout instance element for 3-second demo modes -->
+                <div id="puzzle-demo-hand" class="hidden">👆</div>
+
+                <!-- Large high contrast interactive piece drawer tray layout box -->
+                <div class="puzzle-mix-tray" id="puzzle-pieces-tray"></div>
             </section>
+            
             <section id="puzzle-reinforcement-panel">
                 <div class="giant-preview-card" id="puzzle-preview-card">
+                    <!-- Right Target Picture frame guide remain visible throughout task -->
                     <div class="avatar-classroom-frame" id="puzzle-avatar-viewport"><span style="font-size: 130px;">🧩</span></div>
-                    <div class="classroom-vocab-title" id="puzzle-vocab-title">Build It!</div>
+                    <div class="classroom-vocab-title" id="puzzle-vocab-title">TARGET PICTURE<span>MAKE THIS PICTURE</span></div>
                 </div>
-                <button class="btn-giant-speak" id="btn-puzzle-replay" disabled>📢 REPLAY TARGET</button>
+                <button class="btn-giant-speak" id="btn-puzzle-replay" disabled>📢 REPLAY INSTRUCTION</button>
                 <div class="achievement-ribbon">
                     <span class="badge-icon" id="pbadge-0">🏅</span><span class="badge-icon" id="pbadge-1">🧩</span><span class="badge-icon" id="pbadge-2">🎓</span><span class="badge-icon" id="pbadge-3">🏆</span>
                 </div>
             </section>
         </main>
 
-        <!-- Shared Core Reward Tracker Footer -->
+        <!-- Core Tracker Status Deck -->
         <footer>
             <div class="footer-banner-text">Classroom Progress Tracker:</div>
             <div class="classroom-stars-track" id="stars-deck-casing"></div>
         </footer>
     </div>
 
-    <!-- MAIN MENU SCREEN GATEWAYS OVERLAY -->
+    <!-- MAIN HOME GATEWAYS ROOT MENU OVERLAY -->
     <div class="fullscreen-overlay" id="modal-start-gate">
         <div class="classroom-modal-box" style="border-color:#4caf50;">
-            <h2 class="modal-title-giant">The Family Hub by Teacher Hanz Balili 🌟</h2>
+            <h2 class="modal-title-giant">THE FAMILY HUB 🌟<br><span style="font-size:26px; color:#558b2f; text-shadow:none;">Fishing and Puzzles by Teacher Hanz Balili</span></h2>
             <p class="modal-desc-text">Choose a happy learning activity to play today with your classmates!</p>
             
             <div class="menu-selection-container">
                 <div class="menu-activity-card" id="menu-launch-fishing">
                     <span class="card-glyph">🎣</span>
-                    <span class="card-label">Family Fishing Game by Teacher Hanz Balili</span>
+                    <span class="card-label">Family Fishing Game</span>
                 </div>
                 <div class="menu-activity-card" id="menu-launch-puzzle">
                     <span class="card-glyph">🧩</span>
-                    <span class="card-label">Family Puzzle Game by Teacher Hanz Balili</span>
+                    <span class="card-label">Family Puzzle Game</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- END CERTIFICATES SYSTEM LAYER -->
+    <!-- SYSTEM REWARDS CERTIFICATE OVERLAY MODAL -->
     <div class="fullscreen-overlay hidden" id="modal-end-gate">
         <div class="classroom-modal-box" style="border-color: #ffd700; background: #fffde7;">
-            <h2 class="modal-title-giant" style="color: #ff8f00;" id="end-gate-title">📜 CHAMPION DECK 📜</h2>
+            <h2 class="modal-title-giant" style="color: #ff8f00;" id="end-gate-title">📜 CERTIFICATE 📜</h2>
             <p class="modal-desc-text" id="end-gate-body-text" style="font-size: 32px; color: #ff6f00;"></p>
             <div id="end-stars-display" style="font-size: 54px; margin-bottom: 25px;"></div>
             <div class="modal-btn-group">
@@ -814,7 +892,7 @@
         </div>
     </div>
 
-    <!-- INTERMEDIARY BREAK MODAL -->
+    <!-- PAUSE BREAK GATE INTERFACE -->
     <div class="fullscreen-overlay hidden" id="modal-pause-gate">
         <div class="classroom-modal-box" style="border-color: #2196f3;">
             <h2 class="modal-title-giant" style="color: #1565c0;">Game Paused</h2>
@@ -827,25 +905,36 @@
 
     <script>
         /**********************************************************************
-         * SYSTEM CORE VARIABLES & DATA ARCHIVE
+         * DICTIONARY ARCHIVE & STATE SYSTEMS
          **********************************************************************/
         const CREATURE_EMOJIS = { Dolphin: "🐬", Turtle: "🐢", Octopus: "🐙", Crab: "🦀", TropicalFish: "🐠", Fish: "🐟", Starfish: "⭐", Whale: "🐳", Jellyfish: "🪼", Squid: "🦑", Pufferfish: "🐡", Lobster: "🦞" };
         const FAMILY_EMOJIS = { Father: "👨", Mother: "👩", Brother: "👦", Sister: "👧", Grandfather: "👴", Grandmother: "👵", Baby: "👶", Family: "👨‍👩‍👧‍👦" };
         const VOCABULARY = ["Father", "Mother", "Brother", "Sister", "Grandfather", "Grandmother", "Baby", "Family"];
         const CREATURE_TYPES = Object.keys(CREATURE_EMOJIS);
 
+        // Thai Localized Vocabulary Translations mapping
+        const THAI_VOCAB_MAP = {
+            Father: { thName: "คุณพ่อ", thBuild: "ต่อรูปคุณพ่อ", thIntro: "นี่คือคุณพ่อ" },
+            Mother: { thName: "คุณแม่", thBuild: "ต่อรูปคุณแม่", thIntro: "นี่คือคุณแม่" },
+            Brother: { thName: "พี่ชาย", thBuild: "ต่อรูปพี่ชาย", thIntro: "นี่คือพี่ชาย" },
+            Sister: { thName: "พี่สาว", thBuild: "ต่อรูปพี่สาว", thIntro: "นี่คือพี่สาว" },
+            Grandfather: { thName: "คุณปู่", thBuild: "ต่อรูปคุณปู่", thIntro: "นี่คือคุณปู่" },
+            Grandmother: { thName: "คุณย่า", thBuild: "ต่อรูปคุณย่า", thIntro: "นี่คือคุณย่า" },
+            Baby: { thName: "น้องทารก", thBuild: "ต่อรูปน้องทารก", thIntro: "นี่คือน้องทารก" },
+            Family: { thName: "ครอบครัว", thBuild: "ต่อรูปครอบครัว", thIntro: "นี่คือครอบครัว" }
+        };
+
         let state = {
-            currentGameMode: "menu", // "fishing" | "puzzle" | "menu"
+            currentGameMode: "menu", lang: "en",
             score: 0, coins: 0, gems: 0, correctCount: 0,
             pool: [...VOCABULARY], targetWord: "", activeCreatures: [],
             paused: false, speechSynth: window.speechSynthesis, isNarratingSequence: false,
-            level: 1, // Fishing Level
-            puzzleDifficulty: 4, // 4=2x2, 6=3x2, 9=3x3
-            puzzlePool: [...VOCABULARY],
-            activePuzzlePieces: [], puzzleDragTarget: null, dragOffset: { x:0, y:0 }
+            level: 1, puzzleDifficulty: 4, // Default puzzle difficulty set to 4 (2x2 Beginner Mode)
+            puzzlePool: [...VOCABULARY], activePuzzlePieces: [], puzzleDragTarget: null,
+            dragOffset: { x:0, y:0 }, failureSpeechLimiter: 0
         };
 
-        // UI Binding Elements
+        // DOM Element Reference Bindings
         const elOcean = document.getElementById('ocean-aquarium');
         const elBillboardText = document.getElementById('target-billboard-text');
         const elScore = document.getElementById('ui-score');
@@ -863,7 +952,7 @@
         resizeCanvas();
 
         /**********************************************************************
-         * PROCEDURAL AUDIO ENGINE (WEB AUDIO MACROS)
+         * AUDIO ARCHITECTURE ENGINES (WEB AUDIO API PROCEDURAL GENERATORS)
          **********************************************************************/
         class ClassroomAudioEngine {
             constructor() { this.ctx = null; this.musicInterval = null; this.sfxMuted = false; this.musicMuted = false; this.tempo = 125; this.notes = [60, 62, 64, 67, 69, 67, 64, 62, 60, 64, 67, 69, 72, 69, 67, 64]; this.step = 0; }
@@ -878,7 +967,7 @@
                 } catch(e){}
             }
             playHappyDing() { this.playSynthTone(587.33, 'sine', 0.2, 0.25, 0); this.playSynthTone(659.25, 'sine', 0.2, 0.25, 0.05); this.playSynthTone(880.00, 'sine', 0.3, 0.3, 0.1); }
-            playOops() { this.playSynthTone(349.23, 'triangle', 0.2, 0.3, 0); this.playSynthTone(261.63, 'triangle', 0.3, 0.3, 0.15); }
+            playOops() { this.playSynthTone(349.23, 'triangle', 0.15, 0.2, 0); this.playSynthTone(261.63, 'triangle', 0.2, 0.2, 0.1); }
             playBubblePop() { this.playSynthTone(900, 'sine', 0.04, 0.15, 0); }
             playApplauseBurst() { for(let i=0; i<15; i++) { let rd = Math.random() * 0.6; let rf = 700 + Math.random() * 600; this.playSynthTone(rf, 'triangle', 0.08, 0.08, rd); } }
             startMusic() {
@@ -900,15 +989,33 @@
             if (callback) u.onend = callback; state.speechSynth.speak(u);
         }
 
+        // Expanded Bilingual Narration Controller Method Lookups
+        function speakBilingualSequence(enPhrase, thPhrase, callback) {
+            if (state.lang === 'both' && thPhrase) {
+                classroomNarrate(enPhrase, () => {
+                    setTimeout(() => {
+                        // Switch utterance attributes dynamically for clean localized voice pacing profiles
+                        const thUtterance = new SpeechSynthesisUtterance(thPhrase);
+                        thUtterance.lang = 'th-TH'; thUtterance.rate = 0.8; thUtterance.pitch = 1.1;
+                        if (callback) thUtterance.onend = callback;
+                        state.speechSynth.speak(thUtterance);
+                    }, 500);
+                });
+            } else {
+                classroomNarrate(enPhrase, callback);
+            }
+        }
+
         /**********************************************************************
-         * HUB SCREEN SWITCHER & INITIALIZERS
+         * ROUTER INFRASTRUCTURE PLATFORMS
          **********************************************************************/
         function displayScreen(targetMode) {
             state.currentGameMode = targetMode;
             document.getElementById('modal-start-gate').classList.add('hidden');
             document.getElementById('viewport-main').classList.add('hidden');
             document.getElementById('viewport-puzzle').classList.add('hidden');
-            document.getElementById('difficulty-control-wrapper').querySelectorAll('select').forEach(s => s.classList.add('hidden'));
+            document.getElementById('ctrl-difficulty-level').classList.add('hidden');
+            document.getElementById('ctrl-puzzle-difficulty').classList.add('hidden');
 
             if (targetMode === 'fishing') {
                 document.getElementById('viewport-main').classList.remove('hidden');
@@ -930,8 +1037,12 @@
             }
         }
 
+        function updateDashboardCounters() {
+            elScore.textContent = state.score; elCoins.textContent = state.coins; elGems.textContent = state.gems;
+        }
+
         /**********************************************************************
-         * GAME ENGINE MODE A: FAMILY FISHING
+         * SYSTEM MODE A: FAMILY FISHING (MECHANICS PRESERVED COMPLETELY)
          **********************************************************************/
         function startGameSession() {
             state.score = 0; state.coins = 0; state.gems = 0; state.correctCount = 0; state.pool = [...VOCABULARY]; state.isNarratingSequence = false;
@@ -940,14 +1051,11 @@
             for (let i = 0; i < 5; i++) spawnCreatureInstance();
         }
 
-        function updateDashboardCounters() {
-            elScore.textContent = state.score; elCoins.textContent = state.coins; elGems.textContent = state.gems;
-        }
-
         function setupNextFishingRound() {
             if (state.pool.length === 0) { triggerEndGameSequence("🏆 FISHING CHAMPION 🏆", "Congratulations!<br>You are a Family Vocabulary Champion!"); return; }
             state.targetWord = state.pool[Math.floor(Math.random() * state.pool.length)];
             elBillboardText.textContent = state.targetWord.toUpperCase();
+            
             classroomNarrate(`Can you find the ${state.targetWord}?`);
             if (!state.activeCreatures.some(c => c.word === state.targetWord)) spawnCreatureInstance(state.targetWord);
         }
@@ -985,12 +1093,18 @@
                 state.score += 15; state.coins += 5; state.gems += 1; state.correctCount += 1; updateDashboardCounters();
                 
                 let ts = document.getElementById(`star-idx-${state.correctCount - 1}`); if (ts) ts.classList.add('earned');
+                
+                const thData = THAI_VOCAB_MAP[creature.word];
                 document.getElementById('avatar-viewport-frame').innerHTML = `<span class="giant-learning-emoji">${FAMILY_EMOJIS[creature.word]}</span>`;
-                const vt = document.getElementById('vocab-title-text'); vt.textContent = creature.word.toUpperCase();
+                
+                const vt = document.getElementById('vocab-title-text');
+                vt.innerHTML = `${creature.word.toUpperCase()} <span>${state.lang === 'both' ? thData.thName : ''}</span>`;
+                
                 document.getElementById('btn-trigger-speech').disabled = false;
                 document.getElementById('main-preview-card').classList.add('correct-glow'); vt.classList.add('highlight-active');
 
                 state.pool = state.pool.filter(w => w !== creature.word); updateBadgeUI(false);
+                
                 classroomNarrate(`Excellent! That's the ${creature.word}!`, () => {
                     setTimeout(() => { classroomNarrate(`${creature.word}.`, () => {
                         setTimeout(() => { classroomNarrate(`This is ${creature.word}.`, () => {
@@ -1021,14 +1135,18 @@
         function updateBadgeUI(isPuzzle) {
             let count = state.correctCount; let prefix = isPuzzle ? 'pbadge-' : 'badge-';
             let unl = [count >= 1, count >= 3, count >= 6, (isPuzzle ? state.puzzlePool : state.pool).length === 0];
-            unl.forEach((u, i) => { const el = document.getElementById(prefix + i); if (u) el.classList.add('unlocked'); else el.classList.remove('unlocked'); });
+            unl.forEach((u, i) => { const el = document.getElementById(prefix + i); if (el) { if (u) el.classList.add('unlocked'); else el.classList.remove('unlocked'); } });
         }
 
         /**********************************************************************
-         * GAME ENGINE MODE B: FAMILY PUZZLE SYSTEM
+         * SYSTEM MODE B: REDESIGNED INTUITIVE CLASSROOM PUZZLE SYSTEM
          **********************************************************************/
         function startPuzzleGameSession() {
-            state.score = 0; state.coins = 0; state.gems = 0; state.correctCount = 0; state.puzzlePool = [...VOCABULARY]; state.isNarratingSequence = false;
+            state.score = 0; state.coins = 0; state.gems = 0; state.correctCount = 0; 
+            state.puzzlePool = [...VOCABULARY]; state.isNarratingSequence = false;
+            state.puzzleDifficulty = 4; // Force Beginner 2x2 mode layout profiles as standard default
+            document.getElementById('ctrl-puzzle-difficulty').value = "4";
+            
             updateDashboardCounters(); updateBadgeUI(true); buildProgressStars(VOCABULARY.length); setupNextPuzzleRound();
         }
 
@@ -1036,13 +1154,28 @@
             if (state.puzzlePool.length === 0) { triggerEndGameSequence("🧩 PUZZLE CHAMPION 🏆", "Congratulations!<br>You are a Family Puzzle Champion!"); return; }
             state.targetWord = state.puzzlePool[Math.floor(Math.random() * state.puzzlePool.length)];
             
-            // Set Right Side Reference Cards Viewport
+            // Render visible targets instruction banners (Bilingual adaptive configuration strings)
+            const headerLabel = document.getElementById('puzzle-build-instruction');
+            const thData = THAI_VOCAB_MAP[state.targetWord];
+            if (state.lang === 'both') {
+                headerLabel.innerHTML = `BUILD ${state.targetWord.toUpperCase()} • ${thData.thBuild}`;
+            } else {
+                headerLabel.innerHTML = `BUILD ${state.targetWord.toUpperCase()}`;
+            }
+
+            // Lock Right Target Picture reference frame to maximize connectivity structures
             let emoji = FAMILY_EMOJIS[state.targetWord];
             document.getElementById('puzzle-avatar-viewport').innerHTML = `<span class="giant-learning-emoji">${emoji}</span>`;
-            document.getElementById('puzzle-vocab-title').textContent = state.targetWord.toUpperCase();
+            
+            const titleEl = document.getElementById('puzzle-vocab-title');
+            titleEl.innerHTML = `${state.targetWord.toUpperCase()} <span>${state.lang === 'both' ? thData.thName : ''}</span>`;
             document.getElementById('btn-puzzle-replay').disabled = false;
 
-            classroomNarrate(Math.random() > 0.5 ? `Let's make ${state.targetWord}!` : `Can you build the picture of ${state.targetWord}?`);
+            speakBilingualSequence(`Let's make ${state.targetWord}!`, thData.thBuild, () => {
+                // Instantly kickstart programmatic 3-second animated cursor preview guides
+                setTimeout(runVisualDemonstrationSequence, 400);
+            });
+
             generatePuzzleBoardLayout(emoji);
         }
 
@@ -1059,7 +1192,6 @@
             const cellW = boardSize / cols; const cellH = boardSize / rows;
             board.style.width = boardSize + 'px'; board.style.height = boardSize + 'px';
 
-            // Create temporary rendering elements to clip character designs dynamically
             const renderCanvas = document.createElement('canvas');
             renderCanvas.width = boardSize; renderCanvas.height = boardSize;
             const rCtx = renderCanvas.getContext('2d');
@@ -1067,18 +1199,19 @@
             rCtx.font = `${boardSize * 0.65}px Arial`; rCtx.textAlign = 'center'; rCtx.textBaseline = 'middle';
             rCtx.fillText(emojiStr, boardSize / 2, boardSize / 2 + 15);
 
-            // Generate placement slots and layout maps
             let rawPieces = [];
             for (let r = 0; r < rows; r++) {
                 for (let c = 0; c < cols; c++) {
                     let lx = c * cellW; let ty = r * cellH;
+                    
+                    // Create clearly demarcated slot boundaries with placeholder indicators
                     let slot = document.createElement('div');
                     slot.className = 'puzzle-cell-slot';
-                    slot.style.width = cellW + 'px'; slot.style.height = cellH + 'px';
-                    slot.style.left = lx + 'px'; slot.style.top = ty + 'px';
+                    slot.style.width = (cellW - 4) + 'px'; slot.style.height = (cellH - 4) + 'px';
+                    slot.style.left = (lx + 2) + 'px'; slot.style.top = (ty + 2) + 'px';
+                    slot.innerHTML = `<span style="font-size:20px; color:rgba(255,255,255,0.4); display:flex; align-items:center; justify-content:center; width:100%; height:100%;">?</span>`;
                     board.appendChild(slot);
 
-                    // Cut visual fragments dynamically
                     const pieceCanvas = document.createElement('canvas');
                     pieceCanvas.className = 'puzzle-piece-canvas';
                     pieceCanvas.width = cellW; pieceCanvas.height = cellH;
@@ -1090,23 +1223,27 @@
                     pEl.appendChild(pieceCanvas);
                     pEl.style.width = cellW + 'px'; pEl.style.height = cellH + 'px';
 
-                    const item = { el: pEl, correctX: lx, correctY: ty, currentX: 0, currentY: 0, snapped: false, w: cellW, h: cellH };
+                    const item = { el: pEl, correctX: lx, correctY: ty, currentX: 0, currentY: 0, snapped: false, w: cellW, h: cellH, slotEl: slot };
                     rawPieces.push(item);
                 }
             }
 
-            // Distribute items inside drawer random layout tray layers securely
-            let trayRect = tray.getBoundingClientRect();
+            // Layout scrambled blocks systematically across bottom tray components
+            let trayWidth = 550;
+            let spacing = trayWidth / rawPieces.length;
+            
+            rawPieces.sort(() => Math.random() - 0.5); // Randomize layout order mapping
             rawPieces.forEach((piece, idx) => {
                 tray.appendChild(piece.el);
-                let boundsX = Math.max(0, 500 - piece.w - 15);
-                let boundsY = Math.max(0, 140 - piece.h - 15);
-                let rx = Math.random() * boundsX; let ry = Math.random() * boundsY;
+                
+                // Programmatic high-visibility centering arrays
+                let rx = (idx * spacing) + (spacing / 2) - (piece.w / 2);
+                let ry = 75 - (piece.h / 2);
                 
                 piece.currentX = rx; piece.currentY = ry;
                 piece.el.style.left = rx + 'px'; piece.el.style.top = ry + 'px';
 
-                // Coupling cross-platform pointer listeners directly
+                // Combined pointer listener setups targeting standard cell screens and whiteboard layers
                 const grabAction = (e) => { if (!state.paused && !piece.snapped) startPieceDrag(piece, e); };
                 piece.el.addEventListener('pointerdown', grabAction);
                 state.activePuzzlePieces.push(piece);
@@ -1114,15 +1251,64 @@
         }
 
         /**********************************************************************
-         * POINTER EVENTS POOL MATRICES (DRAG & DROP ENGINE)
+         * VISUAL DEMONSTRATION MODULE
+         **********************************************************************/
+        function runVisualDemonstrationSequence() {
+            if (state.activePuzzlePieces.length === 0 || state.paused) return;
+            
+            const demoHand = document.getElementById('puzzle-demo-hand');
+            const targetPiece = state.activePuzzlePieces[0]; // Guide with primary fragment block
+            if (!targetPiece || targetPiece.snapped) return;
+
+            // Compute geometric bounding matrix values
+            let sandboxRect = document.getElementById('puzzle-sandbox').getBoundingClientRect();
+            let pieceRect = targetPiece.el.getBoundingClientRect();
+            let boardRect = document.getElementById('puzzle-snap-board').getBoundingClientRect();
+
+            let startHandX = pieceRect.left - sandboxRect.left + 30;
+            let startHandY = pieceRect.top - sandboxRect.top + 30;
+            
+            let endHandX = boardRect.left - sandboxRect.left + targetPiece.correctX + (targetPiece.w / 2);
+            let endHandY = boardRect.top - sandboxRect.top + targetPiece.correctY + (targetPiece.h / 2);
+
+            // Display floating hand pointer
+            demoHand.style.left = startHandX + 'px'; demoHand.style.top = startHandY + 'px';
+            demoHand.classList.remove('hidden');
+
+            // Trigger animation interpolation steps
+            setTimeout(() => {
+                targetPiece.el.style.transform = "scale(1.08)";
+                // Highlight corresponding drop destination slot contours
+                targetPiece.slotEl.classList.add('glow-active');
+                
+                demoHand.style.left = endHandX + 'px';
+                demoHand.style.top = endHandY + 'px';
+            }, 600);
+
+            // Turn off preview elements cleanly
+            setTimeout(() => {
+                targetPiece.el.style.transform = "none";
+                targetPiece.slotEl.classList.remove('glow-active');
+                demoHand.classList.add('hidden');
+            }, 2200);
+        }
+
+        /**********************************************************************
+         * POINTER DRAG INTERACTION HOOKS (SMART SNAP CAPABILITIES MULTIPLEX)
          **********************************************************************/
         function startPieceDrag(piece, event) {
             state.puzzleDragTarget = piece;
-            let clientX = event.clientX; let clientY = event.clientY;
-            if (event.touches && event.touches.length > 0) { clientX = event.touches[0].clientX; clientY = event.touches[0].clientY; }
+            let clX = event.clientX; let clY = event.clientY;
+            if (event.touches && event.touches.length > 0) { clX = event.touches[0].clientX; clY = event.touches[0].clientY; }
             
             let elRect = piece.el.getBoundingClientRect();
-            state.dragOffset.x = clientX - elRect.left; state.dragOffset.y = clientY - elRect.top;
+            state.dragOffset.x = clX - elRect.left; state.dragOffset.y = clY - elRect.top;
+            
+            // Instantly highlight drop target paths with animated yellow flaring lines
+            state.activePuzzlePieces.forEach(p => {
+                if(!p.snapped) p.slotEl.classList.add('glow-active');
+            });
+
             piece.el.setPointerCapture(event.pointerId);
             event.stopPropagation();
         }
@@ -1130,16 +1316,15 @@
         window.addEventListener('pointermove', (e) => {
             if (!state.puzzleDragTarget || state.paused) return;
             let piece = state.puzzleDragTarget;
-            let clientX = e.clientX; let clientY = e.clientY;
-            if (e.touches && e.touches.length > 0) { clientX = e.touches[0].clientX; clientY = e.touches[0].clientY; }
+            let clX = e.clientX; let clY = e.clientY;
+            if (e.touches && e.touches.length > 0) { clX = e.touches[0].clientX; clY = e.touches[0].clientY; }
 
-            // Project translation mappings dynamically over viewport parents context
-            let workspaceRect = document.getElementById('puzzle-sandbox').getBoundingClientRect();
-            let targetX = clientX - workspaceRect.left - state.dragOffset.x;
-            let targetY = clientY - workspaceRect.top - state.dragOffset.y;
+            let sandboxRect = document.getElementById('puzzle-sandbox').getBoundingClientRect();
+            let tx = clX - sandboxRect.left - state.dragOffset.x;
+            let ty = clY - sandboxRect.top - state.dragOffset.y;
 
-            piece.el.style.left = targetX + 'px'; piece.el.style.top = targetY + 'px';
-            piece.currentX = targetX; piece.currentY = targetY;
+            piece.el.style.left = tx + 'px'; piece.el.style.top = ty + 'px';
+            piece.currentX = tx; piece.currentY = ty;
         });
 
         window.addEventListener('pointerup', (e) => {
@@ -1148,44 +1333,60 @@
             state.puzzleDragTarget = null;
             piece.el.releasePointerCapture(e.pointerId);
 
+            // Clear glow profiles across outline zones
+            state.activePuzzlePieces.forEach(p => p.slotEl.classList.remove('glow-active'));
+
             let boardRect = document.getElementById('puzzle-snap-board').getBoundingClientRect();
-            let workspaceRect = document.getElementById('puzzle-sandbox').getBoundingClientRect();
+            let sandboxRect = document.getElementById('puzzle-sandbox').getBoundingClientRect();
 
-            // Translate board absolute positioning configurations
-            let bLocalX = boardRect.left - workspaceRect.left; let bLocalY = boardRect.top - workspaceRect.top;
-            let snapDestX = bLocalX + piece.correctX; let snapDestY = bLocalY + piece.correctY;
+            let bLocalX = boardRect.left - sandboxRect.left; let bLocalY = boardRect.top - sandboxRect.top;
+            let targetSnapX = bLocalX + piece.correctX; let targetSnapY = bLocalY + piece.correctY;
 
-            let dist = Math.hypot(piece.currentX - snapDestX, piece.currentY - snapDestY);
-            if (dist < 32) {
-                // Correct Match Placement Snap
+            // Highly forgiving snap calculations customized for kindergarten capabilities
+            let proximityThreshold = 55; // Magnified capturing radius limits
+            let dist = Math.hypot(piece.currentX - targetSnapX, piece.currentY - targetSnapY);
+
+            if (dist < proximityThreshold) {
                 piece.snapped = true; piece.el.classList.add('snapped');
-                piece.el.style.left = snapDestX + 'px'; piece.el.style.top = snapDestY + 'px';
-                document.getElementById('puzzle-sandbox').appendChild(piece.el); // Reparent to Board Space
+                piece.el.style.left = targetSnapX + 'px'; piece.el.style.top = targetSnapY + 'px';
+                document.getElementById('puzzle-sandbox').appendChild(piece.el); 
+                
+                piece.slotEl.innerHTML = ""; // Dismiss guide placeholders
                 AudioSystem.playBubblePop();
                 
-                // Spawn a cute tiny star burst locally above cell
                 let parentRect = canvas.getBoundingClientRect();
                 triggerConfettiAt(boardRect.left - parentRect.left + piece.correctX + piece.w/2, boardRect.top - parentRect.top + piece.correctY + piece.h/2);
-                classroomNarrate("Great job!");
                 
                 checkPuzzleCompletionState();
             } else {
-                // Incorrect Match Placement Return Animation Loop
+                // Forgiving Failure: Smoothly return back into lower slots without jarring cues
                 AudioSystem.playOops();
                 document.getElementById('puzzle-pieces-tray').appendChild(piece.el);
-                let boundsX = Math.max(0, 500 - piece.w - 15); let boundsY = Math.max(0, 140 - piece.h - 15);
-                let rx = Math.random() * boundsX; let ry = Math.random() * boundsY;
+                
+                // Reposition smoothly inside workspace constraints
+                let trayWidth = 550;
+                let pieceIdx = state.activePuzzlePieces.indexOf(piece);
+                let spacing = trayWidth / state.activePuzzlePieces.length;
+                let rx = (pieceIdx * spacing) + (spacing / 2) - (piece.w / 2);
+                let ry = 75 - (piece.h / 2);
+                
                 piece.currentX = rx; piece.currentY = ry;
                 piece.el.style.left = rx + 'px'; piece.el.style.top = ry + 'px';
-                classroomNarrate("Try again.");
+
+                // Soft encouraging reminder vocals activated conservatively to minimize cognitive overload
+                state.failureSpeechLimiter++;
+                if (state.failureSpeechLimiter % 3 === 0) {
+                    const fallbackPhrases = ["Almost!", "Keep trying!", "Let's try another spot."];
+                    classroomNarrate(fallbackPhrases[Math.floor(Math.random() * fallbackPhrases.length)]);
+                }
             }
         });
 
         function checkPuzzleCompletionState() {
             if (state.activePuzzlePieces.every(p => p.snapped)) {
-                // Whole Puzzle Finished Sequence
                 state.isNarratingSequence = true;
                 AudioSystem.playHappyDing(); AudioSystem.playApplauseBurst();
+                
                 let bRect = document.getElementById('puzzle-snap-board').getBoundingClientRect();
                 let pRect = canvas.getBoundingClientRect();
                 triggerConfettiAt(bRect.left - pRect.left + 160, bRect.top - pRect.top + 160);
@@ -1193,19 +1394,24 @@
                 state.score += 20; state.coins += 10; state.gems += 2; state.correctCount += 1; updateDashboardCounters();
                 let ts = document.getElementById(`star-idx-${state.correctCount - 1}`); if (ts) ts.classList.add('earned');
 
+                // Apply victory flares over card panels
                 document.getElementById('puzzle-preview-card').classList.add('correct-glow');
                 document.getElementById('puzzle-avatar-viewport').classList.add('wave-animation');
-                const title = document.getElementById('puzzle-vocab-title'); title.classList.add('highlight-active');
+                
+                const title = document.getElementById('puzzle-vocab-title'); 
+                title.classList.add('highlight-active');
 
                 state.puzzlePool = state.puzzlePool.filter(w => w !== state.targetWord); updateBadgeUI(true);
+                const thData = THAI_VOCAB_MAP[state.targetWord];
 
-                classroomNarrate(`Excellent! You made ${state.targetWord}!`, () => {
+                // Comprehensive Bilingual Learning Reinforcement Flow Chain
+                speakBilingualSequence(`Excellent! You built ${state.targetWord}!`, "ต่อรูปเสร็จแล้ว", () => {
                     setTimeout(() => { classroomNarrate(`${state.targetWord}.`, () => {
-                        setTimeout(() => { classroomNarrate(`This is ${state.targetWord}.`, () => {
+                        setTimeout(() => { speakBilingualSequence(`This is ${state.targetWord}.`, thData.thIntro, () => {
                             setTimeout(() => { classroomNarrate(`Can you say ${state.targetWord}?`, () => {
                                 state.isNarratingSequence = false;
                                 document.getElementById('puzzle-preview-card').classList.remove('correct-glow');
-                                document.getElementById('puzzle-avatar-viewport').classList.remove('wave-animation');
+                                document.getElementById('puzzle-avatar-viewport').classList.remove('puzzle-avatar-viewport');
                                 title.classList.remove('highlight-active');
                                 setTimeout(setupNextPuzzleRound, 800);
                             }); }, 1000);
@@ -1216,7 +1422,7 @@
         }
 
         /**********************************************************************
-         * BACKGROUND REALTIME GRAPHICS SYSTEM SIMULATIONS (TICK RUNTIME)
+         * REALTIME SIMULATION TICK ENGINE
          **********************************************************************/
         function gameLoopRuntime() {
             let wW = elOcean.offsetWidth || 800;
@@ -1237,7 +1443,6 @@
                 if (state.activeCreatures.length < 5) spawnCreatureInstance();
             }
 
-            // Global Ambient Background Bubbles Manager
             if (!state.paused && (state.currentGameMode === 'fishing' || state.currentGameMode === 'puzzle')) {
                 if (Math.random() < 0.05 && ambientBubbles.length < 35) {
                     ambientBubbles.push({ x: Math.random() * canvas.width, y: canvas.height + 20, speed: 1 + Math.random() * 2, radius: 2 + Math.random() * 5, wobble: Math.random() * 100, wobbleSpeed: 0.02 + Math.random()*0.03 });
@@ -1282,11 +1487,17 @@
         }
 
         /**********************************************************************
-         * BINDINGS, CORE ACTIONS AND INTERACTION HANDLERS
+         * USER INTERACTION CONTROL BINDS
          **********************************************************************/
         document.getElementById('menu-launch-fishing').addEventListener('click', () => { AudioSystem.init(); displayScreen('fishing'); });
         document.getElementById('menu-launch-puzzle').addEventListener('click', () => { AudioSystem.init(); displayScreen('puzzle'); });
         document.getElementById('ctrl-brand-home').addEventListener('click', () => { displayScreen('menu'); });
+
+        // Language toggle selection listener setup context variations
+        document.getElementById('ctrl-language-setting').addEventListener('change', (e) => {
+            state.lang = e.target.value;
+            if (state.currentGameMode === 'puzzle') setupNextPuzzleRound();
+        });
 
         document.getElementById('ctrl-difficulty-level').addEventListener('change', (e) => {
             state.level = parseInt(e.target.value); state.activeCreatures.forEach(c => c.el.remove()); state.activeCreatures = [];
@@ -1297,7 +1508,6 @@
             state.puzzleDifficulty = parseInt(e.target.value); setupNextPuzzleRound();
         });
 
-        // Ambient Sandbox Tap Responses
         document.getElementById('prop-crab').addEventListener('click', (e) => { AudioSystem.playBubblePop(); triggerConfettiAt(e.clientX, e.clientY); classroomNarrate("Look, a little crab!"); });
         document.getElementById('prop-starfish').addEventListener('click', (e) => { AudioSystem.playBubblePop(); triggerConfettiAt(e.clientX, e.clientY); classroomNarrate("That is a friendly starfish!"); });
         document.getElementById('prop-treasure').addEventListener('click', () => { AudioSystem.playHappyDing(); classroomNarrate("A hidden treasure chest!"); });
@@ -1317,9 +1527,14 @@
         document.getElementById('btn-end-home').addEventListener('click', () => { document.getElementById('modal-end-gate').classList.add('hidden'); state.paused = false; displayScreen('menu'); });
 
         document.getElementById('btn-trigger-speech').addEventListener('click', () => { if (!state.isNarratingSequence) classroomNarrate(`Can you find the ${state.targetWord}?`); });
-        document.getElementById('btn-puzzle-replay').addEventListener('click', () => { if (!state.isNarratingSequence) classroomNarrate(`Can you build the picture of ${state.targetWord}?`); });
+        document.getElementById('btn-puzzle-replay').addEventListener('click', () => { 
+            if (!state.isNarratingSequence) {
+                const thData = THAI_VOCAB_MAP[state.targetWord];
+                speakBilingualSequence(`Can you build the picture of ${state.targetWord}?`, thData.thBuild);
+            }
+        });
 
-        // Kickstart Background Animation Execution Thread Loop
+        // Initialize background animation cycle threads
         displayScreen('menu');
         requestAnimationFrame(gameLoopRuntime);
     </script>
